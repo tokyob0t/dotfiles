@@ -1,0 +1,164 @@
+[global]
+    font = "Fira Code NF 13"
+	allow_markup = yes
+	format = "<b>%s</b>\n%b"
+	sort = yes
+
+	# Show how many messages are currently hidden (because of geometry)
+	indicate_hidden = yes
+
+	# Alignment of message text.
+	# Possible values are "left", "center" and "right"
+	alignment = center
+	vertical_alignment = center
+
+	# The frequency with wich text that is longer than the notification
+	# window allows bounces back and forth.
+	# This option conflicts with 'word_wrap'.
+	# Set to 0 to disable
+	bounce_freq = 0
+
+	# Specify where to make an ellipsis in long lines.
+	# Possible values are "start", "middle" and "end".
+	ellipsize = middle
+
+	# Show age of message if message is older than show_age_threshold seconds.
+	# set to -1 to disable
+	show_age_threshold = -1
+
+	# Split notifications into multiple lines if they don't fit into geometry
+	word_wrap = yes
+
+	# Ignore newlines '\n' in notifications
+	ignore_newline = no
+
+	### Geometry ###
+    corner_radius = 10
+    width = 320
+    heigth = 300
+	min_icon_size = 32
+	max_icon_size = 48
+
+	# Position of the notification
+	origin = top-center
+
+	# Offset from the origin
+    offset = 25x25
+    progress_bar = true
+    progress_bar_height = 5
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 150
+	progress_bar_corner_radius = 15
+    progress_bar_max_width = 300
+
+	# Frame
+	frame_width = 0
+	frame_color = "#1C2325"
+
+	# The transparency of the window. range: [0; 100]
+	# This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
+	transparency = 0
+
+	# Don't remove messages, if the user is idle (no mouse or keyboard input)
+	# for longer than idle_threshold seconds.
+	# Set to 0 to disable.
+	idle_threshold = 0
+
+	# Which monitor should the notifications be displayed on.
+	monitor = 0
+	follow = none
+	show_indicators = no
+
+	# Should a notification popped up from history be sticky or
+	# timeout as if it would normally do.
+	sticky_history = yes
+
+	# The height of a single line. If the height is smaller than the font height,
+	# it will get raised to the font height.
+	# This adds empty space above and under the text.
+	line_height = 8
+
+	# Draw a line of 'separatpr_height' pixel height between two notifications.
+	# Set to 0 to disable
+	separator_height = 3
+
+	# Padding between text and separator
+	padding = 16
+
+	# Horizontal padding
+	horizontal_padding = 12
+
+	# Padding between text and icon.
+	text_icon_padding = 16
+
+	# Define a color for the separator.
+	# possible values are:
+	#  * auto: dunst tries to find a color fitting to the background
+	#  * foreground: use the same color as the foreground
+	#  * frame: use the same color as the frame.
+	#  * anything else will be interpreted as a X color
+	separator_color = auto
+
+
+	# Print a notification on startup
+	# This is mainly for error detection, since dbus (re-)starts dunst
+	# automatically after a crash.
+	startup_notification = false
+
+	# Align icons left/right/off
+	icon_position = left
+
+	# Always run rule-defined scripts, even if the notification is suppressed
+	always_run_script = true
+
+	# Mouse actions
+	mouse_left_click = close_current
+	mouse_middle_click = do_action, close_current
+	mouse_right_click = close_all
+
+# [openEwwPopup]
+# 	script = ~/.config/dunst/scripts/openEwwPopup.sh
+
+[songArtLogger]
+	script = ~/.config/dunst/scripts/songArtLogger.sh
+
+[urgency_low]
+	timeout = 6
+	background = "#161616"
+	foreground = "#9fa0a0"
+	frame_color = "#192022"
+	highlight = "#7ba5dd"
+
+[urgency_normal]
+	# script = ~/.config/dunst/scripts/playNotificationSound.sh
+	timeout = 6
+	background = "#161616"
+	foreground = "#c5c8c9"
+	frame_color = "#192022"
+	highlight = "#7ba5dd"
+
+[urgency_critical]
+	script = ~/.config/dunst/scripts/playNotificationSound.sh
+	timeout = 6
+	background = "#161616"
+	foreground = "#c5c8c9"
+	frame_color = "#192022"
+	highlight = "#ee6a70"
+
+[backlight]
+	summary = "Backlight"
+	highlight = "#ffb29b"
+	set_stack_tag = "backlight"
+
+[volume]
+	summary = "Volume"
+	set_stack_tag = "volume"
+
+[volume-muted]
+	summary = "Volume Muted"
+	highlight = "#ee6a70"
+
+[volume-unmuted]
+	summary = "Volume Unmuted"
+	highlight = "#ee6a70"
+	

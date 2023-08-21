@@ -1,0 +1,56 @@
+
+
+(defwidget music_menu []
+  (revealer
+    :transition "slideup"
+    :reveal active
+    (box
+      :class "music_box"
+      :orientation "h"
+      :space-evenly false
+      :style "background-image: url(\"${COVER}\"); background-size: 100%;"
+
+      (image
+        :class "music_cover"
+        :image-width 50
+        :image-height 50
+        :path COVER
+      )
+      
+      (box
+        :space-evenly false
+        :class "music_childbox"
+        :orientation "v"
+        (label
+          :text SONG
+          :class "music_song label"
+          :limit-width 20
+          )
+        (label
+          :text ARTIST
+          :class "music_artist label"
+        )
+        (box
+          :space-evenly true
+          :style "padding-bottom: 5px;   mix-blend-mode: difference;"
+          (button
+            :onclick "playerctl previous"
+            (label :text "󰒮" :class "icon"))
+          (button
+            :onclick "playerctl play-pause"
+            (label :text STATUS :class "icon"))
+          (button
+            :onclick "playerctl next"
+            (label :text "󰒭" :class "icon"))
+        )       
+        (scale
+          :class "music_scale"
+          :value CTIME
+          :min 0
+          :max TTIME
+          :onchange "playerctl position {}"
+          )
+      )
+    )
+  )
+)

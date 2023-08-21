@@ -1,0 +1,11 @@
+.quicksettings_box {
+    padding: 10px;
+    border-radius: $inner_border_radius;
+    .quicksettings_button {
+        .quicksettings_icon{
+            border-radius: 20px;
+            padding: $button_icon;
+        }
+    }
+
+}

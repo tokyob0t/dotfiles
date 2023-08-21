@@ -1,0 +1,48 @@
+// scheme: "#Oxocarbon\ Dark";
+// author: "#shaunsingh/IBM";
+
+
+$base00: #161616;
+$base01: #232323;
+$base02: #393939;
+$base03: #525252;
+$base04: #dde1e6;
+$base05: #f2f4f8;
+$base06: #ffffff;
+$base07: #08bdba;
+$base08: #3ddbd9;
+$base09: #78a9ff;
+$base0A: #ee5396;
+$base0B: #33b1ff;
+$base0C: #ff7eb6;
+$base0D: #43b365;
+$base0E: #be95ff;
+$base0F: #82cfff;
+
+$baseA0: #6791da;
+$baseA1: #747474;
+
+$shadow00: 5px 5px 2px rgb(0, 0, 0, 0.4);
+$outer_border-radius: 8px;
+$inner_border-radius: 10px;
+$button_icon: 5px 16px 5px 10px;
+
+* {
+    all: unset;
+    font-family: monospace;
+}
+
+.icon {
+    font-family: "FiraCode Nerd Font";
+    font-weight: bold;
+    font-size: 20px;
+}
+
+@import './scss/menu_topRight.scss';
+@import "./scss/menu_topLeft.scss";
+@import "./scss/menu_brsound.scss";
+@import "./scss/menu_music.scss";
+@import "./scss/menu_upper.scss";
+@import "./scss/menu_stats.scss";
+@import "./scss/menu_quicksettings.scss";
+// @import "./scss/menu_launcher.scss";

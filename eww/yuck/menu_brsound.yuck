@@ -1,0 +1,62 @@
+
+
+(defwidget volume_menu []
+  (box
+  :class "brsound_box"
+  :orientation "h"
+  :space-evenly false
+  (label :class "icon" :text " ")
+    (scale
+        :class "brsound_scale"
+        :tooltip {volume == "muted" ? "Muted" : "${volume}%"}
+        :value {volume == "muted" ? "0" : volume} 
+        :min 0
+        :max 101
+        :onchange "pamixer -u && pamixer --set-volume {}"
+    )
+  )
+)
+
+(defwidget brightness_menu []
+  (box
+  :class "brsound_box"
+  :orientation "h"
+  :space-evenly false
+  (label :class "icon" :text "󰃠 ")
+    (scale
+        :class "brsound_scale"
+        :value brightness 
+        :min 10.00
+        :max 101.00
+        :onchange "light -S {}"
+    )
+  )
+)
+
+(defwidget mic_menu []
+  (box
+  :class "brsound_box"
+  :orientation "h"
+  :space-evenly false
+  (label :class "icon" :text " ")
+    (scale
+        :class "brsound_scale"
+        :value mic
+        :min 0
+        :max 100
+        :onchange "pactl set-source-volume alsa_input.pci-0000_00_1f.3.analog-stereo {}%"
+    )
+  )
+)
+
+(defwidget brsound []
+(
+  box
+  :space-evenly false
+  :orientation "v"
+  :class "brsound_mainbox"
+  (brightness_menu)
+  (volume_menu)
+  (mic_menu)
+  )
+)

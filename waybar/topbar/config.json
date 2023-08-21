@@ -1,0 +1,128 @@
+{
+    "margin-top": 10,
+    "margin-bottom": -10,
+    "margin-left": 15,
+    "margin-right": 15,
+    "layer": "top",
+    "modules-left": [
+        "custom/menu",
+        "clock"
+    ],
+    "modules-center": [
+        "wlr/workspaces"
+    ],
+    "modules-right": [
+        "tray",
+        "custom/local_ip",
+        "network",
+        "pulseaudio",
+        "battery"
+    ],
+    "wlr/workspaces": {
+        "sort-by-number": true,
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace -1",
+        "on-scroll-down": "hyprctl dispatch workspace +1",
+        "format": "{icon}",
+        "format-icons": {
+            "1": "一",
+            "2": "二",
+            "3": "三",
+            "4": "四",
+            "5": "五",
+            "6": "六",
+            "7": "七",
+            "8": "八",
+            "9": "九",
+            "10": "十"
+        },
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []
+        }
+    },
+    "custom/menu": {
+        "format": ""
+    },
+    "battery": {
+        "tooltip-format": "{capacity}%",
+        "on-click":"eww open top_right && eww update 'bigmenu'=true",
+        "interval": 60,
+        "states": {
+            "warning": 35,
+            "critical": 20,
+            "fully": 100
+        },
+        "format": "{icon} ",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    "clock": {
+        "interval": 1,
+        "format": "{:%b %d ǀ %H:%M:%OS}",
+        "timezone": "America/Santiago",
+        "tooltip": true,
+        "on-click": "eww open top_left && eww update 'calendar_hover'=true"
+    },
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+    "network": {
+        "interface": "wlo1",
+        "format": "{icon}",
+        "format-wifi": "{icon}",
+        "format-disconnected": "󰞃",
+        "format-ethernet": "󰈀",
+        "tooltip-format-wifi": "{essid} {ifname} ({signalStrength}%) {icon}",
+        "tooltip-format-disconnected": "Wifi Off",
+        "max-length": 50,
+        "on-click-right": "exec $HOME/.config/rofi/applets/bin/rofi-wifimenu.sh",
+        "on-click": "eww open top_right && eww update 'bigmenu'=true",
+        "format-icons": [
+            "󰢿",
+            "󰢼",
+            "󰢽",
+            "󰢾"
+        ]
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "on-scroll-up": "$HOME/.config/dunst/scripts/main.py volume_up",
+        "on-scroll-down": "$HOME/.config/dunst/scripts/main.py volume_down",
+        "on-click-right": "$HOME/.config/dunst/scripts/main.py volume_mute",
+        "on-click": "eww open top_right && eww update 'bigmenu'=true",
+        "tooltip-format":"{volume}%",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted":"󰖁",
+        "format-icons": {
+            "default": [
+                "󰕿",
+                "󰖀",
+	            "󰕾"
+            ]
+        },
+        "scroll-step": 1,
+        "ignored-sinks": [
+            "Easy Effects Sink"
+        ]},
+        "custom/local_ip": {
+            "exec": "/home/tokyob0t/.config/waybar/topbar/scripts/local_ip.py",
+            "interval": 1,
+            "return-type": "json",
+            "format": "{}",
+            "format-icons": false
+        }
+}

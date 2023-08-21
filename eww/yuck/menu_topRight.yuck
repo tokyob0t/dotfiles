@@ -1,0 +1,49 @@
+
+(defwindow top_right
+  :class "top_right"
+  :monitor 0
+  :geometry (geometry
+    :anchor "top right"
+    :height "80px"
+    :y 21
+    )
+  :focusable false
+  :stacking "fg"
+  :exclusive false
+  (bigmenu)
+)
+
+(defwidget bigmenu []
+(eventbox
+    :onhoverlost "eww update 'bigmenu'=false"
+    :class "bigmenu_evenbox"
+    
+        (revealer
+          :class "bigmenu_rev"
+          :reveal bigmenu
+          :transition "slideleft"
+        (box  
+          :class "bigmenu_box_grandfather"
+          :space-evenly false
+          :orientation "v"
+          (box
+          :class "bigmenu_box_father"
+          :orientation "v"
+          :width "350"
+          :space-evenly false
+          (upper_menu)
+          ;(label :class "greeting_label" :text "Good ${greeting}, ${real_name}." :style "font-size: 20px;")
+
+          (quicksettings_box)
+          (brsound)
+          (music_menu)
+          )
+          (stats)
+
+        )
+      )
+
+    )
+  )
+
+

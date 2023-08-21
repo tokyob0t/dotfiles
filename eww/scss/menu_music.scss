@@ -1,0 +1,26 @@
+.music_box {
+    background-color: $base01;
+    border-radius: 10px;
+    margin: 0 10px;
+    padding: 5px 0;
+    font-weight: bold;
+    color: $base05;
+    .music_cover {
+        margin-left: 15px;
+    }
+
+        
+        .music_scale trough {
+            margin: 0 20px;
+            color: $baseA0;
+            min-height: 5px;
+            min-width: 230px;
+            background-color: $base02;
+            border-radius: 50px;
+        }
+
+        .music_scale trough highlight {
+            border-radius: 50px;
+            background-color: $baseA0;
+        }
+    }   

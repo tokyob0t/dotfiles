@@ -1,0 +1,61 @@
+
+
+(defwindow top_left
+  :class "top_left"
+  :monitor 0
+  :geometry (geometry
+    :y "-3px"
+    :x "23px"
+    :anchor "top left"
+    )
+  :focusable false
+  :stacking "fg"
+  :exclusive false
+(box
+:space-evenly false
+  (calendar_hover)
+  )
+)
+
+(defwidget calendar_hover []
+    (eventbox
+    :class "calendar_hover_eventbox"
+    :onhoverlost "eww update 'calendar_hover'=false "
+        (revealer
+          :class "cal-rev"
+          :reveal calendar_hover
+          :transition "slidedown"
+        (box
+        :class "relleno"
+
+        (box
+        :class "cal-box"
+        :orientation "v"
+        :space-evenly false
+        (weather)
+        (calendar))
+      )
+    )
+  )
+)
+  
+
+(defwidget weather [] 
+        
+      (box :orientation "v" :space-evenly "false" :class "weatherFather"
+          (label :class "weather-stat" :text weather-stat-side :visible false)
+          (box
+            :class "weatherChild"
+            :space-evenly false
+            (label :class "weather-icon icon" :text weather-icon :style "color: ${weather-hex};")
+            (label :class "weather-stat" :text weather-stat :hexpand true)
+            (box
+            :space-evenly false
+            :class "weather-temperature-box"
+              (label :class "weather-temperature" :text "${temperature} ")
+            (label :class "icon" :text " "))
+            )
+            (label :class "weather-quote-head" :text "${weather-quote}")
+            (label :class "weather-quote-tail" :text "\"${weather-quote2}\"")
+    )
+  )

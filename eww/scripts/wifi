@@ -1,0 +1,74 @@
+#!/bin/bash
+
+choice="$1"
+wifi_status=$(nmcli radio wifi)
+
+wifi_toggle() {
+	if [ "$wifi_status" == "enabled" ]; then
+		nmcli radio wifi off
+	else
+		nmcli radio wifi on
+	fi
+}
+
+wifi_menu() {
+	eww_var=$(eww get wifi.menu)
+	if [ "$eww_var" == false ]; then
+		eww update "wifi.menu"=true
+	else
+		eww update "wifi.menu"=false
+	fi
+
+}
+wifi_name() {
+	wifi_name=$(nmcli -t -f active,ssid dev wifi | awk -F: '/^yes/ { print $2 }')
+	if [ -z "$wifi_name" ]; then
+		echo "Wifi"
+	else
+		echo "$wifi_name"
+	fi
+}
+
+wifi_color() {
+	if [ "$wifi_status" == "enabled" ]; then
+		echo '#6791da'
+	else
+		echo '#232323'
+	fi
+}
+
+wifi_icon() {
+	connected=$(nmcli -t -f STATE connection show --active | sed 1d | grep -c "activated")
+
+	if [ "$connected" -eq 0 ]; then
+		echo "󰤮"
+		return
+	fi
+
+	signal=$(nmcli -t -f IN-USE,SIGNAL device wifi | grep '*' | cut -d':' -f2)
+	if [ "$signal" -ge -50 ]; then
+		echo "󰤨"
+	elif [ "$signal" -ge -60 ]; then
+		echo "󰤥"
+	elif [ "$signal" -ge -70 ]; then
+		echo "󰤢"
+	elif [ "$signal" -ge -80 ]; then
+		echo "󰤟"
+	else
+		echo "󰤯"
+	fi
+}
+
+if [ $choice == "--toggle" ]; then
+	wifi_toggle
+elif [ $choice == "--ssid" ]; then
+	wifi_name
+elif [ $choice == "--col" ]; then
+	wifi_color
+elif [ $choice == "--expand" ]; then
+	wifi_menu
+elif [ $choice == "--str" ]; then
+	wifi_strenght
+elif [ $choice == "--icon" ]; then
+	wifi_icon
+fi
