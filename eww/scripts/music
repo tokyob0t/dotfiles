@@ -1,0 +1,122 @@
+#!/bin/bash
+
+
+## Get status
+get_status() {
+    playerctl_status=$(playerctl status 2>/dev/null)
+    if [ -z "$playerctl_status" ]; then
+        echo "0"
+    else
+        if [ "$playerctl_status" = "Playing" ]; then
+            echo "󰏤"
+        else
+            echo "󰐊"
+        fi
+    fi
+}
+
+
+## Get song
+get_song() {
+    song=$(playerctl metadata title 2>/dev/null)
+    if [ -z "$song" ]; then
+        echo "0"
+    else
+        echo "$song"
+    fi
+}
+
+## Get artist
+get_artist() {
+    artist=$(playerctl metadata artist 2>/dev/null)
+    if [ -z "$artist" ]; then
+        echo "0"
+    else
+        echo "$artist"
+    fi
+}
+
+## Get time
+get_time() {
+    time=$(playerctl metadata mpris:length | awk '{printf "%.2f", $1/1000000}')
+    if [ -z "$time" ]; then
+        echo "(0.00)"
+    else
+        echo "($time)"
+    fi
+}
+
+## Get current time
+get_ctime() {
+    ctime=$(playerctl position 2>/dev/null | awk -F'.' '{printf "%.2f", $1}')
+    if [ -z "$ctime" ]; then
+        echo "0.00"
+    else
+        echo "$ctime"
+    fi
+}
+
+## Get total time
+get_ttime() {
+    ttime=$(playerctl metadata mpris:length 2>/dev/null | awk '{printf "%.2f", $1/1000000}')
+    if [ -z "$ttime" ]; then
+        echo "0.00"
+    else
+        echo "$ttime"
+    fi
+}
+
+
+## Get cover
+get_cover() {
+    cover_url=$(playerctl metadata mpris:artUrl 2>/dev/null)
+    
+    if [ -n "$cover_url" ]; then
+        temp_cover_path="/tmp/cover.jpg"
+        curl -s -o "$temp_cover_path" "$cover_url"
+        
+        if [ $? -eq 0 ]; then
+            echo "$temp_cover_path"
+        else
+            echo "No se pudo descargar a portada."
+        fi
+    else
+        echo "$HOME/.config/eww/img/randomImage.jpg"
+    fi
+}
+
+update_visible() {
+    if [[ $(playerctl -l 2>&1) == "No players found" ]]; then
+        echo false
+    else
+        echo true
+    fi
+}
+
+## Execute accordingly}
+
+if [ "$1" = "--song" ]; then
+    get_song
+elif [ "$1" = "--artist" ]; then
+    get_artist
+elif [ "$1" = "--status" ]; then
+    get_status
+elif [ "$1" = "--time" ]; then
+    get_time
+elif [ "$1" = "--ctime" ]; then
+    get_ctime
+elif [ "$1" = "--ttime" ]; then
+    get_ttime
+elif [ "$1" = "--cover" ]; then
+    get_cover
+elif [ "$1" = "--toggle" ]; then
+    playerctl play-pause
+elif [ "$1" = "--next" ]; then
+    playerctl next
+    get_cover
+elif [ "$1" = "--prev" ]; then
+    playerctl previous
+    get_cover
+elif [ "$1" = "--visible" ]; then
+    update_visible
+fi

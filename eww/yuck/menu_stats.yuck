@@ -1,0 +1,49 @@
+; (defpoll greeting :interval "60s" "~/.config/eww/scripts/greeting")
+; (defvar timestamp EWW_TIME)
+
+
+
+(defwidget stats []
+  (box
+    :orientation "v"
+    :space-evenly false
+
+    (box
+      :orientation "h"
+      :space-evenly false
+      :class "stats_box"
+
+      (box
+        :class "arch"
+        :style "background-image: url(\"${arch_logo}\")"
+      )
+      (box
+        :orientation "v"
+        :hexpand true
+        :space-evenly true  
+
+        (box :space-evenly false
+          (label :text "󰍛 CPU" :class "key")
+          (box :hexpand true)
+          (label :text CPU :class "value"))
+        (box :space-evenly false
+          (label :text "󰘚 GPU" :class "key")
+          (box :hexpand true)
+          (label :text GPU :class "value"))
+        (box :space-evenly false
+          (label :text " Kernel" :class "key")
+          (box :hexpand true)
+          (label :text kernel :class "value" :limit-width 10))
+        (box :space-evenly false
+          (label :text "󰅐 Uptime" :class "key")
+          (box :hexpand true)
+          (label :text "${uptimeH} ${uptimeM}" :class "value"))
+        (box :space-evenly false
+          (label :text "󰊠 Packages" :class "key")
+          (box :hexpand true)
+          (label :text "${pacman} (pacman)" :class "value"))        
+      )
+    )
+    
+  )
+)

@@ -1,0 +1,37 @@
+
+(defwidget upper_menu []
+
+  (box
+  :space-evenly false
+  :class "upper_menuboxFather"
+
+    (label :text battery_iterator :visible false)
+
+    (button
+
+    :class "yuck_settings"
+    :onclick "code ~/.config/eww"
+    (label :text " " :class "icon"))
+    
+    (label
+    :hexpand true
+    :text user
+    :style "font-weight: bold;"
+    )
+
+    (box
+    :class "battery_box"
+    (label
+    :class "battery_percentaje"
+    :text "${battery_percentaje}%"
+    )
+
+    (label
+    :class "icon battery_icon"
+    :text {battery_status == "charging" ? battery_charging : battery_icon}
+      
+      )
+    )
+  )
+)
+

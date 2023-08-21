@@ -1,0 +1,24 @@
+.arch {
+    background-repeat: no-repeat;
+    background-size: 90px;
+    background-position: center;
+    padding: 5px 10px;
+    min-height: 74px;
+    min-width: 90px;
+}
+
+.stats_box {
+    margin-top: 10px;
+    background-color: $base00;
+    padding: 10px 15px 10px 15px;
+    border-radius: $outer_border-radius;
+    .stats_header {
+        margin: 5px 0;
+    }
+    .key {
+        color: $baseA0;
+    }
+    .value {
+        color: $base05;
+    }
+}
