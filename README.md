@@ -1,14 +1,20 @@
 # Dotfiles
-
 ## Details
-
-- **OS:** Arch Linux btw
+###### (Updated Sep 01) 
+- **OS:** 
 - **Compositor:** Hyprland
 - **Terminal:** kitty
 - **TopBar:** Waybar
 - **Widgets:** eww
-- **Browser:** Firefox 🦊
-- **Scripts:** Some made by me, some not
+- **Browser:** Vivaldi
+- **Editor:** VSCode
+    - **Theme:** [Another Colorscheme](https://marketplace.visualstudio.com/manage/publishers/t0kyob0y/extensions/another-colorscheme/hub?_a=acquisition)
+    - **CSS:** You need to use [this](https://marketplace.visualstudio.com/items?itemName=be5invis.vscode-custom-css)
+    - **Icons:** [Bearded Icons](https://marketplace.visualstudio.com/items?itemName=BeardedBear.beardedicons)
+- **Scripts:** Some made by me, some not  
 
-![Desktop](./img/desktop.png)
+![Desktop](./img/desktop1.jpg)  
+
+![Desktop](./img/desktop2.jpg)
+
 

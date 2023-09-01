@@ -1,0 +1,145 @@
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row .suggest-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+}
+
+.suggest-icon {
+    /* margin: unset; */
+    border-radius: 1.5px;
+    color: #161616 !important;
+    margin-right: 4px;
+}
+
+
+.codicon-symbol-array {
+    background-color: #be95ff;
+}
+
+.codicon-symbol-boolean {
+    background-color: #78a9ff;
+}
+
+.codicon-symbol-class {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-color {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-constant {
+    background-color: #ee5396;
+}
+
+.codicon-symbol-constructor {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-enumerator {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-enumerator-member {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-event {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-field {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-file {
+    background-color: #ee5396;
+}
+
+.codicon-symbol-folder {
+    background-color: #ee5396;
+}
+
+.codicon-symbol-function {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-interface {
+    background-color: #ee5396;
+}
+
+.codicon-symbol-key {
+    background-color: #be95ff;
+}
+
+.codicon-symbol-keyword {
+    background-color: #78a9ff;
+}
+
+.codicon-symbol-method {
+    background-color: #82cfff;
+}
+
+.codicon-symbol-module {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-namespace {
+    background-color: #ee5396;
+}
+
+.codicon-symbol-null {
+    background-color: #ee5396;
+}
+
+.codicon-symbol-number {
+    background-color: #be95ff;
+}
+
+.codicon-symbol-object {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-operator {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-package {
+    background-color: #ee5396;
+}
+
+.codicon-symbol-property {
+    background-color: #ff73b6;
+}
+
+.codicon-symbol-reference {
+    background-color: #ee5396;
+}
+
+.codicon-symbol-snippet {
+    background-color: #43be65;
+}
+
+.codicon-symbol-string {
+    background-color: #be95ff;
+}
+
+.codicon-symbol-struct {
+    background-color: #33b1ff;
+}
+
+.codicon-symbol-text {
+    background-color: #be95ff;
+}
+
+.codicon-symbol-type-parameter {
+    background-color: #be95ff;
+}
+
+.codicon-symbol-unit {
+    background-color: #be95ff;
+}
+
+.codicon-symbol-variable {
+    background-color: #be95ff;
+}
