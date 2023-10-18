@@ -18,4 +18,4 @@
 
 ![desktop](./img/desktop.png)
 
-![desktop2](./img/desktop1.png)
+![desktop1](./img/desktop1.png)
