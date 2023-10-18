@@ -7,7 +7,7 @@
 - **OS:** Arch btw
 - **Window Manager:** BSPWM & [bsp-layout](https://github.com/phenax/bsp-layout)
 - **Compositor:** Picom Pijulius [Aur Fork](https://github.com/allusive-dev/picom-allusive)
-- **Terminal:** kitty
+- **Terminal:** [wezterm](https://github.com/wez/wezterm)
 - **Widgets/Topbar:** [eww](https://github.com/elkowar/eww)
 - **Notifications:** eww & [Tiramisu](https://github.com/Sweets/tiramisu)
 - **Editor:** VSCodium
