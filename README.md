@@ -17,4 +17,5 @@
 - **Scripts:** Some made by me, some not  
 
 ![desktop](./img/desktop.png)
-![desktop2](./img/desktop2.png)
+
+![desktop2](./img/desktop1.png)
