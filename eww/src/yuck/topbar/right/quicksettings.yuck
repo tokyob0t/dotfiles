@@ -1,0 +1,69 @@
+; Main widget that contains quicksettings
+(defwidget quicksettings []
+  (box
+    :class "quicksettingsBox"
+    
+    (eventbox
+      :class "quicksettingsEventbox"
+      :onclick "eww open dashboardWindow_right --toggle & ./scripts/notifManage --reload &"
+      :cursor "pointer"
+      (box
+        :space-evenly false
+        :spacing 10
+        :class "quicksettingsChildBox"
+        (eventbox
+          :class "Eventbox"
+          
+          (label
+            :class "icon"
+            :tooltip {wifiInfo.name}
+            :text {wifiInfo.icon}
+          )
+        )
+        (eventbox
+          :class "Eventbox"
+          :onscroll "./scripts/volume --{}"
+          
+          (label
+            :class "icon"
+            :tooltip volume
+            :text "${
+            volume_muted == 'yes' ? '󰝟' :
+            volume >= 35 ? '' :
+            volume >= 25 ? '' : ''
+            }"
+          )
+        )
+        (box
+          :space-evenly false
+          (eventbox
+            :class "Eventbox"
+            :onscroll "./scripts/brightness --{}"
+            (label
+              :class "icon ${
+                EWW_BATTERY.BAT1.status == 'Full' ? 'charging' :
+                EWW_BATTERY.BAT1.status == 'Charging' ? 'charging' :
+                EWW_BATTERY.BAT1.capacity <= 15 ? 'critical' :
+                EWW_BATTERY.BAT1.capacity <= 20 ? 'low' :
+                EWW_BATTERY.BAT1.capacity <= 40 ? 'normal' :
+                EWW_BATTERY.BAT1.status}"
+                :text {
+                    EWW_BATTERY.BAT1.capacity >= 90 ? "󰁹" :
+                    EWW_BATTERY.BAT1.capacity >= 85 ? "󰂂" :
+                    EWW_BATTERY.BAT1.capacity >= 70 ? "󰂁" :
+                    EWW_BATTERY.BAT1.capacity >= 65 ? "󰂀" :
+                    EWW_BATTERY.BAT1.capacity >= 60 ? "󰁿" :
+                    EWW_BATTERY.BAT1.capacity >= 55 ? "󰁾" :
+                    EWW_BATTERY.BAT1.capacity >= 50 ? "󰁽" :
+                    EWW_BATTERY.BAT1.capacity >= 45 ? "󰁼" :
+                    EWW_BATTERY.BAT1.capacity >= 40 ? "󰁻" :
+                    "󰂎"
+                }
+                :tooltip "${EWW_BATTERY.BAT1.status} ${EWW_BATTERY.BAT1.capacity}%"
+            )
+          )
+        )
+      )
+    )
+  )
+)

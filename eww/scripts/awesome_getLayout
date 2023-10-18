@@ -1,0 +1,66 @@
+#!/usr/bin/bash
+
+#For awesome, not used now bc im on bspwm
+
+layout=$(awesome-client 'return mouse.screen.selected_tag.layout.name' | awk '{print $2}' | sed 's/"//g')
+
+# # We use a json to return the path of the image
+
+layoutjson='{
+"floating": "./img/layouts/floatingw.png",
+"magnifier": "./img/layouts/magnifierw.png",
+"max": "./img/layouts/maxw.png",
+"fullscreen": "./img/layouts/fullscreenw.png",
+"tile": "./img/layouts/tilew.png",
+"tileleft": "./img/layouts/tileleftw.png",
+"tilebottom": "./img/layouts/tilebottomw.png",
+"tiletop": "./img/layouts/tiletopw.png",
+"fairv": "./img/layouts/fairvw.png",
+"fairh": "./img/layouts/fairhw.png",
+"spiral": "./img/layouts/spiralw.png",
+"dwindle": "./img/layouts/dwindlew.png",
+"cornernw": "./img/layouts/cornernww.png"
+}'
+
+
+case $layout in
+    floating)
+        echo $layoutjson | jq -r .floating
+        ;;
+    magnifier)
+        echo $layoutjson | jq -r .magnifier
+        ;;
+    max|fullscreen)
+        echo $layoutjson | jq -r .max
+        ;;
+    tile)
+        echo $layoutjson | jq -r .tile
+        ;;
+    tileleft)
+        echo $layoutjson | jq -r .tileleft
+        ;;
+    tilebottom)
+        echo $layoutjson | jq -r .tilebottom
+        ;;
+    tiletop)
+        echo $layoutjson | jq -r .tiletop
+        ;;
+    fairv)
+        echo $layoutjson | jq -r .fairv
+        ;;
+    fairh)
+        echo $layoutjson | jq -r .fairh
+        ;;
+    spiral)
+        echo $layoutjson | jq -r .spiral
+        ;;
+    dwindle)
+        echo $layoutjson | jq -r .dwindle
+        ;;
+    cornernw)
+        echo $layoutjson | jq -r .cornernw
+        ;;
+    *)
+        echo "Layout no reconocido: $layout"
+        ;;
+esac

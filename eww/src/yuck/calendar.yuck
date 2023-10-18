@@ -1,0 +1,88 @@
+
+
+(defwindow dashboardWindow_left
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore true
+  
+  :geometry (geometry
+    :x "11px"
+    :y "60px"
+    :width "300px"
+    :height "380px"
+    :anchor "top left"
+  )
+  
+  (eventbox
+    :onhoverlost "eww open dashboardWindow_left --toggle"
+    (weather)
+  )
+)
+
+
+(defwidget weather []
+  
+  (box
+    :class "weatherMainBox"
+    :orientation "v"
+    :space-evenly false
+    (box
+      :space-evenly false
+      :orientation "h"
+      :class "weatherTop"
+      :valign "center"
+      (label
+        :text {weather.icon}
+        :style "color: ${weather.hex};"
+        :halign "start"
+        :class "icon"
+        :hexpand true
+      )
+      
+      (box
+        :space-evenly false
+        :orientation "v"
+        :valign "center"
+        
+        (box
+          :space-evenly false
+          :halign "end"
+          :spacing 5
+          (label :text {weather.temperature} )
+          (label :text "" :class "icon")
+        )
+        
+        (label
+          :text {weather.description}
+        )
+      )
+    )
+
+    (box
+      :space-evenly false
+      :class "weatherQuoteBox"
+      :orientation "v"
+      :vexpand true
+      :spacing 10
+      :valign "center"
+      
+      (label
+        :text {weather.quoteOne}
+        :wrap true
+        :valign "center"
+        :class "quoteOne"
+      )
+      (label
+        :class "quoteTwo"
+        :text "\"${weather.quoteTwo}\""
+        :wrap true
+        :valign "center"
+        :justify "fill"
+    )
+    )
+    (box
+      :class "weatherBottom"
+      (calendar)
+    )
+  )
+)

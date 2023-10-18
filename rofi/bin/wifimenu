@@ -6,6 +6,7 @@ rofi_command="rofi -dmenu -theme "$DIR"/wifi.rasi -no-fixed-num-lines -yoffset -
 rofi_commandPassword="rofi -dmenu -p "Password:" -lines 1 -theme $dir/$theme -password"
 
 notify-send "󰖩     Scanning..."
+
 # Get a list of available wifi connections and morph it into a nice-looking list
 wifi_list=$(nmcli --fields "SECURITY,SSID" device wifi list | sed 1d | sed 's/  */ /g' | sed -E "s/WPA*.?\S/ /g" | sed "s/^--/ /g" | sed "s/  //g" | sed "/--/d")
 
@@ -28,7 +29,6 @@ elif [ "$chosen_network" = "󰖩  Enable Wi-Fi" ]; then
 elif [ "$chosen_network" = "󰖪  Disable Wi-Fi" ]; then
 	nmcli radio wifi off
 else
-	# Message to show when connection is activated successfully
 	success_message="You are now connected to the Wi-Fi network \"$chosen_id\"."
 	# Get saved connections
 	saved_connections=$(nmcli -g NAME connection)

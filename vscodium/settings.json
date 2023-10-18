@@ -1,0 +1,220 @@
+{
+    "files.associations": {
+      // ...
+      "**/.i3/config": "i3",
+      "**/i3/config": "i3"
+      // ...
+  },
+    "[javascript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[lua]": {
+      "editor.defaultFormatter": "yinfei.luahelper"
+    },
+  
+    "editor.fontWeight": "465",
+  
+    // Hide trash and other things
+    "window.menuBarVisibility": "hidden",
+    "workbench.editor.showTabs": false,
+    "workbench.activityBar.visible": false,
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.tree.indent": 18,
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.tips.enabled": false,
+    "editor.folding": false,
+    "editor.minimap.enabled": false,
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "editor.overviewRulerBorder": false,
+    "editor.scrollbar.horizontalScrollbarSize": 0,
+    "editor.scrollbar.verticalScrollbarSize": 0,
+    "editor.guides.highlightActiveIndentation": "always",
+    "editor.guides.bracketPairs": "active",
+    "editor.matchBrackets": "never",
+    "editor.scrollBeyondLastLine": false,
+    "editor.cursorBlinking": "phase",
+    "editor.cursorStyle": "block",
+    "editor.renderLineHighlight": "all",
+    "editor.guides.indentation": true,
+    "explorer.compactFolders": false,
+    "workbench.iconTheme": "bearded-icons",
+    "editor.colorDecorators": false,
+    "editor.wordWrap": "on",
+  
+  
+    // VSCORD SETTINGS
+  
+    "vscord.app.name": "VSCodium",
+    "vscord.status.buttons.button1.enabled": false,
+    "vscord.status.buttons.button1.git.active.enabled": false,
+    "vscord.status.buttons.button1.git.idle.enabled": false,
+    "vscord.status.buttons.button1.git.inactive.enabled": false,
+    "vscord.status.idle.check": false,
+    "vscord.status.idle.enabled": false,
+  
+    // Rest of the configuration
+  
+    "security.workspace.trust.untrustedFiles": "open",
+    "files.autoSave": "afterDelay",
+    "editor.cursorSmoothCaretAnimation": "explicit",
+    "editor.smoothScrolling": true,
+    "terminal.integrated.smoothScrolling": true,
+    "debug.terminal.clearBeforeReusing": true,
+    "terminal.integrated.profiles.linux": {
+      "bash": {
+        "path": "bash",
+        "icon": "terminal-bash"
+      },
+      "zsh": {
+        "path": "zsh",
+        "icon": "terminal",
+        "colorScheme": "Custom",
+        "historyRepr": "default",
+        "historySize": 9001,
+        "fontFamily": "Fira Code",
+        "fontSize": 14
+      }
+    },
+    "statusbar_command.commands": [
+      {
+        "text": "$(terminal-linux)",
+        "tooltip": "Entorno Linux",
+        "id": "sbc_linux",
+        "name": "Entorno Linux",
+        "alignment": "left"
+      },
+      {
+        "text": "$(git-branch)  main",
+        "tooltip": "Branch-Icon",
+        "id": "sbc_branch-icon",
+        "name": "Branch-Icon",
+        "priority": 99,
+        "alignment": "left",
+        "command": "git-graph.view"
+      }
+    ],
+  
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "editor.fontSize": 12,
+    "editor.codeActionsOnSave": {},
+    "scm.inputFontSize": 12,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "redhat.telemetry.enabled": false,
+    "editor.minimap.size": "fit",
+    "git.autofetch": true,
+  
+    "python.interpreter.infoVisibility": "always",
+    "search.showLineNumbers": true,
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font,'FiraCode NF', 'Meslo LG L DZ for Powerline','Droid Sans Mono', 'monospace'",
+    "window.autoDetectHighContrast": false,
+    "editor.codeActionWidget.showHeaders": false,
+    "editor.codeLensFontFamily": "FiraCode Nerd Font",
+    "editor.inlayHints.fontFamily": "FiraCode Nerd Font",
+    "scm.inputFontFamily": "FiraCode Nerd Font",
+    "notebook.output.fontFamily": "'FiraCode Nerd Font'",
+    "git.openRepositoryInParentFolders": "never",
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "liveServer.settings.donotShowInfoMsg": true,
+    "auto-rename-tag.activationOnLanguage": ["*"],
+    "liveServer.settings.donotVerifyTags": true,
+    "editor.accessibilitySupport": "off",
+    "editor.definitionLinkOpensInPeek": true,
+    "java.autobuild.enabled": false,
+    "diffEditor.renderSideBySide": false,
+    "diffEditor.wordWrap": "on",
+    "editor.suggest.preview": true,
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "breadcrumbs.filePath": "off",
+    "terminal.integrated.cursorBlinking": true,
+    "editor.suggest.localityBonus": true,
+    "breadcrumbs.symbolSortOrder": "type",
+    "terminal.explorerKind": "external",
+    "vscode_custom_css.imports": [
+      "file:///home/tokyob0t/Documents/VSCodiumCSS/styles.css",
+      "file:///home/tokyob0t/.vscode-oss/extensions/brandonkirbyson.vscode-animations-2.0.1/dist/updateHandler.js"
+    ],
+    "terminal.external.linuxExec": "kitty",
+    "vscode_custom_css.statusbar": false,
+    "notebook.compactView": false,
+    "debug.showInlineBreakpointCandidates": false,
+    "editor.stickyTabStops": true,
+    "update.showReleaseNotes": false,
+    "update.mode": "none",
+    "markdown.preview.breaks": true,
+    "markdown-preview-github-styles.colorTheme": "dark",
+    "notebook.insertToolbarLocation": "hidden",
+    "notebook.globalToolbarShowLabel": "never",
+    "editor.parameterHints.cycle": false,
+    "editor.parameterHints.enabled": false,
+    "debug.onTaskErrors": "abort",
+    "animations.Scrolling": "Slide",
+    "editor.linkedEditing": true,
+    "animations.Focus-Dimming-Mode": "None",
+    "animations.Enabled": true,
+    "java.foldingRange.enabled": false,
+    "animations.Active": "None",
+    "breadcrumbs.symbolPath": "off",
+    "vsintellicode.features.python.deepLearning": "enabled",
+    "gutterpreview.showImagePreviewOnGutter": false,
+    "editor.quickSuggestionsDelay": 0,
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on"
+    },
+    "telemetry.telemetryLevel": "off",
+    "workbench.layoutControl.enabled": false,
+    "window.commandCenter": false,
+    "animations.CursorAnimation": true,
+    "animations.CursorAnimationOptions": {
+      "Color": "#3ddbd9"
+    },
+    "workbench.startupEditor": "none",
+    "editor.fontFamily": "fira-code-nerd, FiraCode Nerd Font, Consolas, 'Courier New', monospace",
+    "workbench.reduceMotion": "off",
+    "editor.renderWhitespace": "trailing",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[astro]": {
+      "editor.defaultFormatter": "astro-build.astro-vscode"
+    },
+    "editor.detectIndentation": false,
+    "color-highlight.languages": [
+        "*"
+    ],
+    "color-highlight.matchWords": true,
+    "colorize.colorized_colors": [
+        "BROWSERS_COLORS",
+        "HEXA",
+        "RGB",
+        "HSL"
+    ],
+    "colorize.enable_search_variables": true,
+    "colorize.colorized_variables": [
+        "CSS",
+        "SASS"
+    ],
+    "colorize.hide_current_line_decorations": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "html.format.wrapLineLength": 0,
+    "[yuck]": {
+        "editor.defaultFormatter": "eww-yuck.yuck"
+    },
+    "workbench.colorTheme": "Another Colorscheme",
+    "window.zoomLevel": 1
+  }

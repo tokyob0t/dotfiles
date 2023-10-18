@@ -1,0 +1,65 @@
+.weatherMainBox {
+  background: $base00;
+  padding: 10px;
+  border-radius: 10px;
+
+  .weatherTop {
+    padding: 0 55px;
+
+    > .icon {
+      font-size: 60px;
+    }
+}
+.weatherQuoteBox {
+    all: unset;
+    padding: 5px 2.5px;
+    
+    .quoteTwo {
+        font-family: Arial;
+        font-style: italic;
+    font-weight: 200;
+    color: $base03;
+    margin: 0 10px;
+}
+}
+
+  .weatherBottom {
+    // background-color: $base01;
+    border-radius: 10px;
+    
+    calendar {
+        color: $baseA2;
+
+        .header {
+            font-weight: bold;
+            border-radius: 5px;
+            color: $base01;   
+            background-color: $baseA0;
+        }
+
+        .button {
+            color: $base02;
+            color: transparent;
+        }
+
+        .highlight {
+            color: $baseA0;
+            font-weight: bold;
+        }
+    }
+
+    calendar:selected {
+        color: $base01;
+        background-color: $baseA0;
+        border-radius: 5px;
+        border: 3px solid white;
+    }
+    
+    calendar:indeterminate {
+        color: $base02;
+    }
+    
+}
+
+}
+

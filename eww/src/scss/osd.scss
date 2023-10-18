@@ -1,0 +1,23 @@
+.osd-widget {
+  background-color: $base00;
+  padding: 3px;
+  border-radius: 8px;
+
+  .scale {
+    @extend .Scale;
+    transition: 0.25s;
+
+    trough {
+      margin: unset;
+      border-radius: 8px;
+      min-height: 30px;
+      min-width: 200px;
+      background-color: $base01;
+
+      highlight {
+        background: $baseA0;
+        border-radius: 8px;
+    }
+    }
+  }
+}

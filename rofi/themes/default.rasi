@@ -46,7 +46,7 @@ window {
 	enabled: true;
 	border-radius: 12px;
 	cursor: "default";
-	background-color: @background;
+	background-color: @backgroundSolid;
 }
 
 /*****----- Main Box -----*****/
@@ -70,9 +70,8 @@ listbox {
 inputbar {
 	enabled: true;
 	spacing: 10px;
-	padding: 40px 40px 155px;
+	padding: 40px 40px;
 	background-color: transparent;
-	background-image: url("~/.config/wpg/.current", width);
 	text-color: @foreground;
 	orientation: horizontal;
 	children: [ "textbox-prompt-colon", "entry"];
@@ -85,7 +84,7 @@ textbox-prompt-colon {
 	str: "";
 	padding: 14px 17px 14px 17px;
 	border-radius: 10px;
-	background-color: @background-alt;
+	background-color: #232323;
 	text-color: inherit;
 }
 
@@ -94,7 +93,7 @@ entry {
 	expand: true;
 	padding: 12px 16px;
 	border-radius: 10px;
-	background-color: @background-alt;
+	background-color: #232323;
 	text-color: inherit;
 	cursor: text;
 	placeholder: "Search";

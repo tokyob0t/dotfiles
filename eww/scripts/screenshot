@@ -1,3 +1,0 @@
-#!/bin/bash
-
-$HOME/.config/dunst/scripts/main.py screenshot

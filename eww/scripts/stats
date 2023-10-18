@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 choice=$1
 
@@ -6,17 +6,17 @@ pacman_packages() {
     echo "$(pacman -Qq | wc -l)"
 }
 
-upTime_h(){
-    hour="$(uptime -p | awk '{print $4 "h"}')"
-    if [ "$hour" == "h" ]; then 
+upTime_m(){
+    hour="$(uptime -p | awk '{print $4 "m"}')"
+    if [[ "$hour" == "h" ]]; then 
         echo ""
     else 
-        echo "$hour,"
+        echo "$hour"
     fi
 }
 
-upTime_m(){
-    min="$(uptime -p | awk '{print $2 "m"}')"
+upTime_h(){
+    min="$(uptime -p | awk '{print $2 "h"}')"
     echo "$min"
 }
 
@@ -46,22 +46,22 @@ systemGPU(){
     fi
 }
 
-
-
-
-
-if [ $choice == "--pacman" ]; then
+if [[ $choice == "--pacman" ]]; then
     pacman_packages; 
-elif [ $choice == "--userHost" ]; then
+elif [[ $choice == "--userHost" ]]; then
     userHost
-elif [ $choice == "--uptimeH" ]; then
+elif [[ $choice == "--uptimeH" ]]; then
     upTime_h
-elif [ $choice == "--uptimeM" ]; then
+elif [[ $choice == "--uptimeM" ]]; then
     upTime_m
-elif [ $choice == "--kernel" ]; then
+elif [[ $choice == "--uptime" ]]; then
+    echo $(uptime -p)
+elif [[ $choice == "--kernel" ]]; then
     kernel
-elif [ $choice == "--systemCPU" ]; then
+elif [[ $choice == "--systemCPU" ]]; then
     systemCPU
-elif [ $choice == "--systemGPU" ]; then
+elif [[ $choice == "--systemGPU" ]]; then
     systemGPU
+else
+    echo "Usage ./stats --parameter"
 fi

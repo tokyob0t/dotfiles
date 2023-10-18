@@ -1,0 +1,19 @@
+.quicksettingsBox {
+  background-color: $base01;
+  border-radius: 8px;
+  transition: 0.25s;
+  margin: 10px 0;
+
+  .icon {
+    margin: unset;
+  }
+
+  .quicksettingsEventbox:active {
+    background-color: $base02;
+    border-radius: 8px;
+  }
+
+  .quicksettingsChildBox {
+    padding: 2.5px 10px;
+  }
+}

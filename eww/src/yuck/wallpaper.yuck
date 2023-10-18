@@ -1,0 +1,19 @@
+(defwindow wallpaper
+  :stacking "bg"
+  :windowtype "desktop"
+  
+  :geometry (geometry
+    :width "100%"
+    :height "100%"
+    :anchor "top left"
+  )
+  
+  (box
+    :class "wallpaperBox"
+    :hexpand true
+    :vexpand true
+    (box
+      :class "wallpaperImage"
+    )
+  )
+)

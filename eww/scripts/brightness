@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+
+dir="/home/$(whoami)/.config/eww/scripts"
+
+if [[ $1 == "--get" ]]; then
+    xbacklight
+
+elif [[ $1 == "--set" ]]; then
+    xbacklight -set "$2"
+    
+elif [[ $1 == "--up" ]]; then
+    xbacklight -inc 10
+    zsh $dir/osd 󰃠 $(xbacklight)
+
+elif [[ $1 == "--down" ]]; then
+    xbacklight -dec 10
+    zsh $dir/osd "󰃠" $(xbacklight)
+
+fi

@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+
+playerctl --follow metadata status --format '{"length":"{{mpris:length}}","artist":"{{xesam:artist}}","title":"{{xesam:title}}","artUrl":"{{mpris:artUrl}}"}' | while read -r line; do
+    echo $line
+    eww update playerctl="$line"
+done

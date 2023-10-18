@@ -1,0 +1,72 @@
+(defwidget quick_buttons []
+  (box
+    :class "quick_buttons"
+    :orientation "v"
+    :space-evenly false
+    (box
+      :space-evenly false
+      :orientation "h"
+      ; Wifi button 
+      (buttonWidget
+        :ButtonBoxClass {wifiInfo.status == "connected" ? "Active": "Inactive" }
+        :onChecked "./scripts/wifi --on &"
+        :onUnChecked "./scripts/wifi --off &"
+        :icon {wifiInfo.icon}
+        :belowLabel {wifiInfo.name}
+      )
+      ; Bluetooth button 
+      (buttonWidget
+        :ButtonBoxClass {btInfo.status == "connected" ? "Active": "Inactive" }
+        :onChecked "./scripts/bluetooth --on &"
+        :onUnChecked "./scripts/bluetooth --off &"
+        :icon {btInfo.icon}
+        :belowLabel {btInfo.name}
+      )
+    )
+    
+  )
+  
+)
+
+
+(defwidget buttonWidget [ButtonBoxClass onChecked onUnChecked icon belowLabel]
+  (box
+    :orientation "v"
+    :space-evenly false
+    :class "QuickButtonsBox"
+    (eventbox
+      :cursor "pointer"
+      (box
+        :space-evenly false
+        :class "ButtonBox ${ButtonBoxClass}"
+        :style "margin: 0 50%;"
+
+        (checkbox
+          :class "CheckBox"
+          :onchecked onChecked
+          :onunchecked onUnChecked
+          
+          (label
+            :text icon
+            :class "icon"
+          )
+        )
+        (eventbox
+          :class "EventBox"
+          (label
+            :text ""
+            :class "icon"   
+          )
+        )
+      )
+    )
+    
+    (label
+      :class "belowLabel"
+      :text belowLabel
+      :tooltip belowLabel
+      :wrap true
+      :limit-width 10
+    )
+  )
+)

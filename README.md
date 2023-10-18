@@ -1,21 +1,20 @@
 # Dotfiles
 
-## Details
+## Details  
 
-###### (Updated Sep 01)
+###### (Updated Oct 18)
 
-- **OS:** Arch
-- **Compositor:** Hyprland
+- **OS:** Arch btw
+- **Window Manager:** BSPWM & [bsp-layout](https://github.com/phenax/bsp-layout)
+- **Compositor:** Picom Pijulius [Aur Fork](https://github.com/allusive-dev/picom-allusive)
 - **Terminal:** kitty
-- **TopBar:** Waybar
-- **Widgets:** eww
-- **Browser:** Vivaldi
-- **Editor:** VSCode
-  - **Theme:** [Another Colorscheme](https://marketplace.visualstudio.com/manage/publishers/t0kyob0y/extensions/another-colorscheme/hub?_a=acquisition)
+- **Widgets/Topbar:** [eww](https://github.com/elkowar/eww)
+- **Notifications:** eww & [Tiramisu](https://github.com/Sweets/tiramisu)
+- **Editor:** VSCodium
+  - **Theme:** [Another Colorscheme](https://marketplacwe.visualstudio.com/manage/publishers/t0kyob0y/extensions/another-colorscheme/hub?_a=acquisition)
   - **CSS:** You need to use [this](https://marketplace.visualstudio.com/items?itemName=be5invis.vscode-custom-css)
   - **Icons:** [Bearded Icons](https://marketplace.visualstudio.com/items?itemName=BeardedBear.beardedicons)
 - **Scripts:** Some made by me, some not  
 
-![Desktop](./img/desktop1.jpg)  
-
-![Desktop](./img/desktop2.jpg)
+![desktop](./img/desktop.png)
+![desktop2](./img/desktop2.png)

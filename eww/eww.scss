@@ -1,7 +1,6 @@
 // scheme: "#Oxocarbon\ Dark";
 // author: "#shaunsingh/IBM";
 
-
 $base00: #161616;
 $base01: #232323;
 $base02: #393939;
@@ -19,8 +18,11 @@ $base0D: #43b365;
 $base0E: #be95ff;
 $base0F: #82cfff;
 
-$baseA0: #6791da;
+$baseA0: #be95ff;
+// $baseA0: #6791da;
 $baseA1: #747474;
+$baseA2: #a2a4a8;
+
 
 $shadow00: 5px 5px 2px rgb(0, 0, 0, 0.4);
 $outer_border-radius: 8px;
@@ -28,21 +30,39 @@ $inner_border-radius: 10px;
 $button_icon: 5px 16px 5px 10px;
 
 * {
-    all: unset;
-    font-family: monospace;
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font","Tilt Neon", monospace;
+  font-size: 14.6px;
+  font-weight: 600;
+}
+
+.wallpaperBox {
+    background-color: $base00;
+    padding: 53px 2.5px 2.5px 2.5px;
+    
+    .wallpaperImage {
+        border-radius: 10px;
+        background-image: url("./img/arch_purple.png");
+        background-size: cover;
+    }
 }
 
 .icon {
-    font-family: "FiraCode Nerd Font";
-    font-weight: bold;
-    font-size: 20px;
+  font-family: "JetBrainsMono Nerd Font";
+  font-weight: bold;
+  font-size: 18px;
+  color: $base04;
+  padding: 2.5px 7px 2.5px 2.5px;
 }
 
-@import './scss/menu_topRight.scss';
-@import "./scss/menu_topLeft.scss";
-@import "./scss/menu_brsound.scss";
-@import "./scss/menu_music.scss";
-@import "./scss/menu_upper.scss";
-@import "./scss/menu_stats.scss";
-@import "./scss/menu_quicksettings.scss";
-// @import "./scss/menu_launcher.scss";
+@import "./src/scss/topbar.scss";
+@import "./src/scss/topbar/left/time.scss";
+@import "./src/scss/topbar/center/workspaces.scss";
+@import "./src/scss/topbar/right/layout.scss";
+@import "./src/scss/topbar/right/battery.scss";
+@import "./src/scss/topbar/right/quicksettings.scss";
+
+@import "./src/scss/dashboard.scss";
+@import "./src/scss/notification.scss";
+@import "./src/scss/osd.scss";
+@import "./src/scss/calendar.scss";

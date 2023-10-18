@@ -1,0 +1,169 @@
+//General dashboard Settings. for all sections
+
+.dashboardWindow {
+  padding: 5px 10px;
+}
+
+.dashboard {
+  padding: 15px;
+  background: $base00;
+  border-radius: 8px;
+}
+
+.checkbox {
+  border-radius: 10px;
+  padding: 5px 10px;
+  transition: 0.25s;
+  color: transparent;
+
+  .icon {
+    padding: unset;
+    font-weight: bold;
+    margin-left: -15px;
+  }
+}
+
+
+
+.icon_sliders {
+    padding: 5px;
+}
+
+.inactive_checkbox {
+  background: $base01;
+
+  .icon {
+    color: $base04;
+  }
+}
+
+.active_checkbox {
+  background: $baseA0;
+  color: $baseA0;
+  .icon {
+    color: $base01;
+    margin-left: -16.5px;
+  }
+}
+
+.Scale {
+  trough {
+    all: unset;
+    margin: 0 5px;
+    min-height: 8px;
+    min-width: 100px;
+    background-color: $base02;
+    border-radius: 50px;
+    highlight {
+      all: unset;
+      border-radius: 50px;
+      background-color: $baseA0;
+    }
+  }
+}
+
+// Settings for the quickbuttons, like wifi bluetooth and more
+.QuickButtonsBox {
+  margin: 0 5px 2.5px 5px;
+  padding: 5px 10px;
+  min-width: 100px;
+
+  .ButtonBox {
+    border-radius: 8px;
+    margin: 0 20px;
+    transition: 0.25s;
+    .CheckBox {
+      @extend .checkbox;
+      border-radius: 0;
+      padding: 5px 15px;
+    }
+
+    .EventBox {
+      border-left: 1px solid $base03;
+
+      .icon {
+        padding: 0 8px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .ButtonBox.Inactive {
+    background-color: $base02;
+  }
+
+  .ButtonBox.Active {
+    background-color: $baseA0;
+    .icon {
+      color: $base01;
+    }
+  }
+  .belowLabel {
+    margin: 10px;
+    font-size: 12px;
+  }
+}
+
+// mid section
+
+.quick_buttons {
+  padding: 12.5px 20px;
+  margin: 12.5px;
+}
+
+// Mid section
+
+
+
+//Playerctl box settings
+
+.music_box {
+  background-color: $base01;
+  border-radius: 10px;
+  padding: 5px;
+
+  .music_cover {
+    border-radius: 10px;
+    margin: 5px;
+  }
+  .music_scale {
+    @extend .Scale;
+    trough {
+      min-height: 4px;
+    }
+  }
+}
+
+// Bottom section
+
+// Notif section
+
+.notifmenuTopBox {
+  .notifTitle {
+    font-size: 18px;
+  }
+
+  .clearEventbox {
+    label {
+      padding: 10px;
+      background-color: $base01;
+      border-radius: 5px;
+      transition: 0.25s;
+    }
+  }
+
+  .clearEventbox:hover {
+    label {
+      background-color: $base02;
+    }
+  }
+
+  .clearEventbox:active {
+    label {
+      background-color: $baseA0;
+      color: $base01;
+    }
+  }
+}

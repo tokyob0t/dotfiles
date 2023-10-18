@@ -1,0 +1,17 @@
+(defwidget layout_widget []
+  
+  (eventbox
+    :cursor "pointer"
+    
+    (box
+      :class "layoutBox"
+      :space-evenly false
+      (image
+      :path layout
+      :image-width 20
+      :image-height 20
+      )
+    )
+  )
+  
+)

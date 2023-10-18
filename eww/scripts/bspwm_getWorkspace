@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Checks if a list ($1) contains an element ($2)
+contains() {
+    for e in $1; do
+        [ "$e" -eq "$2" ] && echo 1 && return
+    done
+    echo 0
+}
+
+# Función para obtener información de workspaces y crear un JSON
+get_workspace_info() {
+    monitor=""
+    [ -n "$1" ] && monitor="--monitor $1"
+    workspaces=()
+    desktops="$(bspc query -D --names $monitor)"
+    focused_desktop="$(bspc query -D -d focused --names $monitor)"
+    occupied_desktops="$(bspc query -D -d .occupied --names $monitor)"
+
+    for d in $desktops; do
+        if [ "$(contains "$focused_desktop" "$d")" -eq 1 ]; then
+            class="active"
+        elif [ "$(contains "$occupied_desktops" "$d")" -eq 1 ]; then
+            class="inactive"
+        else
+            class="empty"
+        fi
+
+
+        workspaces+=("{\"id\":\"$d\",\"state\":\"$class\"}")
+    done
+
+    # Generar JSON
+    echo "["$(IFS=','; echo "${workspaces[*]}")"]"
+}
+
+# Escuchar cambios en bspwm
+bspc subscribe desktop node_transfer | while read -r _ ; do
+    workspace_info=$(get_workspace_info)
+    echo "$workspace_info"
+done

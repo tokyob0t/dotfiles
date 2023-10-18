@@ -1,0 +1,173 @@
+(defwidget media_player []
+  (revealer
+    :transition "slideup"
+    :reveal {
+    playerctlStatus == "Playing" ? true :
+    playerctlStatus == "Paused" ? true : false
+    }
+    
+    (box
+      :class "music_box"
+      :orientation "h"
+      :space-evenly false
+      (box
+        :class "music_cover"
+        :width 75
+        :height 75
+        :space-evenly false
+        :style "background-image: url(\"${playerctl.artUrl}\"); background-size: 100%;"
+        :visible {strlength(playerctl.artUrl) == 0 ? false : true}
+      )
+      
+      (box
+        :space-evenly false
+        :class "music_childbox"
+        :orientation "v"
+        :hexpand true
+        
+        (label
+          :text {playerctl.title}
+          :class "music_song label"
+          :limit-width 20
+        )
+        (label
+          :text {playerctl.artist}
+          :class "music_artist label"
+        )
+        (box
+          :space-evenly true
+          :style "padding-bottom: 5px;   mix-blend-mode: difference;"
+          (button
+            :onclick "playerctl shuffle Toggle"
+            (label :text {playerctlShuffle == "On" ? "󰒝" : "󰒞"} :class "icon"))
+          (button
+            :onclick "playerctl previous"
+            (label
+              :text "󰒮"
+            :class "icon")
+          )
+          
+          (button
+            :onclick "playerctl play-pause"
+            (label
+              :text {playerctlStatus == "Playing" ? "󰏤" : "󰐊"}
+            :class "icon")
+          )
+          
+          (button
+            :onclick "playerctl next"
+            (label
+              :text "󰒭"
+            :class "icon")
+          )
+          
+          (button
+            :onclick {
+            playerctlLoop == "None" ? "playerctl loop Track" :
+            playerctlLoop == "Track" ? "playerctl loop Playlist" :
+            playerctlLoop == "Playlist" ? "playerctl loop None" :
+            ""
+            }
+            (label
+              :text {
+              playerctlLoop == "None" ? "󰑗" :
+              playerctlLoop == "Track" ? "󰑘" : "󰑖"
+              }
+            :class "icon")
+          )
+          
+        )
+        (scale
+          :class "music_scale .Scale"
+          :value playerctlCTime
+          :min 0
+          :max {playerctl.length / 1000000}
+          :onchange "playerctl position {}"
+        )
+      )
+    )
+  )
+)
+
+
+(defwidget quick_sliders []
+  
+  (box
+    :space-evenly false
+    :class "quick_sliders"
+    :orientation "v"
+    
+    
+    (icon_sliders
+      :icon {brightness >= 35 ? "󰃠" : brightness >= 20 ? "󰃟" :"󰃞"}
+      :value brightness
+      :onChangeSlider "./scripts/brightness --set {}"
+    )
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      (box
+        :space-evenly false
+        
+        (icon_sliders
+          :icon {volume_muted == "yes" ? "󰝟" : volume >= 35 ? "" : volume >= 25 ? "" : ""}
+          :value volume
+          :onChangeSlider "./scripts/volume --set {}"
+          :onClickButton "./scripts/volume --toggle"
+        )
+        
+        (eventbox
+          :halign "end"
+          :class "CheckBox"
+          :onclick "./scripts/toggle_var --toggle microphone_revealer"
+          
+          (label
+            :text {microphone_revealer == false ? "" : "" }
+            :class "icon"
+          )
+        )
+        
+      )
+      (revealer
+        :reveal microphone_revealer
+        :transition "slideup"
+        (icon_sliders
+          :icon "${
+          microphone_muted == 'yes' ? '' : ''
+          }"
+          :value microphone
+          :onChangeSlider "./scripts/microphone --set {}"
+          :onClickButton "./scripts/microphone --toggle"
+        )
+      )
+    )
+  )
+)
+
+
+(defwidget icon_sliders [icon value ?onClickButton onChangeSlider]
+  (box
+    :space-evenly false
+    :hexpand true
+
+    (button
+      :onclick onClickButton
+      (label
+        :class "icon"
+        :tooltip "${value}%"
+        :text icon
+      ))
+    (scale
+      :hexpand true
+      :class "Scale"
+      :value value
+      :tooltip "${value}%"
+      :min 0
+      :max 100
+      :onchange onChangeSlider
+    )
+  )
+)
+
+

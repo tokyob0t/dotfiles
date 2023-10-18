@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+killall eww
+
+eww daemon
+eww open topbar
+
+eww open wallpaper
+
+zsh /home/tokyob0t/.config/eww/scripts/notifCatch &
+sleep 2
+notify-send "Startup Notification" "Welcome $(whoami)"

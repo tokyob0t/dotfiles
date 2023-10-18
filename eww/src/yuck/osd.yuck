@@ -1,0 +1,38 @@
+(defwindow osd_window
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  :class "topbar_window"
+  :wm-ignore true
+  
+  :geometry (geometry
+    :x "30px"
+    :y "60px"
+    :width "200px"
+    :height "26px"
+    :anchor "center top"
+  )
+  (osd)
+)
+
+(defwidget osd []
+  (eventbox
+    :onclick "./scripts/osd close"
+    (box :class "osd-widget"
+      (overlay
+        (scale
+          :class "scale"
+          :value {osd.value}
+          :valign "center"
+          :halign "center"
+          :orientation "h"
+        )
+        (label
+          :text {osd.icon}
+          :valign "end"
+          :halign "center"
+          :class "icon"
+        )
+      )
+    )
+  ))

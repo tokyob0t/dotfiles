@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+if [[ $1 == "--get" ]]; then
+    pactl get-source-volume @DEFAULT_SOURCE@ | grep -Po '[0-9]{1,3}(?=%)' | head -1
+elif [[ $1 == "--getState" ]]; then
+    pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}'
+elif [[ $1 == "--set" ]]; then
+    pactl set-source-volume @DEFAULT_SOURCE@ $2%
+elif [[ $1 == "--up" ]]; then
+    pactl set-source-volume @DEFAULT_SOURCE@ +10%
+elif [[ $1 == "--down" ]]; then
+    pactl set-source-volume @DEFAULT_SOURCE@ -10%
+elif [[ $1 == "--toggle" ]]; then
+    pactl set-source-mute @DEFAULT_SOURCE@ toggle
+fi

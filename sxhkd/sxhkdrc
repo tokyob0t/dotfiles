@@ -1,0 +1,153 @@
+#
+# wm independent hotkeys
+#
+
+# terminal emulator
+super + t
+	wezterm start
+
+# screenshot
+super + shift + s
+	flameshot gui
+
+#  clipboard
+super + v
+	copyq show
+
+#  vivaldi
+super + f
+	vivaldi-stable
+
+#  clipboard
+super + e
+	nautilus
+
+#  vscodium
+super + c
+	vscodium /home/tokyob0t/CodeWorkspace
+
+
+# program launcher
+super + r
+	rofi -show drun -theme ~/.config/rofi/themes/default.rasi
+
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+#
+# bspwm hotkeys
+#
+
+# quit/restart bspwm
+super + shift + {q,r}
+	bspc {quit,wm -r}
+
+# close and kill
+super + w
+	bspc node -c
+
+
+# Change layout next
+super + Return
+	bsp-layout next --master-size 40 --desktop $(bspc query -D -d focused --names)
+
+# Change layout prev
+super + shift + Return
+	bsp-layout previous --master-size 40 --desktop $(bspc query -D -d focused --names)
+
+
+# Cambiar el tamaño del gap
+super + l
+    bspc config window_gap $(($(bspc config window_gap)-10))
+
+# Cambiar el tamaño del gap
+super + m
+    bspc config window_gap $(($(bspc config window_gap)+10))
+
+
+
+# move focused window to the next workspace and then switch to that workspace
+super + control + {Left,Right}
+    id=$(bspc query --nodes --node); bspc node --to-desktop {prev,next}; bspc desktop --focus next; bspc node --focus ${id}
+
+#focus the node in the given direction
+super + {Left,Down,Up,Right}
+	bspc node -f {west,south,north,east}
+
+super + alt + {Left,Down,Up,Right}
+	bspc node -s {west,south,north,east}
+
+# focus the node for the given path jump
+super + {p,b,comma,period}
+	bspc node -f @{parent,brother,first,second}
+
+# focus the next/previous window in the current desktop
+alt + {_,shift + }Tab
+	bspc node -f {next,prev}.local.!hidden.window
+
+
+# focus the next/previous desktop in the current monitor
+control + alt + {Left,Right}
+	bspc desktop -f {prev,next}.local
+
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+#
+# state/flags
+#
+
+# set the window state
+super + shift + c
+	bspc node -t {tiled,floating}
+
+# set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+# # # preselect the direction
+# # super + ctrl + {h,j,k,l}
+# # 	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space 
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+super + shift + {Left,Down,Up,Right}
+  bspc node -z {left -25 0 || bspc node -z right -25 0, \
+                bottom 0 25 || bspc node -z top 0 25,\
+                top 0 -25 || bspc node -z bottom 0 -25,\
+                right 25 0 || bspc node -z left 25 0}
+
+#
+#	Function keys
+#
+
+#Brightness
+XF86MonBrightnessUp
+	bash ~/.config/eww/scripts/brightness --up
+	
+XF86MonBrightnessDown
+	bash ~/.config/eww/scripts/brightness --down
+
+#Volume 
+XF86AudioRaiseVolume
+	zsh ~/.config/eww/scripts/volume --up
+
+XF86AudioLowerVolume
+	zsh ~/.config/eww/scripts/volume --down

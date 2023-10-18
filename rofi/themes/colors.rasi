@@ -5,10 +5,10 @@ backgroundAdditional:   #232323;
 background-alt:         #232323;
 foreground:			    #dde1e6;
 foreground-alt:		    #f2f4f8;
-selected:			    #6791da;
-active: 			    #6791da;
-highlight:			    #6791da;
-urgent:				    #33b1ff;
-on:					    #6791da;
+selected:			    #be95ff;
+active: 			    #be95ff;
+highlight:			    #be95ff;
+urgent:				    #be95ff;
+on:					    #be95ff;
 off:				    #393939;
 }

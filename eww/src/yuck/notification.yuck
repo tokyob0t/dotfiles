@@ -1,0 +1,99 @@
+; ; ; ; ; First we create a widget for the popup
+
+(defwindow notifpopup
+  :geometry (geometry
+    :x "10px"
+    :y "60px"
+    :width "18%"
+    :height "10%"
+    :anchor "top left"
+  )
+  
+  :class "notifpopup"
+  :ignore-wm true
+
+  (notifpopup
+    :id {notifNow.id}
+    :source {notifNow.source}
+    :title {notifNow.title}
+    :content {notifNow.content}
+    :time {notifNow.time}
+    :onClose "eww close notifpopup"
+  )
+)
+
+; We create the widget that contains the info of the notif, at the moment image display is not supported bc idk how to do it xd
+(defwidget notifpopup [id source title content time ?onClose]
+  (centerbox
+    :orientation "v"
+    :space-evenly false
+    :class "notifBox ${source} Box_${source}"
+    
+    (box
+      ; "IconTitlebar" of the popup
+      (label
+        :text {
+        source == "discord" ? "󰙯":
+        source == "VencordDesktop" ? "󰙯":
+        source == "flameshot" ? "󰲍" :
+        source == "Spotify" ? "" :
+        source == "notify-send" ? "󰵅" : "󰵅"
+        }
+        :class "icon titlebar ${source}"
+        :halign "start"
+      )
+      
+      ; "LabelTitlebar" of the popup
+      (label
+        :text {
+        source == "discord" ? "Discord":
+        source == "VencordDesktop" ? "Discord":
+        source == "flameshot" ? "Screenshot" :
+        source == "Spotify" ? "Spotify" :
+        source == "notify-send" ? "Tiramisu" :
+        source
+      }
+        :class "titlebar"
+        :halign "start"
+      )
+      (eventbox
+        :class "eventbox icon"
+        :onclick onClose
+        :cursor "pointer"
+        :halign "end"
+        
+        (label
+          :text ""
+          :class "icon"
+        )
+      )
+    )
+    ; ; Body of the notification
+    (box
+      :orientation "v"
+      :space-evenly false
+      (label
+        :text title
+        :class "title"
+        :halign "start"
+        :limit-width 25
+      )
+      
+      (label
+        :text content
+        :hexpand true
+        :class "content"
+        :limit-width 30
+        :wrap true
+        :width "100px"
+        :xalign 0
+        :tooltip content
+      )
+    )
+    (label
+      :text time
+      :class "title"
+      :halign "end"
+    )
+  )
+)
