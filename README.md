@@ -16,6 +16,6 @@
   - **Icons:** [Bearded Icons](https://marketplace.visualstudio.com/items?itemName=BeardedBear.beardedicons)
 - **Scripts:** Some made by me, some not  
 
-![desktop](./img/desktop.png)
-![desktop2](./img/desktop2.png)
-g![desktop1](./img/desktop1.png)
+![desktop](img/desktop.png)
+![desktop2](img/desktop2.png)
+g![desktop1](img/desktop1.png)
