@@ -8,22 +8,23 @@
   :wm-ignore true
   :geometry (geometry
     :x "-11px"
-    :y "63px"
-    :width "20%"
-    :height "93.2%"
+    :y "58px"
+    :width "18%"
     :anchor "top right"
   )
+  
   (eventbox
     :onhoverlost "eww open dashboardWindow_right --toggle"
     (box
       :class "dashboard"
       :orientation "v"
       :space-evenly false
-      :spacing 20
+      :spacing 15
+      (aboutme)
       (quick_buttons)
       (quick_sliders)
+      (quick_info)
       (media_player)
-    (notifHistory)
     )
   )
 )

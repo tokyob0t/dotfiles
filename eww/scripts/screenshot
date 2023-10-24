@@ -1,0 +1,7 @@
+
+#!/usr/bin/bash
+
+
+eww close dashboardWindow_right &&
+
+maim -s -l -u --color=0.74,0.58,1,0.85 | xclip -selection clipboard -t image/png -i

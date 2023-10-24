@@ -26,7 +26,7 @@
 .notifBox {
   background: $base00;
   padding: 5px 15px;
-  border-radius: 5px;
+  border-radius: $inner_border-radius;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 
   .titlebar {

@@ -1,9 +1,7 @@
 #!/usr/bin/python
 
 import sys, os, json
-from subprocess import run as shell
-from time import sleep as wait
-from colorama import Fore
+from subprocess import PIPE, run as bash
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                     #
@@ -12,7 +10,6 @@ from colorama import Fore
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 def verifJson():
-    # Obtén la ruta de la carpeta donde se encuentra el archivo jsonPath
     folder_path = os.path.dirname(jsonPath)
 
     if not os.path.exists(folder_path):
@@ -29,59 +26,66 @@ def clearJson():
 
 def delJson(notification_id):
     oldData = readJson()
+    oldData.sort(key=lambda x: x.get('id'))
 
-    # Filtrar las notificaciones para mantener solo aquellas con un ID diferente al proporcionado
-    oldData = [notif for notif in oldData if notif.get('id') != notification_id]
+    low = 0
+    high = len(oldData) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+        mid_id = oldData[mid].get('id')
+
+        if mid_id == notification_id:
+            break
+        elif mid_id < notification_id:
+            low = mid + 1
+        else:
+            high = mid - 1
+    else:
+        return
+
+    del oldData[mid]
 
     with open(jsonPath, 'w') as file:
         json.dump(oldData, file)
+
 
 def readJson(type=None):
+
     if type == "txt":
-        temp = []
+
         with open(jsonPath, 'r') as file:
             data = file.read()
-        
-        for i in range(len(data)):
-            temp.append(data[i])
         return data
 
-    else:   
-        with open(jsonPath, 'r') as file:
-            data = json.load(file)
-        return data
+    else:
+        return json.loads(readJson("txt"))
+
     
+
 def addJson(data):
+    data = json.loads(data)
     oldData = readJson()
-
-    newData = json.loads(data)
-
-    # Insertar newData al principio de la lista
-    oldData.insert(0, newData)
-
+    oldData.insert(0, data)
+    
     with open(jsonPath, 'w') as file:
         json.dump(oldData, file)
-
 
 
 def ewwUpdate(clear=False):
     if clear:
         command = "eww update notifHist=\"[]\""
-        shell(command, shell=True)
-
+        bash(command, shell=True)
     else:
-        content = readJson("txt")
-        content = content.replace("\"", "\\\"")
-        command = f"eww update notifHist=\"{content}\""
-        shell(command, shell=True)
-            
+        command = f"eww update notifHist=\"$(cat {jsonPath})\""
+        bash(command, shell=True)
 
 def main():
     if arg == "--send":
-        arg2 = sys.argv[2]        
+        arg2 = sys.argv[2]
         addJson(arg2)
         ewwUpdate()
-
+       
     elif arg == "--del":
         arg2 = sys.argv[2]
         delJson(arg2)
@@ -93,14 +97,16 @@ def main():
     elif arg == "--clear":
         clearJson()
         ewwUpdate(clear=True)
- 
+
+    elif arg == "--read":
+        print(readJson("cat"))
+
     else:
         print("usage: ./script --add {json}")
         print("                --del {id}")
         print("                --clear")
+        print("                --read")
 
-
-    
 jsonPath = os.path.expanduser("~/.cache/eww/oldNotif.json")
 
 if len(sys.argv) > 1:

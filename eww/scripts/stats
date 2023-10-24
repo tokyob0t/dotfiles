@@ -6,8 +6,8 @@ pacman_packages() {
     echo "$(pacman -Qq | wc -l)"
 }
 
-upTime_m(){
-    hour="$(uptime -p | awk '{print $4 "m"}')"
+upTime_h(){
+    hour="$(uptime -p | awk '{print $2 "h"}')"
     if [[ "$hour" == "h" ]]; then 
         echo ""
     else 
@@ -15,14 +15,23 @@ upTime_m(){
     fi
 }
 
-upTime_h(){
-    min="$(uptime -p | awk '{print $2 "h"}')"
+upTime_m(){
+    min="$(uptime -p | awk '{print $4 "m"}')"
     echo "$min"
 }
 
 userHost() {
-    echo "$(whoami)@$(hostname)"
+    echo "$(whoami)@$(hostnamectl --json=pretty | jq .Hostname  | sed 's/"//g')"
 }
+
+Host() {
+    echo "@$(hostnamectl --json=pretty | jq .Hostname  | sed 's/"//g')"
+}
+
+User() {
+    echo "$(whoami)"
+}
+
 
 kernel(){
     echo "$(uname -r)"
@@ -50,6 +59,11 @@ if [[ $choice == "--pacman" ]]; then
     pacman_packages; 
 elif [[ $choice == "--userHost" ]]; then
     userHost
+elif [[ $choice == "--user" ]]; then
+    User
+elif [[ $choice == "--host" ]]; then
+    Host
+
 elif [[ $choice == "--uptimeH" ]]; then
     upTime_h
 elif [[ $choice == "--uptimeM" ]]; then

@@ -1,5 +1,10 @@
 #!/usr/bin/bash
 
+dir="/home/tokyob0t/.config/eww/scripts"
+
+zsh $dir/notifCatch &
+
+pkill eww
 killall eww
 
 eww daemon
@@ -7,6 +12,8 @@ eww open topbar
 
 eww open wallpaper
 
-zsh /home/tokyob0t/.config/eww/scripts/notifCatch &
 sleep 2
-notify-send "Startup Notification" "Welcome $(whoami)"
+
+notify-send "Startup Notification" "Welcome $(whoami)" &
+
+zsh $dir/airplaneMode --get &

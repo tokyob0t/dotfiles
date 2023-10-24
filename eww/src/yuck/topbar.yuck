@@ -6,6 +6,8 @@
 ; ; Include right modules for topbar
 (include "./src/yuck/topbar/right/quicksettings.yuck")
 (include "./src/yuck/topbar/right/local_ip.yuck")
+(include "./src/yuck/topbar/right/notifbutton.yuck")
+(include "./src/yuck/topbar/right/tray.yuck")
 ; ; Topbar with modules, left, center and right, like waybar modules
 
 (defwindow topbar
@@ -58,6 +60,9 @@
     :space-evenly false
     :halign "end"
     (local_ip)
+    (tray)
     (quicksettings)
+    (notifButton)
+        
     )
 )

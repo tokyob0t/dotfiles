@@ -63,7 +63,7 @@
       :class "weatherQuoteBox"
       :orientation "v"
       :vexpand true
-      :spacing 10
+      :spacing 30
       :valign "center"
       
       (label

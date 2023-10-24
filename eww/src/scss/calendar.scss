@@ -1,7 +1,7 @@
 .weatherMainBox {
   background: $base00;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: $outer_border-radius;
 
   .weatherTop {
     padding: 0 55px;
@@ -24,15 +24,14 @@
 }
 
   .weatherBottom {
-    // background-color: $base01;
-    border-radius: 10px;
+    border-radius: $inner_border-radius;
     
     calendar {
-        color: $baseA2;
+        color: $base03;
 
         .header {
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: $outer_border-radius;
             color: $base01;   
             background-color: $baseA0;
         }
@@ -41,7 +40,7 @@
             color: $base02;
             color: transparent;
         }
-
+        
         .highlight {
             color: $baseA0;
             font-weight: bold;
@@ -51,8 +50,7 @@
     calendar:selected {
         color: $base01;
         background-color: $baseA0;
-        border-radius: 5px;
-        border: 3px solid white;
+        border-radius: $outer_border-radius;
     }
     
     calendar:indeterminate {

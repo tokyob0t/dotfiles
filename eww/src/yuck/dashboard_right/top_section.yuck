@@ -1,72 +1,56 @@
-(defwidget quick_buttons []
+
+(defwidget aboutme []
   (box
-    :class "quick_buttons"
-    :orientation "v"
     :space-evenly false
+    :class "aboutmeBox"
+    :hexpand true
+    :spacing 10
+    
+    (box
+      :class "pfpImage"
+      :width 55
+      :height 55
+    )
+    
+    (box
+      :class "divisor"
+      :vexpand true
+    )
+    
     (box
       :space-evenly false
-      :orientation "h"
-      ; Wifi button 
-      (buttonWidget
-        :ButtonBoxClass {wifiInfo.status == "connected" ? "Active": "Inactive" }
-        :onChecked "./scripts/wifi --on &"
-        :onUnChecked "./scripts/wifi --off &"
-        :icon {wifiInfo.icon}
-        :belowLabel {wifiInfo.name}
+      :spacing 5
+      :orientation "v"
+      :valign "center"
+      :hexpand true
+      
+      (label
+        :halign "start"
+        :text user
+        :class "username"
       )
-      ; Bluetooth button 
-      (buttonWidget
-        :ButtonBoxClass {btInfo.status == "connected" ? "Active": "Inactive" }
-        :onChecked "./scripts/bluetooth --on &"
-        :onUnChecked "./scripts/bluetooth --off &"
-        :icon {btInfo.icon}
-        :belowLabel {btInfo.name}
+      (label
+        :halign "start"
+        :text host
+        :class "hostname"
       )
     )
     
-  )
-  
-)
-
-
-(defwidget buttonWidget [ButtonBoxClass onChecked onUnChecked icon belowLabel]
-  (box
-    :orientation "v"
-    :space-evenly false
-    :class "QuickButtonsBox"
-    (eventbox
-      :cursor "pointer"
-      (box
-        :space-evenly false
-        :class "ButtonBox ${ButtonBoxClass}"
-        :style "margin: 0 50%;"
-
-        (checkbox
-          :class "CheckBox"
-          :onchecked onChecked
-          :onunchecked onUnChecked
-          
-          (label
-            :text icon
-            :class "icon"
-          )
-        )
-        (eventbox
-          :class "EventBox"
-          (label
-            :text ""
-            :class "icon"   
-          )
+    (box
+      :space-evenly false
+      :orientation "v"
+      :spacing 5
+      :valign "center"
+      
+      (button
+        :class "logoutButton"
+        
+        (label
+          :text "󰍃"
+          :class "icon"
         )
       )
     )
-    
-    (label
-      :class "belowLabel"
-      :text belowLabel
-      :tooltip belowLabel
-      :wrap true
-      :limit-width 10
-    )
   )
 )
+

@@ -1,3 +1,403 @@
+
+(defwidget quick_actions []
+  (box
+    :class "quick_actions"
+    :orientation "v"
+    (eventbox
+      :onclick "./scripts/toggle_var --toggle notifMuted &"
+      :cursor "pointer"
+      (box
+        :space-evenly false
+        :halign "center"
+        :valign "center"
+        :class "Button ${notifMuted == false ? 'offButton' : 'onButton'}"
+        
+        (label
+          :text {notifMuted == true ? "󰂛" : "󰂚"}
+          :class "icon"
+          :halign "center"
+          :valign "center"
+        )
+      )
+    )
+    (eventbox
+      :onclick "./scripts/airplanemode --toggle &"
+      :cursor "pointer"
+      (box
+
+        :space-evenly false
+        :halign "center"
+        :valign "center"
+        :class "Button ${airplaneMode == false ? 'offButton' : 'onButton'}"
+
+        (label
+          :text ""
+          :class "icon"
+          :halign "center"
+          :valign "center"
+        )
+      )
+    )
+    (eventbox
+      :onclick "./scripts/screenshot &"
+      :cursor "pointer"
+      (box
+        :space-evenly false
+        :halign "center"
+        :valign "center"
+        :class "Button offButton"
+        
+        (label
+          :text ""
+          :class "icon"
+          :halign "center"
+          :valign "center"
+        )
+      )
+    )
+  )
+)
+
+
+(defwidget quick_buttons []
+  (box
+    :space-evenly false
+    :spacing 15
+    (box
+      :class "quick_buttons"
+      :orientation "v"
+      :spacing 15
+      :hexpand true
+      
+      (quickButton
+        :icon {wifiInfo.icon}
+        :status {wifiInfo.status}
+        :name {wifiInfo.name}
+      )
+      
+      (quickButton
+        :icon {btInfo.icon}
+        :status {btInfo.status}
+        :name {btInfo.name}
+      )
+      (box
+        :class "quick_button"
+        
+        (overlay
+          (circular-progress
+            :class "circprogress"
+            :value {EWW_CPU["avg"]}
+            :thickness 3
+            :clockwise true
+            :start-at 20
+            :tooltip {EWW_CPU["avg"]}
+          )
+          (box
+            :class "circBox"
+            :halign "center"
+            (label
+              :text ""
+              :class "icon"
+              :tooltip {EWW_CPU["avg"]}
+            )
+          )
+        )
+        (overlay
+          (circular-progress
+            :class "circprogress"
+            :value {EWW_RAM.used_mem_perc}
+            :thickness 3
+            :clockwise true
+            :start-at 20
+            :tooltip {EWW_RAM.used_mem_perc}
+          )
+          (box
+            :class "circBox"
+            :halign "center"
+            (label
+              :text ""
+              :class "icon"
+              :tooltip {EWW_RAM.used_mem_perc}
+            )
+          )
+        )
+        (overlay
+          (circular-progress
+            :class "circprogress"
+            :value {EWW_DISK["/"].used_perc}
+            :thickness 3
+            :clockwise true
+            :start-at 20
+            :tooltip {EWW_DISK["/"].used_perc}
+          )
+          (box
+            :class "circBox"
+            :halign "center"
+            (label
+              :text ""
+              :class "icon"
+              :tooltip {EWW_DISK["/"].used_perc}
+            )
+          )
+        )
+      )
+    )
+    (quick_actions)
+  )
+)
+
+(defwidget quickButton [icon ?status ?name]
+  
+  (box
+    :space-evenly true
+    :class "quick_button"
+    :hexpand true
+    
+    (box
+      :space-evenly false
+      :spacing 10
+      (box
+        :space-evenly false
+        :halign "start"
+        :valign "center"
+        :class "Button ${status == 'disconnected' ? 'offButton' : 'onButton'}"
+        (label
+          :text icon
+          :tooltip name
+          :class "icon"
+          :halign "center"
+          :valign "center"
+        )
+      )
+      
+      (box
+        :width 20
+        (label
+          :text name
+          :tooltip name
+          :wrap true
+          :halign "start"
+          :class "name"
+          :visible {strlength(name) > 0}
+        )
+      )
+    )
+  )
+)
+
+
+(defwidget quick_sliders []
+  
+  (box
+    :space-evenly false
+    :class "quick_sliders"
+    :orientation "v"
+    
+    
+    (icon_sliders
+      :icon {brightness >= 60 ? "󰃠" : brightness >= 50 ? "󰃟" :"󰃞"}
+      :value brightness
+      :onChangeSlider "./scripts/brightness --set {} &"
+    )
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      (box
+        :space-evenly false
+        
+        (icon_sliders
+          :icon {volume.muted == "yes" || volume.value == 0 ? "󰝟" : volume.value >= 35 ? "" : volume.value >= 25 ? "" : ""}
+          :value {volume.value}
+          :onChangeSlider "./scripts/volume --set {} &"
+          :onClickButton "./scripts/volume --toggle &"
+        )
+        
+        (eventbox
+          :halign "end"
+          :class "CheckBox"
+          :onclick "./scripts/toggle_var --toggle microphone_revealer"
+          
+          (label
+            :text {microphone_revealer == false ? "" : "" }
+            :class "icon"
+          )
+        )
+        
+      )
+      (revealer
+        :reveal microphone_revealer
+        :transition "slideup"
+        (icon_sliders
+          :icon {microphone_muted == "yes" ? "" : ""}
+          :value microphone
+          :onChangeSlider "./scripts/microphone --set {} &"
+          :onClickButton "./scripts/microphone --toggle &"
+        )
+      )
+    )
+  )
+)
+
+
+(defwidget icon_sliders [icon ?value ?onClickButton onChangeSlider]
+  (box
+    :space-evenly false
+    :hexpand true
+    
+    (button
+      :onclick onClickButton
+      (label
+        :class "icon"
+        :tooltip "${value}%"
+        :text icon
+      )
+    )
+    (scale
+      :hexpand true
+      :class "Scale"
+      :value value
+      :tooltip "${value}%"
+      :min 0
+      :max 100
+      :onchange onChangeSlider
+    )
+  )
+)
+
+(defwidget quick_info []
+  (box
+    :orientation "v"
+    :space-evenly false
+    :class "quick_info"
+    :spacing 15
+    
+    (box
+      :space-evenly false
+      :height 100
+      :orientation "v"
+      (overlay
+        (box
+          :height 100
+          :orientation "v"
+          :class "quick_graphs"
+          (overlay
+            (graph
+              :min 0
+              :max 100
+              :value {EWW_CPU["avg"]}
+              :height 100
+              :time-range "1m"
+              :dynamic true
+              :thickness 2
+              :class "graph1"
+              
+            )
+            (graph
+              :min 0
+              :max 100
+              :value {EWW_RAM.used_mem_perc}
+              :height 100
+              :time-range "1m"
+              :dynamic true
+              :thickness 2
+              :class "graph2"
+              
+            )
+            (graph
+              :min 0
+              :max 100
+              :value {(
+                EWW_TEMPS["CORETEMP_CORE_0"] +
+                EWW_TEMPS["CORETEMP_CORE_1"] +
+                EWW_TEMPS["CORETEMP_CORE_2"] +
+                EWW_TEMPS["CORETEMP_CORE_3"]
+              ) / 4}
+              :height 100
+              :time-range "1m"
+              :dynamic true
+              :thickness 2
+              :class "graph3"
+            )
+          )
+        )
+        
+        (centerbox
+          :orientation "v"
+          :valign "start"
+          :class "usagelabel"
+          (label :text "CPU" :class "graph1" :halign "start" )
+          (label :text "RAM" :class "graph2" :halign "start")
+          (label :text "TEMP" :class "graph3" :halign "start")
+        )
+      )
+      
+    )
+    
+    (box
+      :space-evenly false
+      :spacing 15
+      :halign "center"
+      (box
+        :class "quick_button batteryBox"
+        :space-evenly false
+        (box
+          :class "batteryChildBox"
+          :space-evenly false
+          :halign "start"
+          (overlay
+            :class "overlay"
+            (progress
+              :value {EWW_BATTERY.BAT1["capacity"]}
+              :class "progress"
+              :tooltip "${EWW_BATTERY.BAT1.capacity}%"
+              :valign "center"
+              :halign "center"
+            )
+            (label
+              :text "󱐋"
+              :class "icon ${EWW_BATTERY.BAT1.capacity > 50 ? 'batteryIconHigh' : 'batteryIconLow' }"
+              :valign "center"
+              :halign "center"
+              :tooltip "${EWW_BATTERY.BAT1.capacity}%"
+            )
+          )
+        ))
+      
+      
+      (box
+        :class "quick_button"
+        :space-evenly false
+        :spacing 5
+        
+        (label
+          :valign "center"
+          :text {
+          (
+            EWW_TEMPS["CORETEMP_CORE_0"] +
+            EWW_TEMPS["CORETEMP_CORE_1"] +
+            EWW_TEMPS["CORETEMP_CORE_2"] +
+            EWW_TEMPS["CORETEMP_CORE_3"]
+          ) / 4
+          }
+        )
+        (label
+          :valign "center"
+          :text "󰈸"
+          :class {((
+              EWW_TEMPS["CORETEMP_CORE_0"] +
+              EWW_TEMPS["CORETEMP_CORE_1"] +
+              EWW_TEMPS["CORETEMP_CORE_2"] +
+              EWW_TEMPS["CORETEMP_CORE_3"]
+            ) / 4
+          ) <= 75 ? "normaltemp icon" : "hottemp icon" }
+          
+        )
+      )
+    )
+  )
+)
+
 (defwidget media_player []
   (revealer
     :transition "slideup"
@@ -15,7 +415,7 @@
         :width 75
         :height 75
         :space-evenly false
-        :style "background-image: url(\"${playerctl.artUrl}\"); background-size: 100%;"
+        :style "background-image: url(\"${playerctl.artUrl}\");"
         :visible {strlength(playerctl.artUrl) == 0 ? false : true}
       )
       
@@ -78,96 +478,14 @@
           
         )
         (scale
-          :class "music_scale .Scale"
+          :visible {playerctl.length != "" ? true : false}
+          :class "music_scale Scale"
           :value playerctlCTime
           :min 0
           :max {playerctl.length / 1000000}
-          :onchange "playerctl position {}"
+          :onchange "playerctl position {} &"
         )
       )
     )
   )
 )
-
-
-(defwidget quick_sliders []
-  
-  (box
-    :space-evenly false
-    :class "quick_sliders"
-    :orientation "v"
-    
-    
-    (icon_sliders
-      :icon {brightness >= 35 ? "󰃠" : brightness >= 20 ? "󰃟" :"󰃞"}
-      :value brightness
-      :onChangeSlider "./scripts/brightness --set {}"
-    )
-    
-    (box
-      :orientation "v"
-      :space-evenly false
-      (box
-        :space-evenly false
-        
-        (icon_sliders
-          :icon {volume_muted == "yes" ? "󰝟" : volume >= 35 ? "" : volume >= 25 ? "" : ""}
-          :value volume
-          :onChangeSlider "./scripts/volume --set {}"
-          :onClickButton "./scripts/volume --toggle"
-        )
-        
-        (eventbox
-          :halign "end"
-          :class "CheckBox"
-          :onclick "./scripts/toggle_var --toggle microphone_revealer"
-          
-          (label
-            :text {microphone_revealer == false ? "" : "" }
-            :class "icon"
-          )
-        )
-        
-      )
-      (revealer
-        :reveal microphone_revealer
-        :transition "slideup"
-        (icon_sliders
-          :icon "${
-          microphone_muted == 'yes' ? '' : ''
-          }"
-          :value microphone
-          :onChangeSlider "./scripts/microphone --set {}"
-          :onClickButton "./scripts/microphone --toggle"
-        )
-      )
-    )
-  )
-)
-
-
-(defwidget icon_sliders [icon value ?onClickButton onChangeSlider]
-  (box
-    :space-evenly false
-    :hexpand true
-
-    (button
-      :onclick onClickButton
-      (label
-        :class "icon"
-        :tooltip "${value}%"
-        :text icon
-      ))
-    (scale
-      :hexpand true
-      :class "Scale"
-      :value value
-      :tooltip "${value}%"
-      :min 0
-      :max 100
-      :onchange onChangeSlider
-    )
-  )
-)
-
-

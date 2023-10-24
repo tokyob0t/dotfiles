@@ -1,7 +1,5 @@
 #!/usr/bin/bash
 
-dir="/home/$(whoami)/.config/eww/scripts"
-
 xprop -spy -root _NET_CURRENT_DESKTOP | while read -r line;
 do
     echo "$line" | awk '{print $3}'

@@ -1,19 +1,46 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 dir="/home/$(whoami)/.config/eww/scripts"
+backlight_device="/sys/class/backlight/$(ls /sys/class/backlight)"
+
+
+icon() {
+    local value="$1"
+    if ((value < 30)); then
+        echo "󰃞"
+    elif ((value < 70)); then
+        echo "󰃟"
+    else
+        echo "󰃠"
+    fi
+}
+
+getValue() {
+    current_brightness=$(brightnessctl get)
+    max_brightness=$(brightnessctl max)
+    new_brightness=$((100 * current_brightness / max_brightness))
+    echo $new_brightness
+}
 
 if [[ $1 == "--get" ]]; then
-    xbacklight
+    while inotifywait -e modify "$backlight_device/brightness" > /dev/null 2>&1; do
+        getValue
+    done
 
 elif [[ $1 == "--set" ]]; then
-    xbacklight -set "$2"
+    brightnessctl set "$2"%
     
 elif [[ $1 == "--up" ]]; then
-    xbacklight -inc 10
-    zsh $dir/osd 󰃠 $(xbacklight)
+    brightnessctl set 10%+
+
+    icon=$(icon "$(getValue)")
+    
+    zsh "$dir/osd" "$icon" "$(getValue)"
 
 elif [[ $1 == "--down" ]]; then
-    xbacklight -dec 10
-    zsh $dir/osd "󰃠" $(xbacklight)
+    brightnessctl set 5%-
+
+    icon=$(icon "$(getValue)")
+    zsh "$dir/osd" "$icon" "$(getValue)"
 
 fi

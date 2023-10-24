@@ -6,3 +6,10 @@
 .module {
     font-family: monospace;
 }
+
+.tray_icon {
+    background-color: $base01;
+    border-radius: $outer_border-radius;
+    margin: 10px 5px;
+    padding: 0 10px;
+}

@@ -2,11 +2,11 @@
 
 (defwindow notifpopup
   :geometry (geometry
-    :x "10px"
+    :x "0%"
     :y "60px"
     :width "18%"
     :height "10%"
-    :anchor "top left"
+    :anchor "top center"
   )
   
   :class "notifpopup"
@@ -26,7 +26,6 @@
 (defwidget notifpopup [id source title content time ?onClose]
   (centerbox
     :orientation "v"
-    :space-evenly false
     :class "notifBox ${source} Box_${source}"
     
     (box
@@ -74,18 +73,18 @@
       :space-evenly false
       (label
         :text title
+        :tooltip title
         :class "title"
         :halign "start"
         :limit-width 25
       )
-      
       (label
         :text content
         :hexpand true
         :class "content"
         :limit-width 30
         :wrap true
-        :width "100px"
+        :width 100
         :xalign 0
         :tooltip content
       )

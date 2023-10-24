@@ -6,33 +6,38 @@
   :wm-ignore true
   
   :geometry (geometry
-    :x "30px"
-    :y "60px"
+    :x "0%"
+    :y "-5%"
     :width "200px"
     :height "26px"
-    :anchor "center top"
+    :anchor "center bottom"
   )
   (osd)
 )
 
 (defwidget osd []
   (eventbox
-    :onclick "./scripts/osd close"
-    (box :class "osd-widget"
-      (overlay
-        (scale
-          :class "scale"
-          :value {osd.value}
-          :valign "center"
-          :halign "center"
-          :orientation "h"
-        )
-        (label
-          :text {osd.icon}
-          :valign "end"
-          :halign "center"
-          :class "icon"
-        )
+    :onclick "./scripts/osd --close &"
+    (box
+      :class "osd-widget"
+      :space-evenly false
+      (label
+        :text {osd.icon}
+        :valign "end"
+        :halign "center"
+        :class "icon"
       )
+      (scale
+        :class "scale"
+        :value {osd.value}
+        :valign "center"
+        :halign "center"
+      )
+      
+      (label
+        :text "${osd.value}%"
+      )
+      
     )
-  ))
+  )
+)

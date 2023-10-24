@@ -7,7 +7,7 @@
 .dashboard {
   padding: 15px;
   background: $base00;
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .checkbox {
@@ -23,10 +23,8 @@
   }
 }
 
-
-
 .icon_sliders {
-    padding: 5px;
+  padding: 5px;
 }
 
 .inactive_checkbox {
@@ -62,60 +60,176 @@
   }
 }
 
-// Settings for the quickbuttons, like wifi bluetooth and more
-.QuickButtonsBox {
-  margin: 0 5px 2.5px 5px;
-  padding: 5px 10px;
-  min-width: 100px;
+// Settings for the aboutme section
+.aboutmeBox {
+  padding: 10px 20px;
 
-  .ButtonBox {
-    border-radius: 8px;
-    margin: 0 20px;
-    transition: 0.25s;
-    .CheckBox {
-      @extend .checkbox;
-      border-radius: 0;
+  .username {
+    color: $base04;
+  }
+  .hostname {
+    color: $base02;
+  }
+  .pfpImage {
+    background-image: url("./img/pfp.png");
+    background-size: cover;
+    border-radius: 65px;
+  }
+  .divisor {
+    background: $base01;
+    border-radius: 10px;
+    min-width: 2.5px;
+  }
+
+  .logoutButton {
+    background-color: $base01;
+    border-radius: $inner_border-radius;
+    .icon {
       padding: 5px 15px;
     }
-
-    .EventBox {
-      border-left: 1px solid $base03;
-
-      .icon {
-        padding: 0 8px;
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-        font-weight: bold;
-      }
-    }
-  }
-
-  .ButtonBox.Inactive {
-    background-color: $base02;
-  }
-
-  .ButtonBox.Active {
-    background-color: $baseA0;
-    .icon {
-      color: $base01;
-    }
-  }
-  .belowLabel {
-    margin: 10px;
-    font-size: 12px;
   }
 }
-
-// mid section
-
-.quick_buttons {
-  padding: 12.5px 20px;
-  margin: 12.5px;
-}
-
 // Mid section
+// Settings for the quickbuttons, like wifi bluetooth and more
+.quick_actions {
+  background-color: $base01;
+  border-radius: 20px;
+  padding: 20px;
 
+  .quickButton {
+    background: $base01;
+    border-radius: 20px;
+    padding: 5px 10px;
 
+    .icon {
+      margin: unset;
+    }
+
+    .name {
+      font-size: 14px;
+    }
+  }
+}
+.Button {
+  padding: 7px 13px;
+  border-radius: 100%;
+  transition: 500ms;
+}
+
+.onButton {
+  background: $baseA0;
+  label {
+    color: $base01;
+  }
+}
+
+.offButton {
+  background: $base03;
+  label {
+    color: $base04;
+  }
+}
+
+.quick_sliders {
+  background: $base01;
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.quick_button {
+  background: $base01;
+  border-radius: 20px;
+  padding: 10px 15px;
+
+  .Button {
+    padding: 7px 13px;
+    border-radius: 100%;
+  }
+
+  .icon {
+    margin: unset;
+  }
+
+  .name {
+    font-size: 14px;
+  }
+}
+
+.circprogress {
+  color: $baseA0;
+  background: $base00;
+}
+
+.quick_info {
+  border-radius: 20px;
+  .quick_button {
+    background-color: $base01;
+    padding: 2.5px 10px;
+  }
+
+  .quick_graphs {
+    background: $base01;
+    border-radius: 20px;
+    padding: 10px 15px;
+
+    .graph1 {
+      color: $baseA0;
+    }
+    .graph2 {
+      color: $base0D;
+    }
+    .graph3 {
+      color: $base0E;
+    }
+  }
+  .usagelabel {
+    margin: 10px 15px;
+    .graph1, .graph2, .graph3 {
+        font-family: monospace;
+        font-size: 13px;
+        font-weight: bold;
+    }
+    .graph1 {
+    color: $baseA0;
+    }
+    .graph2 {
+      color: $base0D;
+    }
+    .graph3 {
+      color: $base0E;
+    }
+  }
+
+  .batteryBox {
+    padding: 3px;
+    .batteryChildBox {
+      @extend .quick_button;
+      background-color: $base00;
+      padding: unset;
+    }
+
+    progress {
+      background: $base0D;
+      min-height: 28px;
+      border-radius: 20px;
+    }
+
+    .batteryIconLow {
+      color: $base04;
+    }
+
+    .batteryIconHigh {
+      color: $base00;
+    }
+  }
+
+  .normaltemp {
+    color: $base0C;
+  }
+  .hottemp {
+    color: $base0A;
+  }
+}
 
 //Playerctl box settings
 
@@ -125,9 +239,11 @@
   padding: 5px;
 
   .music_cover {
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 5px;
+    background-size: cover;
   }
+
   .music_scale {
     @extend .Scale;
     trough {
@@ -135,8 +251,6 @@
     }
   }
 }
-
-// Bottom section
 
 // Notif section
 

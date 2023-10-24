@@ -5,23 +5,34 @@
 (include "./src/yuck/wallpaper.yuck")
 (include "./src/yuck/calendar.yuck")
 (include "./src/yuck/osd.yuck")
+
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 ;                Variables Section                  ;
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 
 ; ; Workspaces
-(deflisten workspaces :initial "0" "./scripts/bspwm_getWorkspace")
+(deflisten workspaces :initial '[{"id":"1","state":"active"},{"id":"2","state":"empty"},{"id":"3","state":"empty"},{"id":"4","state":"empty"},{"id":"5","state":"empty"},{"id":"6","state":"empty"},{"id":"7","state":"empty"}]'
+  "./scripts/bspwm_getWorkspace"
+)
+
 (defpoll layout :initial "./img/layouts/dwindlew.png" :interval "0.5s" "./scripts/bspwm_getLayout --icon")
+(defvar tray_icon "")
 
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 ;                Dashboard Variables                ;
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 
+
+; AbotMe section
+(defpoll uptimeH :interval "59m" "./scripts/stats --uptimeH")
+(defpoll uptimeM :interval "1m" "./scripts/stats --uptimeM")
+(defpoll user :interval "24h" "./scripts/stats --user")
+(defpoll host :interval "24h" "./scripts/stats --host")
+
 ; Quick settings variables
 
 ; ; Volume variables
-(defpoll volume :interval "1s" "./scripts/volume --get")
-(defpoll volume_muted :interval "1s" "./scripts/volume --getState")
+(deflisten volume :initial '{"value": "50", "muted": "no"}' "./scripts/volume --get")
 
 ; ; Microphone variables
 (defpoll microphone :interval "1s" "./scripts/microphone --get")
@@ -29,36 +40,43 @@
 (defvar microphone_revealer false)
 
 ; ; Brightness variables
-(defpoll brightness :interval "1s" "./scripts/brightness --get")
+(deflisten brightness :initial 100 "./scripts/brightness --get")
+
+; Graph type
+(defvar graphSel 0)
 
 ; Notifications
 (defvar notifDuration 5)
 (defvar notifNow "{}")
-(defvar notifHist "{}")
+(defvar notifHist "[]")
 (defvar notifMuted false)
 ; ToDo list
 (defvar taskList "[]")
 (defvar taskTitle "")
 (defvar taskBody "")
-    
-(defvar osd '{ "icon": "", "value": 0 }')
+
+(defvar osd '{ "icon": "", "value": 50 }')
 
 ; Wi-Fi
 (defpoll wifiInfo :interval "5s" :initial '{"status":"disconnected","name":"Wi-Fi","icon":"󰤮"}' "./scripts/wifi --info" )
 
 (defpoll ipInfo :interval "5s" :initial '{"text": "Disconnected", "tooltip": "VPN Status: Disconnected", "IP": "192.168.0.6"}' "./scripts/local_ip")
 
-(defpoll btInfo :interval "5s" :initial '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}' "./scripts/bluetooth --info" )
+; (defpoll btInfo :interval "1m" :initial '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}' "./scripts/bluetooth --info" )
+(defvar btInfo '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}')
+
+; AirplaneMode
+(defvar airplaneMode false)
+
+
+
 
 ; Playerctl main variables
 (deflisten playerctl :initial '{"length":"","artist":"","title":"","artUrl":""}' "./scripts/media")
 (deflisten playerctlStatus :initial false "playerctl --follow status")
 (deflisten playerctlShuffle :initial "Off" "playerctl --follow shuffle")
 (deflisten playerctlLoop :initial "Off" "playerctl --follow loop")
-(defpoll playerctlCTime :run-while {playerctlStatus == "Playing"} :interval "1s" "playerctl position")
+(defpoll playerctlCTime :initial 0 :run-while {playerctlStatus == "Playing" ? true : false} :interval "1s" "playerctl position")
 
-; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
-;                Calendar Variables                 ;
-; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
-
+; Calendar variables
 (defpoll weather :interval "30s" :initial "{}" "./scripts/weather")

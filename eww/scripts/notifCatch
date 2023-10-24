@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/usr/bin/bash
 
 
 # This script is only for catching notifications
@@ -6,12 +6,11 @@
 notifDuration=$(eww get notifDuration)
 
 
-tiramisu -s -o '{"id": "#id","source": "#source", "title": "#summary", "content": "#body", "timeout": "#timeout"}' | while read -r line; do
-
+tiramisu -s -o '{"id": "#id","source": "#source", "title": "#summary", "content": "#body"}' | while read -r line; do
     notifMuted=$(eww get notifMuted)
 
     # Get the current time for every notification
-    current_time=$(date "+%I:%M %p")
+    current_time=$(date "+%I:%M:%S")
     
 
     # Add the current time
@@ -22,9 +21,9 @@ tiramisu -s -o '{"id": "#id","source": "#source", "title": "#summary", "content"
         python /home/$(whoami)/.config/eww/scripts/notifManage --send "$line"
         eww update notifNow="$line"
         eww update notifNowRevealer=true
-        echo "$line"
         
-        sleep $notifDuration
+        sleep "$notifDuration"
+
         eww update notifNowRevealer=false
         eww close notifpopup
     else

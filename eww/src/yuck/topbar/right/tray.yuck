@@ -1,0 +1,10 @@
+(defwidget tray []
+  (eventbox
+    :cursor "pointer" :onclick "./scripts/toggleTray"
+    (label
+      :class "tray_icon"
+      :text tray_icon
+    
+    )
+  )
+)

@@ -1,0 +1,7 @@
+background "#161616"
+geometry 1x1-161+60
+grow_gravity NE
+icon_gravity NE
+vertical true
+slot_size 32
+icon_size 16

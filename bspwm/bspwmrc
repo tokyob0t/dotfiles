@@ -2,7 +2,7 @@
 
 pgrep -x sxhkd >/dev/null || sxhkd &
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor -d 1 2 3 4 5 6 7
 
 bspc config focus_follows_pointer true
 bspc config pointer_follows_focus true
@@ -10,8 +10,8 @@ bspc config pointer_follows_focus true
 bspc config border_width        0
 bspc config window_gap          8
 
-bspc config focused_border_color "#dde1e6"
-bspc config normal_border_color "#161616"
+bspc config focused_border_color "#43b365"
+bspc config normal_border_color "#393939"
 bspc config left_padding 3
 bspc config right_padding 3
 
@@ -29,14 +29,13 @@ bspc rule -a Screenkey manage=off
 
 
 # Mouse settings
+/home/tokyob0t/.config/eww/scripts/MAIN &&
 copyq &
 picom -f &
 
 # Keyboard settings
 setxkbmap latam &
-/home/tokyob0t/.config/eww/scripts/MAIN &
-stalonetray -c /home/tokyob0t/.config/stalonetray/stalonetrayrc &
-workspaces=("I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X")
+workspaces=(1 2 3 4 5 6 7)
 
 for i in "${workspaces[@]}"; do
     bsp-layout set tall "$i"

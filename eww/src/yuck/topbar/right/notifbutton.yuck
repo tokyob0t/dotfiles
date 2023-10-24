@@ -1,0 +1,137 @@
+(defwidget notifButton []
+  (revealer
+    :reveal {arraylength(notifHist) > 0 ? true : false}
+    :transition "slideleft"
+    
+    (eventbox
+      :onclick "eww open notifDashboard --toggle"
+      :cursor "pointer"
+      (box
+        :class "notifButton"
+        (label
+          :text "󱅫"
+          :class "icon"
+            :halign "center"
+        )
+        
+      )
+    )
+  )
+)
+
+(defwindow notifDashboard
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore true
+  :geometry (geometry
+    :x "-11px"
+    :y "63px"
+    :width "20%"
+    :height "93.2%"
+    :anchor "top right"
+  )
+  (eventbox
+    :onhoverlost "eww open notifDashboard --toggle"
+    (box
+      :class "notifHistoryBox"
+      ; :space-evenly false
+      (notifHistory)
+    )
+  )
+)
+
+; ; And now we create another widget only for the history of the notifications
+
+(defwidget notifHistory []
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      (box
+        :class "notifmenuTopBox"
+        :space-evenly false
+        
+        (label
+          :hexpand true
+          :halign "start"
+          :class "notifTitle"
+          :text "Notifications"
+        )
+        (box
+          :space-evenly false
+          :spacing 5
+          (eventbox
+            :cursor "pointer"
+            (checkbox
+              :halign "start"
+              :class "checkbox ${notifMuted == true ? 'active_checkbox': 'inactive_checkbox' }"
+              :onchecked "eww update notifMuted=true"
+              :onunchecked "eww update notifMuted=false"
+              
+              (label
+                :class "icon"
+                :text {notifMuted == true ? "󰂛" : "󰂚"}
+              )
+            )
+          )
+          (revealer
+            :reveal {arraylength(notifHist) > 0 ? true : false}
+            :transition "slideleft"
+            
+            (button
+              :halign "end"
+              :onclick "./scripts/notifManage --clear"
+              :class "clearEventbox"
+              :cursor "pointer"
+              
+              (label :text "Clear All")
+            )
+          )
+        )
+      )
+      
+      (scroll
+        :vscroll true
+        :vexpand true
+        :height 500
+        
+        (box
+          :space-evenly false
+          :class "notifmenuBox"
+          :space-evenly false
+          :spacing 5
+          :orientation "v"
+          :hexpand true
+          
+          (for n in {notifHist}
+            (notifpopup
+              :id {n.id}
+              :source {n.source}
+              :title {n.title}
+              :content {n.content}
+              :time {n.time}
+              :onClose "./scripts/notifManage --del ${n.id}"
+            )
+          )
+          (box
+            :visible {arraylength(notifHist) > 0 ? false : true}
+            :orientation "v"
+            :space-evenly false
+            :vexpand true
+            :valign "center"
+            
+            (label
+              :class "icon zeronotifIcon"
+              :text ""
+            )
+            
+            (label
+              :class "zeronotifLabel"
+              :text "No Notifications"
+              :halign true
+            )
+          )
+        )
+      ))
+  )
+  

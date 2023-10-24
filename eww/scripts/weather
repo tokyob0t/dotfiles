@@ -1,6 +1,16 @@
 #!/usr/bin/bash
+# https://github.com/Axarva/dotfiles-2.0/
 
-##########! https://github.com/Axarva/dotfiles-2.0/ ##########
+tmp_weather="$HOME/.cache/eww/weather"
+tmp_weather_stat=$tmp_weather/weather-stat
+tmp_weather_degree=$tmp_weather/weather-degree
+tmp_weather_quote=$tmp_weather/weather-quote
+tmp_weather_hex=$tmp_weather/weather-hex
+tmp_weather_icon=$tmp_weather/weather-icon
+
+if [ ! -d $tmp_weather ]; then
+        mkdir -p $tmp_weather
+fi
 
 # Put in your api and stuff link here 
 # If you dunno, head to openweathermap.org, and make and account 
