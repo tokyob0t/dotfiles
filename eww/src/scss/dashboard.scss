@@ -15,12 +15,6 @@
   padding: 5px 10px;
   transition: 0.25s;
   color: transparent;
-
-  .icon {
-    padding: unset;
-    font-weight: bold;
-    margin-left: -15px;
-  }
 }
 
 .icon_sliders {
@@ -29,15 +23,16 @@
 
 .inactive_checkbox {
   background: $base01;
-
+  color: transparent;
   .icon {
     color: $base04;
+    margin-left: -16.5px;
   }
 }
 
 .active_checkbox {
   background: $baseA0;
-  color: $baseA0;
+  color: transparent;
   .icon {
     color: $base01;
     margin-left: -16.5px;
@@ -91,6 +86,7 @@
 }
 // Mid section
 // Settings for the quickbuttons, like wifi bluetooth and more
+
 .quick_actions {
   background-color: $base01;
   border-radius: 20px;
@@ -98,24 +94,26 @@
 
   .quickButton {
     background: $base01;
-    border-radius: 20px;
-    padding: 5px 10px;
-
-    .icon {
-      margin: unset;
-    }
 
     .name {
       font-size: 14px;
     }
   }
 }
-.Button {
-  padding: 7px 13px;
-  border-radius: 100%;
-  transition: 500ms;
+
+.quick_sliders {
+  background: $base01;
+  padding: 15px;
+  border-radius: 20px;
 }
 
+.Button {
+  border-radius: 100%;
+  transition: 500ms;
+  .icon {
+    padding: 12px 15px;
+  }
+}
 .onButton {
   background: $baseA0;
   label {
@@ -130,29 +128,15 @@
   }
 }
 
-.quick_sliders {
-  background: $base01;
-  padding: 15px;
-  border-radius: 20px;
-}
-
 .quick_button {
   background: $base01;
   border-radius: 20px;
   padding: 10px 15px;
 
-  .Button {
-    padding: 7px 13px;
-    border-radius: 100%;
-  }
-
-  .icon {
-    margin: unset;
-  }
-
   .name {
     font-size: 14px;
   }
+
 }
 
 .circprogress {
@@ -184,13 +168,15 @@
   }
   .usagelabel {
     margin: 10px 15px;
-    .graph1, .graph2, .graph3 {
-        font-family: monospace;
-        font-size: 13px;
-        font-weight: bold;
+    .graph1,
+    .graph2,
+    .graph3 {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: bold;
     }
     .graph1 {
-    color: $baseA0;
+      color: $baseA0;
     }
     .graph2 {
       color: $base0D;
@@ -242,6 +228,7 @@
     border-radius: 5px;
     margin: 5px;
     background-size: cover;
+    background-position: center;
   }
 
   .music_scale {
@@ -255,6 +242,7 @@
 // Notif section
 
 .notifmenuTopBox {
+    
   .notifTitle {
     font-size: 18px;
   }

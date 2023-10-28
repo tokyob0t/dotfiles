@@ -1,19 +1,29 @@
 (defwindow wallpaper
-  :stacking "bg"
-  :windowtype "desktop"
-  
   :geometry (geometry
     :width "100%"
     :height "100%"
-    :anchor "top left"
+    :anchor "center"
   )
   
-  (box
-    :class "wallpaperBox"
+  :windowtype "desktop"
+  :stacking "bg"
+  
+  (eventbox
+    :cursor "pointer"
     :hexpand true
     :vexpand true
+    :onclick "notify-send 'Click Detectado'"
     (box
-      :class "wallpaperImage"
+      :class "wallpaperBox"
+      :hexpand true
+      :vexpand true
+      :orientation "v"
+      :space-evenly false
+      (box
+        :hexpand true
+        :vexpand true
+        :class "wallpaperImage"
+      )
     )
   )
 )

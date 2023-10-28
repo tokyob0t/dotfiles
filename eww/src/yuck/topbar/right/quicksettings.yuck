@@ -9,8 +9,9 @@
       :cursor "pointer"
       (box
         :space-evenly false
-        :spacing 10
+        :spacing 15
         :class "quicksettingsChildBox"
+
         (eventbox
           :class "Eventbox"
           
@@ -26,7 +27,7 @@
           
           (label
             :class "icon volumeIcon"
-            :tooltip {volume.volume}
+            :tooltip {volume.value}
             :text {
             volume.muted == "yes" || volume.value == 0 ? "󰝟" :
             volume.value >= 35 ? "" :

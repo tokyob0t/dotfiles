@@ -2,18 +2,22 @@
 
 dir="/home/tokyob0t/.config/eww/scripts"
 
-zsh $dir/notifCatch &
 
 pkill eww
 killall eww
 
 eww daemon
 eww open topbar
-
 eww open wallpaper
+## This now is managed by the notifCatch script
+# eww open notifpopup
 
-sleep 2
 
-notify-send "Startup Notification" "Welcome $(whoami)" &
+sleep 3
 
-zsh $dir/airplaneMode --get &
+# python $dir/notifCatch &
+bash $dir/airplanemode --get &
+# python $dir/apps &
+
+# notify-send "Startup Notification" "Welcome $(whoami)" &
+

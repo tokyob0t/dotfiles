@@ -1,0 +1,136 @@
+#!/usr/bin/python
+
+# https://github.com/juminai/dotfiles/
+### SCRIPT MADE BY @juminai AND MODIFIED BY @tokyob0t
+
+
+
+import glob, sys, os, json, subprocess, gi
+from configparser import ConfigParser
+
+
+
+
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import Gtk
+
+# Path to the JSON file used for caching application data
+jsonPath = os.path.expanduser("~/.cache/eww/apps.json")
+
+# List of preferred (favorite) applications
+PREFERRED_APPS = []
+
+# List of applications to be blacklisted (hidden)
+BLACKLISTED_APPS = [
+]
+
+# List of substrings used to blacklist applications
+BLACKLISTED_SUBSTRINGS = [
+    "avahi",
+    "wayland"
+]
+
+def get_gtk_icon(icon_name):
+    if icon_name is not None:
+        theme = Gtk.IconTheme.get_default()
+        icon_info = theme.lookup_icon(icon_name.lower(), 128, 0)
+
+        if icon_info is not None:
+            return icon_info.get_filename()
+
+        icon_info = theme.lookup_icon(icon_name.capitalize(), 128, 0)
+
+        if icon_info is not None:
+            return icon_info.get_filename()
+
+        icon_info = theme.lookup_icon(icon_name, 128, 0)
+
+        if icon_info is not None:
+            return icon_info.get_filename()
+    return None
+
+def get_desktop_entries(file_path):
+    parser = ConfigParser()
+    parser.read(file_path)
+
+    app_name = parser.get("Desktop Entry", "Name")
+    
+    # Check if the app_name contains any substring in the blacklist,
+    # if NoDisplay is set, or if app_name is in the BLACKLISTED_APPS list
+    if any(substring in app_name.lower() for substring in BLACKLISTED_SUBSTRINGS) or parser.getboolean("Desktop Entry", "NoDisplay", fallback=False) or app_name in BLACKLISTED_APPS:
+        return None  # Skip applications with blacklisted substrings or NoDisplay=true
+
+    icon_path = get_gtk_icon(parser.get("Desktop Entry", "Icon", fallback=None))
+    comment = parser.get("Desktop Entry", "Comment", fallback=None)
+    
+    # Handle situations where "comment" is missing or set to Nonetype
+    if comment == None:
+        comment = parser.get("Desktop Entry", "GenericName", fallback=None)
+
+    if comment == None:
+        comment = parser.get("Desktop Entry", "Type", fallback=None)
+
+    entry = {
+        "name": app_name.capitalize(),
+        "icon": icon_path,
+        "comment": comment,
+        "desktop": os.path.basename(file_path),
+    }
+    return entry
+
+def update_cache(all_apps, preferred_apps):
+    data = {"apps": all_apps, "preferred": preferred_apps}
+    with open(jsonPath, "w") as file:
+        json.dump(data, file, indent=2)
+
+def get_cached_entries():
+    if os.path.exists(jsonPath):
+        with open(jsonPath, "r") as file:
+            try:
+                return json.load(file)
+            except json.JSONDecodeError:
+                pass
+
+    all_apps = []
+    preferred_apps = []
+
+    desktop_files = glob.glob(os.path.join("/usr/share/applications", "*.desktop"))
+
+    for file_path in desktop_files:
+        entry = get_desktop_entries(file_path)
+        if entry is not None:
+            all_apps.append(entry)
+            if entry["name"].lower() in PREFERRED_APPS:
+                preferred_apps.append(entry)
+
+    # Sort applications alphabetically by name
+    all_apps = sorted(all_apps, key=lambda x: x["name"].lower())
+
+    update_cache(all_apps, preferred_apps)
+    return {"apps": all_apps, "preferred": preferred_apps}
+
+def filter_entries(entries, query):
+    filtered_data = [
+        entry for entry in entries["apps"]
+        if query.lower() in entry["name"].lower()
+        or (entry["comment"] and query.lower() in entry["comment"].lower())
+    ]
+    return filtered_data
+
+def update_eww(entries):
+    subprocess.run(["eww", "update", "apps={}".format(json.dumps(entries))])
+
+if __name__ == "__main__":
+    if len(sys.argv) > 2 and sys.argv[1] == "--query":
+        query = sys.argv[2]
+    else:
+        query = None
+
+    entries = get_cached_entries()
+
+    if query is not None:
+        filtered = filter_entries(entries, query)
+        update_eww({"apps": filtered, "preferred": entries["preferred"]})
+    else:
+        update_eww(entries)

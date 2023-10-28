@@ -1,0 +1,36 @@
+.launcherBox {
+  background: $base00;
+  border-radius: 20px;
+  padding: 40px;
+
+  .launcherInputBox {
+    background: $base01;
+    border-radius: 20px;
+    padding: 10px 15px;
+
+    .launcherInput {
+      color: $base04;
+      margin: 5px 10px;
+    }
+  }
+}
+
+.appEntryEventBox {
+  background: $base01;
+  border-radius: 20px;
+  transition: 250ms;
+  .appEntryBox {
+    padding: 10px;
+    .appName {
+      color: $base04;
+      transition: 250ms;
+    }
+    .appDesc {
+      color: $base03;
+      transition: 250ms;
+    }
+  }
+  &:hover {
+    background-color: $base02;
+  }
+}

@@ -1,6 +1,6 @@
 
 
-(defwindow dashboardWindow_left
+(defwindow weather
   :stacking "fg"
   :windowtype "dock"
   :wm-ignore true
@@ -9,12 +9,12 @@
     :x "11px"
     :y "60px"
     :width "300px"
-    :height "380px"
+    ; :height "380px"
     :anchor "top left"
   )
   
   (eventbox
-    :onhoverlost "eww open dashboardWindow_left --toggle"
+    :onhoverlost "eww close weather"
     (weather)
   )
 )
@@ -26,11 +26,14 @@
     :class "weatherMainBox"
     :orientation "v"
     :space-evenly false
+
     (box
       :space-evenly false
       :orientation "h"
       :class "weatherTop"
-      :valign "center"
+      :halign "center"
+      :spacing 10
+
       (label
         :text {weather.icon}
         :style "color: ${weather.hex};"
@@ -57,27 +60,24 @@
         )
       )
     )
-
+    
     (box
       :space-evenly false
       :class "weatherQuoteBox"
       :orientation "v"
-      :vexpand true
-      :spacing 30
-      :valign "center"
-      
+      :halign "center"
+
       (label
         :text {weather.quoteOne}
         :wrap true
-        :valign "center"
+        :halign "center"
         :class "quoteOne"
       )
       (label
         :class "quoteTwo"
         :text "\"${weather.quoteTwo}\""
         :wrap true
-        :valign "center"
-        :justify "fill"
+        :halign "center"
     )
     )
     (box

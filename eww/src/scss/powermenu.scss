@@ -1,0 +1,29 @@
+.inner {
+  padding: 20px;
+  border-radius: 20px;
+  background: $base00;
+
+  .shutdown,
+  .reboot,
+  .exit,
+  .suspend {
+    background: $base01;
+    padding: 30px;
+    border-radius: 15px;
+    transition: 250ms;
+
+    .icon {
+      font-size: 35px;
+      transition: 250ms;
+    }
+
+    &:hover {
+      background-color: $baseA0;
+    .icon {
+        color: $base01;
+
+    }
+
+    }
+  }
+}

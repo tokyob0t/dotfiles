@@ -1,0 +1,78 @@
+(defwindow powermenu
+  :geometry (geometry
+    :width "25%"
+    :height "10%"
+    :anchor "center"
+  )
+  
+  :windowtype "dialog"
+  (powermenu)
+)
+
+(defwidget powermenu []
+  (eventbox
+    :onhoverlost "eww close powermenu"
+    
+    (box
+      :class "inner"
+      :spacing 20
+      :halign "center"
+      :valign "center"
+      (eventbox
+        :cursor "pointer"
+        (button
+          :class "shutdown"
+          :onclick "systemctl poweroff -i"
+          (label
+            :text ""
+            :class "icon"
+          )
+        )
+      )
+      (eventbox
+        :cursor "pointer"
+        (button
+          :class "suspend"
+          :onclick "systemctl suspend"
+          (label
+            :text ""
+            :class "icon"
+          )
+        )
+      )
+      (eventbox
+        :cursor "pointer"
+        (button
+          :class "exit"
+          :onclick "bspc quit"
+          (label
+            :text "󰍃"
+            :class "icon"
+          )
+        )
+      )
+      (eventbox
+        :cursor "pointer"
+        (button
+          :class "reboot"
+          :onclick "systemctl reboot -i"
+          (label
+            :text "󰁪"
+            :class "icon"
+          )
+        )
+      )
+      (eventbox
+        :cursor "pointer"
+        (button
+          :class "shutdown"
+          :onclick "systemctl poweroff -i"
+          (label
+            :text "󰤆"
+            :class "icon"
+          )
+        )
+      )
+    )
+  )
+)

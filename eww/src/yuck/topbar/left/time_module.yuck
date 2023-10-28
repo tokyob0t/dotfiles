@@ -1,12 +1,39 @@
-(defwidget time_module []    
-    (eventbox
-        :onclick "eww open dashboardWindow_left --toggle"
-        :cursor "pointer"
-        (box
-        :class "time_module"
-        :space-evenly false
-        :spacing 20
-        :orientation "h"
-        (label :text {formattime(EWW_TIME, "%b %d - %I:%M:%S")})
-    ))
+(defwidget time_module []
+  (eventbox
+    :onclick "eww open weather --toggle"
+    :cursor "pointer"
+    (box
+      :class "time_module"
+      :space-evenly false
+      :spacing 20
+      :orientation "h"
+      (label :text {formattime(EWW_TIME, "%b %d - %I:%M:%S")})
+    )
+    
+  )
+)
+
+(defwidget weather_module []
+  (eventbox
+    :onclick "eww open weather --toggle"
+    :cursor "pointer"
+    
+    (box
+      :class "time_module"
+      :space-evenly false
+      :spacing 10
+      :orientation "h"
+      (label
+        :text {weather.icon}
+        :style "color: ${weather.hex}"
+        :class "icon"
+        :valign "center"
+      )
+      (label
+        :text {weather.temperature}
+        :style "color: ${weather.hex}"
+        :valign "center"
+      )
+    )
+  )
 )

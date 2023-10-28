@@ -1,0 +1,43 @@
+#!/usr/bin/python
+
+import subprocess, json
+
+out = subprocess.getoutput("nmcli --fields SSID,BARS,SECURITY,IN-USE device wifi list | sed 1d").strip()
+out = out.split("\n")
+out = [line.split() for line in out]
+
+networkList = []
+
+for line in out:
+    try:
+        in_use = "True" if line[3] == "*" else "False"
+    except IndexError:
+        in_use = "False"
+
+    if line[1] == "▂▄▆█":
+        line[1] = "󰤨"
+    elif line[1] == "▂▄▆_":
+        line[1] = "󰤥"
+    elif line[1] == "▂▄__":
+        line[1] = "󰤢"
+    elif line[1] == "▂___":
+        line[1] = "󰤟"
+    elif line[1] == "▂___":
+        line[1] = "󰤟"
+    else:
+        line[1] = "󰤯"
+
+    dict = {
+        "SSID": line[0] ,
+        "SIGNAL": line[1],
+        "SECURITY": line[2],
+        "IN-USE": in_use
+    }
+
+    networkList.append(dict)
+
+
+for i in range(len(networkList)):
+    networkList[i] = json.dumps(networkList[i])
+    print(networkList[i])
+print(networkList)

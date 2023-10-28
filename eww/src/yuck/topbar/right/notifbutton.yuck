@@ -1,23 +1,3 @@
-(defwidget notifButton []
-  (revealer
-    :reveal {arraylength(notifHist) > 0 ? true : false}
-    :transition "slideleft"
-    
-    (eventbox
-      :onclick "eww open notifDashboard --toggle"
-      :cursor "pointer"
-      (box
-        :class "notifButton"
-        (label
-          :text "󱅫"
-          :class "icon"
-            :halign "center"
-        )
-        
-      )
-    )
-  )
-)
 
 (defwindow notifDashboard
   :stacking "fg"
@@ -36,6 +16,28 @@
       :class "notifHistoryBox"
       ; :space-evenly false
       (notifHistory)
+    )
+  )
+)
+
+
+(defwidget notifButton []
+  (revealer
+    :reveal {notifications.count > 0}
+    :transition "slideleft"
+    
+    (eventbox
+      :onclick "eww open notifDashboard --toggle"
+      :cursor "pointer"
+      (box
+        :class "notifButton"
+        (label
+          :text "󱅫"
+          :class "icon"
+            :halign "center"
+        )
+        
+      )
     )
   )
 )
@@ -75,12 +77,12 @@
             )
           )
           (revealer
-            :reveal {arraylength(notifHist) > 0 ? true : false}
+            :reveal {notifications.count > 0}
             :transition "slideleft"
             
             (button
               :halign "end"
-              :onclick "./scripts/notifManage --clear"
+              :onclick "./scripts/notifManage clear"
               :class "clearEventbox"
               :cursor "pointer"
               
@@ -99,22 +101,24 @@
           :space-evenly false
           :class "notifmenuBox"
           :space-evenly false
-          :spacing 5
+          :spacing 15
           :orientation "v"
           :hexpand true
           
-          (for n in {notifHist}
-            (notifpopup
-              :id {n.id}
-              :source {n.source}
-              :title {n.title}
-              :content {n.content}
-              :time {n.time}
-              :onClose "./scripts/notifManage --del ${n.id}"
-            )
+          (for notif in {notifications.notifications}
+                (notifpopup
+                    :id {notif.id}
+                    :source {notif.app}
+                    :title {notif.summary}
+                    :content {notif.body}
+                    :imgPath {notif.image}
+                    :time {notif.time}
+                    :onClose "zsh ./scripts/notifManage dismiss ${notif.id}"
+                    :onClose2 "zsh ./scripts/notifManage close ${notif.id}"
+                )
           )
           (box
-            :visible {arraylength(notifHist) > 0 ? false : true}
+            :visible {notifications.count < 0}
             :orientation "v"
             :space-evenly false
             :vexpand true

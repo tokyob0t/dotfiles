@@ -1,0 +1,99 @@
+#!/usr/bin/python
+
+import subprocess
+import json
+import gi
+
+from configparser import ConfigParser
+
+# Ensure compatibility with Gtk 3.0
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import Gtk
+
+
+def get_gtk_icon(icon_name):
+    if icon_name is not None:
+        theme = Gtk.IconTheme.get_default()
+        icon_info = theme.lookup_icon(icon_name.lower(), 128, 0)
+
+        if icon_info is not None:
+            return icon_info.get_filename()
+
+        icon_info = theme.lookup_icon(icon_name.capitalize(), 128, 0)
+
+        if icon_info is not None:
+            return icon_info.get_filename()
+
+        icon_info = theme.lookup_icon(icon_name, 128, 0)
+
+        if icon_info is not None:
+            return icon_info.get_filename()
+    return None
+
+# Function to obtain window information
+def get_window_info(window_id):
+    try:
+        # Use xprop to get the WM_CLASS of the window
+        window_info = subprocess.check_output(["xprop", "-id", window_id, "WM_CLASS"], stderr=subprocess.DEVNULL).decode().split()[-1].strip('",')
+        if window_info:
+            window_name = window_info
+            icon_path = get_gtk_icon(window_name)
+            return {"window_id": window_id, "window_name": window_name, "icon_path": icon_path}
+    except subprocess.CalledProcessError:
+        pass
+
+# Function to obtain information about windows in a workspace
+def get_workspace_windows(monitor=None):
+    if monitor:
+        monitor_arg = ["--monitor", monitor]
+    else:
+        monitor_arg = []
+
+    # Get the currently focused workspace
+    focused_workspace = subprocess.check_output(["bspc", "query", "-D", "-d", "focused", "--names"]).decode().strip()
+
+    # Get the list of desktops (workspaces) on the specified monitor
+    desktops = subprocess.check_output(["bspc", "query", "-D", "--names"] + monitor_arg).decode().split()
+
+    # Initialize a dictionary to store window information by workspace
+    workspace_data = {"workspace_active": focused_workspace, "workspaces": []}
+
+    for desktop in desktops:
+        try:
+            # Get the windows in the current workspace
+            desktop_windows = subprocess.check_output(["bspc", "query", "-N", "-d", desktop] + monitor_arg, stderr=subprocess.DEVNULL).decode().split()
+
+            # Initialize an array to store window information
+            windows = []
+
+            # Add window information to the array
+            for window in desktop_windows:
+                window_info = get_window_info(window)
+
+                # Exclude windows with WM_CLASS equal to "eww" or "Eww"
+                if window_info and "eww" not in window_info["window_name"].lower():
+                    windows.append({"window_id": window_info["window_id"], "window_name": window_info["window_name"].capitalize(), "icon_path": window_info["icon_path"]})
+
+            # Add the array of windows to the dictionary by workspace
+            if windows:  # Only add if the list of windows is not empty
+                workspace_data["workspaces"].append({"workspace": desktop, "windows": windows})
+        except subprocess.CalledProcessError:
+            pass
+
+    return workspace_data
+
+# Function to update Eww with window entries
+def update_eww(entries):
+    subprocess.run(["eww", "update", f"windows={json.dumps(entries)}"])
+
+# Subscribe to window changes
+proc = subprocess.Popen(["bspc", "subscribe", "node_add", "node_remove"], stdout=subprocess.PIPE, text=True)
+
+if __name__ == "__main__":
+
+    while True:
+        _ = proc.stdout.readline()
+
+        print(json.dumps(get_workspace_windows()))
+        update_eww(get_workspace_windows())

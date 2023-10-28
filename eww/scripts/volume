@@ -39,11 +39,14 @@ elif [[ $1 == "--up" ]]; then
     
     if (( new_volume <= 100 )); then
         pactl set-sink-volume @DEFAULT_SINK@ +5%
+        vol=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1)
+        
         zsh "$dir/osd" "$icon" "$vol" > /dev/null 2>&1 &
     fi
 
 elif [[ $1 == "--down" ]]; then
     pactl set-sink-volume @DEFAULT_SINK@ -5%
+    vol=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1)
 
     zsh "$dir/osd" "$icon" "$vol" > /dev/null 2>&1 &
     

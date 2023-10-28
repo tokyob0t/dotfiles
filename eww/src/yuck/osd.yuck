@@ -7,7 +7,7 @@
   
   :geometry (geometry
     :x "0%"
-    :y "-5%"
+    :y "-15%"
     :width "200px"
     :height "26px"
     :anchor "center bottom"

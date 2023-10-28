@@ -24,14 +24,17 @@
     :height "50px"
     :anchor "top center"
   )  
-  (centerbox
+  (eventbox
+    :cursor "default"
+
+    (centerbox
     :class "topbar_box"
     :orientation "h"
  
     (left_module)
     (center_module)
     (right_module)
-  )
+  ))
 )
 
 (defwidget left_module []
@@ -40,8 +43,10 @@
     :space-evenly false
     :orientation "h"
     :halign "start"
+    :spacing 10
     (layout_widget)
     (time_module)
+    (weather_module)
     )
 )
 

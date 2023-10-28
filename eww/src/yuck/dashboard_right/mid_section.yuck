@@ -416,7 +416,7 @@
         :height 75
         :space-evenly false
         :style "background-image: url(\"${playerctl.artUrl}\");"
-        :visible {strlength(playerctl.artUrl) == 0 ? false : true}
+        :visible {strlength(playerctl.artUrl) > 0}
       )
       
       (box
@@ -436,7 +436,9 @@
         )
         (box
           :space-evenly true
-          :style "padding-bottom: 5px;   mix-blend-mode: difference;"
+          :style "padding-bottom: 5px;"
+          :valign "center"
+          
           (button
             :onclick "playerctl shuffle Toggle"
             (label :text {playerctlShuffle == "On" ? "󰒝" : "󰒞"} :class "icon"))
@@ -478,12 +480,13 @@
           
         )
         (scale
-          :visible {playerctl.length != "" ? true : false}
-          :class "music_scale Scale"
-          :value playerctlCTime
-          :min 0
-          :max {playerctl.length / 1000000}
-          :onchange "playerctl position {} &"
+            :class "music_scale Scale"
+            :value playerctlCTime
+            :min 0
+            :max {playerctl.length / 1000000}
+            :onchange "playerctl position {} &"
+            :visible {playerctl.length != ""}
+            :valign "end"
         )
       )
     )

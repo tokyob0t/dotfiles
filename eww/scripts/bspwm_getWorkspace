@@ -31,5 +31,6 @@ get_workspace_info() {
 # Escuchar cambios en bspwm
 bspc subscribe desktop node_transfer | while read -r _ ; do
     workspace_info=$(get_workspace_info)
+    eww update workspaces="$workspace_info"
     echo "$workspace_info"
 done

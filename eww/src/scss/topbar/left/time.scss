@@ -1,7 +1,11 @@
 .time_module {
-    margin: 10px;
+    margin: 10px 0;
     padding: 0 15px;
     background-color: $base01;
     border-radius: $outer_border-radius;
     font-size: 17px;
+    
+    .icon {
+        font-size: 30px;
+    }
 }

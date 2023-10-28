@@ -1,0 +1,91 @@
+(defwindow windowSwitcher
+  :geometry (geometry
+    :width "100%"
+    :height "22%"
+    :anchor "bottom center"
+  )
+  
+  :windowtype "dock"
+  :stacking "bg"
+  
+    
+    (eventbox
+    :class "windowEventBoxes"
+    :hexpand true
+    :vexpand true
+    :onhoverlost "eww close windowSwitcher"
+    
+    (scroll
+      :hscroll true
+      
+      (box
+        :hexpand true
+        :space-evenly false
+        :spacing 20
+        :orientation "h"
+        :halign "center"
+        :valign "center"
+        
+        (for i in {windows.workspaces}
+          (box
+            :orientation "v"
+            :space-evenly false
+            :halign "center"
+            :valign "center"
+            :class "windowsContainers"
+            :spacing 10
+            (label
+              :text "Workspace ${i.workspace}"
+              :halign "center"
+              :class "workspaceName"
+            )
+            
+            (box
+              :space-evenly false
+              :spacing 10
+              :valign "center"
+              :halign "center"
+              :class "workspacesBoxes"
+              (for j in {i.windows}
+                (windowWorkspace
+                  :workspace {i.workspace}
+                  :id {j.window_id}
+                  :name {j.window_name}
+                  :icon {j.icon_path}
+                )
+              )
+            )
+          )
+        )
+
+    )
+  ))
+)
+
+(defwidget windowWorkspace [workspace id name icon]
+  (eventbox
+    :onclick "./scripts/bspwm_changeWorkspace --setnode ${id}"
+    :cursor "pointer"
+    :class "workspaceWindowEventbox"
+
+    (box
+      :space-evenly false
+      :class "workspaceWindowsBox"
+      :orientation "v"
+      
+      (label
+        :text name
+        :valign "start"
+        :halign "start"
+        :class "windowName"
+      )
+      
+      (image
+        :path icon
+        :image-width 35
+        :image-height 35
+        :class "windowIcon"
+      )
+    )
+  )
+)

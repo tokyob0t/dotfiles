@@ -1,4 +1,6 @@
 #!/usr/bin/bash
+
+
 # https://github.com/Axarva/dotfiles-2.0/
 
 tmp_weather="$HOME/.cache/eww/weather"
@@ -17,8 +19,8 @@ fi
 #(completely free I swear, and then get your API Key and  your City ID)
 # I wish I was smart enough to do it like Elena, but this is the top I could do lol
 
-KEY=""
-ID=""
+KEY="" # Put your key here
+ID="" # Put city id here
 UNIT="metric" #Options are 'metric' and 'imperial'
 weather=$(curl -sf "http://api.openweathermap.org/data/2.5/weather?APPID="$KEY"&id="$ID"&units="$UNIT"")
 
@@ -27,109 +29,77 @@ if [ ! -z "$weather" ]; then
     weather_icon_code=$(echo "$weather" | jq -r ".weather[].icon" | head -1)
 	weather_description=$(echo "$weather" | jq -r ".weather[].description" | head -1 | sed -e "s/\b\(.\)/\u\1/g")
 
-	#Big long if statement of doom
-    if [[ "$weather_icon_code" == "50d"  ]]; then
-		weather_icon=""
+
+    if [[ "$weather_icon_code" == "50d" || "$weather_icon_code" == "40d" ]]; then
+		weather_icon=""
         weather_quote1="Forecast says it's misty"
         weather_quote2="Make sure you don't get lost on your way..."
-        weather_hex="#84afdb"  #a7b8b2
-    elif [[ "$weather_icon_code" == "50n"  ]]; then
-        weather_icon=""
+        weather_hex="#a7b8b2"
+
+    elif [[ "$weather_icon_code" == "50n" || "$weather_icon_code" == "40n"   ]]; then
+        weather_icon=""
         weather_quote1="Forecast says it's a misty night"
         weather_quote2="Don't go anywhere tonight or you might get lost..."
         weather_hex="#84afdb"
+
     elif [[ "$weather_icon_code" == "01d"  ]]; then
-        weather_icon=""
+        weather_icon="󰖙"
         weather_quote1="It's a sunny day, gonna be fun!"
         weather_quote2="Don't go wandering all by yourself though..."
         weather_hex="#ffd86b"
+
     elif [[ "$weather_icon_code" == "01n"  ]]; then
-        weather_icon=""
+        weather_icon=""
         weather_quote1="It's a clear night"
         weather_quote2="You might want to take a evening stroll to relax..."
         weather_hex="#fcdcf6"
-    elif [[ "$weather_icon_code" == "02d"  ]]; then
-        weather_icon=""
+    elif [[ "$weather_icon_code" == "02d" || "$weather_icon_code" == "03d" ||  "$weather_icon_code" == "04d" ]]; then
+        weather_icon=""
         weather_quote1="It's  cloudy, sort of gloomy"
         weather_quote2="You'd better get a book to read..."
         weather_hex="#adadff"
-    elif [[ "$weather_icon_code" == "02n"  ]]; then
-        weather_icon=""
+    elif [[ "$weather_icon_code" == "02n" || "$weather_icon_code" == "03n" || "$weather_icon_code" == "04n" ]]; then
+        weather_icon=""
         weather_quote1="It's a cloudy night"
         weather_quote2="How about some hot chocolate and a warm bed?"
         weather_hex="#adadff"
-    elif [[ "$weather_icon_code" == "03d"  ]]; then
-        weather_icon=""
-        weather_quote1="It's  cloudy, sort of gloomy"
-        weather_quote2="You'd better get a book to read..."
-        weather_hex="#adadff"
-    elif [[ "$weather_icon_code" == "03n"  ]]; then
-        weather_icon=""
-        weather_quote1="It's a cloudy night"
-        weather_quote2="How about some hot chocolate and a warm bed?"
-        weather_hex="#adadff"
-    elif [[ "$weather_icon_code" == "04d"  ]]; then
-        weather_icon=""
-        weather_quote1="It's  cloudy, sort of gloomy"
-        weather_quote2="You'd better get a book to read..."
-        weather_hex="#adadff"
-    elif [[ "$weather_icon_code" == "04n"  ]]; then
-        weather_icon=""
-        weather_quote1="It's a cloudy night"
-        weather_quote2="How about some hot chocolate and a warm bed?"
-        weather_hex="#adadff"
-    elif [[ "$weather_icon_code" == "09d"  ]]; then
-        weather_icon=""
+    elif [[ "$weather_icon_code" == "09d" || "$weather_icon_code" == "10d"  ]]; then
+        weather_icon=""
         weather_quote1="It's rainy, it's a great day!"
         weather_quote2="Get some ramen and watch as the rain falls..."
         weather_hex="#6b95ff"
-    elif [[ "$weather_icon_code" == "09n"  ]]; then
-        weather_icon=""
+    elif [[ "$weather_icon_code" == "09n" || "$weather_icon_code" == "10n" ]]; then
+        weather_icon=""
         weather_quote1="It's gonna rain tonight it seems"
         weather_quote2="Make sure your clothes aren't still outside..."
         weather_hex="#6b95ff"
-    elif [[ "$weather_icon_code" == "10d"  ]]; then
-        weather_icon=""
-        weather_quote1="It's rainy, it's a great day!"
-        weather_quote2="Get some ramen and watch as the rain falls..."
-        weather_hex="#6b95ff"
-    elif [[ "$weather_icon_code" == "10n"  ]]; then
-        weather_icon=""
-        weather_quote1="It's gonna rain tonight it seems"
-        weather_quote2="Make sure your clothes aren't still outside..."
-        weather_hex="#6b95ff"
+
     elif [[ "$weather_icon_code" == "11d"  ]]; then
-        weather_icon=""
+        weather_icon=""
         weather_quote1="There's storm for forecast today"
         weather_quote2="Make sure you don't get blown away..."
         weather_hex="#ffeb57"
+
     elif [[ "$weather_icon_code" == "11n"  ]]; then
-        weather_icon=""
+        weather_icon=""
         weather_quote1="There's gonna be storms tonight"
         weather_quote2="Make sure you're warm in bed and the windows are shut..."
         weather_hex="#ffeb57"
+
     elif [[ "$weather_icon_code" == "13d"  ]]; then
-        weather_icon=""
+        weather_icon=""
         weather_quote1="It's gonna snow today"
         weather_quote2="You'd better wear thick clothes and make a snowman as well!"
         weather_hex="#e3e6fc"
+
     elif [[ "$weather_icon_code" == "13n"  ]]; then
-        weather_icon=""
+        weather_icon=""
         weather_quote1="It's gonna snow tonight"
         weather_quote2="Make sure you get up early tomorrow to see the sights..."
         weather_hex="#e3e6fc"
-    elif [[ "$weather_icon_code" == "40d"  ]]; then
-        weather_icon=""
-        weather_quote1="Forecast says it's misty"
-        weather_quote2="Make sure you don't get lost on your way..."
-        weather_hex="#84afdb"
-    elif [[ "$weather_icon_code" == "40n"  ]]; then
-        weather_icon=""
-        weather_quote1="Forecast says it's a misty night"
-        weather_quote2="Don't go anywhere tonight or you might get lost..."
-        weather_hex="#84afdb"
+
     else 
-        weather_icon=""
+        weather_icon="󰖐"
         weather_quote1="Sort of odd, I don't know what to forecast"
         weather_quote2="Make sure you have a good time!"
         weather_hex="#adadff"
@@ -140,7 +110,7 @@ if [ ! -z "$weather" ]; then
         echo $json
         eww update weather="$json"
     else
-        json="{\"icon\": \"\",\"description\": \"Weather Unavailable\",\"temperature\": \"-\",\"quoteOne\": \"Ah well, no weather huh?\",\"quoteTwo\":\"Even if there's no weather, it's gonna be a great day!\",\"hex\": \"#adadff\"}"
+        json="{\"icon\": \"󰖐\",\"description\": \"Weather Unavailable\",\"temperature\": \"-\",\"quoteOne\": \"Ah well, no weather huh?\",\"quoteTwo\":\"Even if there's no weather, it's gonna be a great day!\",\"hex\": \"#adadff\"}"
         echo $json
         eww update weather="$json"
 fi

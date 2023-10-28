@@ -23,8 +23,31 @@
       (aboutme)
       (quick_buttons)
       (quick_sliders)
+        (media_player)
       (quick_info)
-      (media_player)
     )
   )
 )
+
+(defwindow wifi_menu
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore true
+    :geometry (geometry
+      :x "-11px"
+      :y "58px"
+      :width "18%"
+      :anchor "top right"
+    )
+    
+    (eventbox
+      :onhoverlost "eww open wifi_menu --toggle"
+      (box
+        :class "dashboard"
+        :orientation "v"
+        :space-evenly false
+        :spacing 15
+
+      )
+    )
+  )

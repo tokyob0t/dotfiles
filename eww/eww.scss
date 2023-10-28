@@ -19,6 +19,9 @@ $base0E: #be95ff;
 $base0F: #82cfff;
 $baseA0: #6791da;
 
+$AltbaseA0: #6791da;
+
+
 $shadow00: 5px 5px 2px rgb(0, 0, 0, 0.4);
 $outer_border-radius: 10px;
 $inner_border-radius: 4px;
@@ -40,17 +43,25 @@ $button_icon: 5px 16px 5px 10px;
     .wallpaperImage {
         border-radius: $outer_border-radius;
         background-color: $base01;
-        // background-image: url("./img/arch_purple.png");
-        // background-size: cover;
+        // background-image: url("./img/wallpaper.png");
+        background-size: 100% 100%;
+        background-position: center;
     }
 }
 
 .icon {
-  font-family: "JetBrainsMono Nerd Font";
-  font-weight: bold;
-  font-size: 18px;
-  color: $base04;
-  padding: 2.5px 7px 2.5px 2.5px;
+  font-family: "Symbols Nerd Font";
+  font-size: 20px;
+}
+
+tooltip {
+    font-weight: 500;
+    font-size: 1rem;
+    color: $base04;
+    background: $base01;
+    border: 3px solid $base00;
+    border-radius: .5rem;
+    padding: 5px
 }
 
 @import "./src/scss/topbar.scss";
@@ -61,7 +72,10 @@ $button_icon: 5px 16px 5px 10px;
 @import "./src/scss/topbar/right/quicksettings.scss";
 @import "./src/scss/topbar/right/notifbutton.scss";
 
+@import "./src/scss/launcher.scss";
 @import "./src/scss/dashboard.scss";
 @import "./src/scss/notification.scss";
 @import "./src/scss/osd.scss";
 @import "./src/scss/calendar.scss";
+@import "./src/scss/powermenu.scss";
+@import "./src/scss/windowSwitcher.scss";

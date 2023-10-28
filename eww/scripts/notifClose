@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+
+eww open notifpopup 
+sleep 3
+eww close notifpopup
