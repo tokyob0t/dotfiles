@@ -1,37 +1,38 @@
 (defwindow notifpopup
   :stacking "fg"
   :windowtype "dock"
-  
   :geometry (geometry
     :x "-21px"
     :y "60px"
-    :width "250px"
+    :width "0%"
+    :height "0%"
     :anchor "top center"
   )
   
-  :class "notifpopup"
-  
-  (scroll
-    :vscroll true
-    :width 450
-    :height 500
+  (eventbox
+    :onhoverlost "eww close notifpopup"
     
-    (box
-      :space-evenly false
-      :spacing 10
-      :orientation "v"
-      :hexpand true
-      :vexpand true
-      (for notif in {notifications.popups}
-        (notifpopup
-          :id {notif.id}
-          :source {notif.app}
-          :title {notif.summary}
-          :content {notif.body}
-          :imgPath {notif.image}
-          :time {notif.time}
-          :onClose "zsh ./scripts/notifManage dismiss ${notif.id} &"
-          :onClose2 "zsh ./scripts/notifManage close ${notif.id} &"
+    (scroll
+      :vscroll true
+      :width 350
+      :height 500
+      (box
+        :space-evenly false
+        :spacing 10
+        :orientation "v"
+        :hexpand true
+        :vexpand true
+        (for notif in {notifications.popups}
+          (notifpopup
+            :id {notif.id}
+            :source {notif.app}
+            :title {notif.summary}
+            :content {notif.body}
+            :imgPath {notif.image}
+            :time {notif.time}
+            :onClose "zsh ./scripts/notifManage dismiss ${notif.id} &"
+            :onClose2 "zsh ./scripts/notifManage close ${notif.id} &"
+          )
         )
       )
     )
@@ -42,7 +43,7 @@
 (defwidget notifpopup [id source title content ?time ?onClose ?onClose2 ?imgPath ?actions]
   (eventbox
     :onclick onClose
-    :pointer "cursor"
+    :cursor "pointer"
     
     (box
       :orientation "v"
@@ -53,11 +54,10 @@
       (centerbox
         (label
           :text {
-          source == "discord" ? "󰙯":
-          source == "VencordDesktop" ? "󰙯":
-          source == "flameshot" ? "󰲍" :
-          source == "Spotify" ? "" :
-          source == "notify-send" ? "󰵅" : "󰵅"
+          source == "flameshot" || source == "Screenshot"  ? "󰲍" :
+          source == "discord" || source == "VencordDesktop" ? "󰙯":
+          source == "Firefox" ? "󰈹" :
+          source == "Spotify" ? "" : "󰵅"
           }
           :class "icon titlebar ${source}"
           :halign "start"
@@ -66,12 +66,9 @@
         ; "LabelTitlebar" of the popup
         (label
           :text {
-          source == "discord" ? "Discord":
-          source == "VencordDesktop" ? "Discord":
+          source == "discord" || source == "VencordDesktop" ? "Discord":
           source == "flameshot" ? "Screenshot" :
-          source == "Spotify" ? "Spotify" :
-          source == "notify-send" ? "Tiramisu" :
-          source
+          source == "Spotify" ? "Spotify" : source
           }
           :class "titlebar"
         )
@@ -83,7 +80,6 @@
           :halign "end"
           (label
             :text time
-            
             :class "titlebar"
           )
         )
@@ -94,8 +90,8 @@
       (box
         :space-evenly false
         :spacing 10
-        :orientation  {source != "Screenshot" && imgPath != "null" ? "h" : "v"}
-        
+        :orientation  {source == "Screenshot" ? "v" :"h"}
+        :halign {source != "Screenshot" && imgPath != "null" ? "start" :"center"}
         
         (box
           :visible {source != "Screenshot" && imgPath != "null"}
@@ -109,27 +105,66 @@
           :valign "center"
           :halign "center"
           :hexpand true
-          :width 100
+          :visible {source != "Screenshot"}
           
           (label
             :text title
             :tooltip title
-            :visible {source != "Screenshot"}
             :class "title"
             :halign "center"
             :valign "start"
             :limit-width 20
+            :xalign 0.5
           )
           
           (label
             :text content
             :tooltip content
-            :visible {source != "Screenshot"}
-            :halign "center"
+            :halign "start"
             :valign "start"
             :class "content"
             :limit-width 25
             :wrap true
+            :xalign 0
+            
+          )
+        )
+        (box
+          :orientation "v"
+          :visible {source == "Screenshot" && imgPath != "null"}
+          :space-evenly false
+          :spacing 10
+          
+          (box
+            :class "bigImage"
+            :style "background-image: url(\"${imgPath}\");"
+            :hexpand true
+          )
+          
+          (box
+            :space-evenly false
+            :spacing 10
+            :halign "center"
+            (button
+              :class "button"
+              :onclick "imv ${imgPath} &"
+              (box
+                :space-evenly false
+                :spacing 10
+                (label :text "󰒖" :class "icon shareIcon")
+                (label :text "Open")
+              )
+            )
+            (button
+              :class "button"
+              (box
+                :space-evenly false
+                :spacing 10
+                :onclick "rm ${imgPath} & zsh ./scripts/notifManage close ${id} &"
+                (label :text "" :class "icon delIcon")
+                (label :text "Delete")
+              )
+            )
           )
         )
       )
