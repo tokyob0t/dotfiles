@@ -30,8 +30,6 @@
             :content {notif.body}
             :imgPath {notif.image}
             :time {notif.time}
-            :onClose "zsh ./scripts/notifManage dismiss ${notif.id} &"
-            :onClose2 "zsh ./scripts/notifManage close ${notif.id} &"
           )
         )
       )
@@ -42,7 +40,9 @@
 ; We create the widget that contains the info of the notif, at the moment image display is not supported bc idk how to do it xd
 (defwidget notifpopup [id source title content ?time ?onClose ?onClose2 ?imgPath ?actions]
   (eventbox
-    :onclick onClose
+    :onclick "./scripts/notifManage --dismiss ${id} &"
+    :onrightclick "./scripts/notifManage --close ${id} &"
+    
     :cursor "pointer"
     
     (box
@@ -114,7 +114,7 @@
             :halign "center"
             :valign "start"
             :limit-width 20
-            :xalign 0.5
+            :xalign 0
           )
           
           (label
@@ -148,22 +148,12 @@
             (button
               :class "button"
               :onclick "imv ${imgPath} &"
-              (box
-                :space-evenly false
-                :spacing 10
-                (label :text "󰒖" :class "icon shareIcon")
-                (label :text "Open")
-              )
+              (label :text "Open")
             )
             (button
               :class "button"
-              (box
-                :space-evenly false
-                :spacing 10
-                :onclick "rm ${imgPath} & zsh ./scripts/notifManage close ${id} &"
-                (label :text "" :class "icon delIcon")
-                (label :text "Delete")
-              )
+              :onclick "rm ${imgPath} & ./scripts/notifManage --close ${id} &"
+              (label :text "Delete")
             )
           )
         )

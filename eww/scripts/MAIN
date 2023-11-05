@@ -9,15 +9,8 @@ killall eww
 eww daemon
 eww open topbar
 eww open wallpaper
+
 ## This now is managed by the notifCatch script
-# eww open notifpopup
 
-
-sleep 3
-
-# python $dir/notifCatch &
-bash $dir/airplanemode --get &
-# python $dir/apps &
-
-# notify-send "Startup Notification" "Welcome $(whoami)" &
-
+bash $dir/airplanemode --get > /dev/null 2>&1 &
+# bash $dir/bspwm_hideTopbar  > /dev/null 2>&1 &

@@ -35,12 +35,12 @@ elif [[ $1 == "--up" ]]; then
 
     icon=$(icon "$(getValue)")
     
-    zsh "$dir/osd" "$icon" "$(getValue)"
+    zsh "$dir/osd" "$icon" "$(getValue)" > /dev/null 2>&1 &
 
 elif [[ $1 == "--down" ]]; then
     brightnessctl set 5%-
 
     icon=$(icon "$(getValue)")
-    zsh "$dir/osd" "$icon" "$(getValue)"
+    zsh "$dir/osd" "$icon" "$(getValue)" > /dev/null 2>&1 &
 
 fi

@@ -58,13 +58,11 @@ elif [[ $1 == "--toggle" ]]; then
         pactl set-sink-mute @DEFAULT_SINK@ toggle
         volume_icon="$(icon $vol)"
         volume_level=$vol
-    
+        zsh "$dir/osd" "$volume_icon" "$volume_level" > /dev/null 2>&1 &
     else
         pactl set-sink-mute @DEFAULT_SINK@ toggle
         volume_icon="󰝟"
         volume_level=--
-    
+        zsh "$dir/osd" "$volume_icon" "$volume_level" > /dev/null 2>&1 &
     fi
-    
-    zsh "$dir/osd" "$volume_icon" "$volume_level"
 fi

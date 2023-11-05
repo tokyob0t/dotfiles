@@ -6,8 +6,8 @@
   )
   
   :windowtype "desktop"
-  :stacking "bg"
-  
+  :stacking "fg"
+
   (eventbox
     :cursor "pointer"
     :hexpand true

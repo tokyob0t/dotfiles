@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# Función para verificar si una ventana está maximizada en el espacio de trabajo actual
+is_workspace_maximized() {
+    # Obtener la lista de ventanas en el espacio de trabajo actual
+    windows=$(bspc query -N -d focused)
+    
+    # Verificar si alguna ventana está maximizada
+    for window in $windows; do
+        if bspc query -T -n "$window" | grep -q '"state":"fullscreen"'; then
+            return 0  # Ventana maximizada encontrada
+        fi
+    done
+    return 1  # Ninguna ventana maximizada encontrada
+}
+
 # Obtener información de workspaces y crear un JSON
 get_workspace_info() {
     monitor=""
@@ -21,7 +35,14 @@ get_workspace_info() {
             class="empty"
         fi
 
-        workspaces+=("{\"id\":\"$d\",\"state\":\"$class\"}")
+        # Verificar si hay una ventana maximizada en este espacio de trabajo
+        if is_workspace_maximized; then
+            maximizedwin="true"
+        else
+            maximizedwin="false"
+        fi
+
+        workspaces+=("{\"id\":\"$d\",\"state\":\"$class\",\"maximizedwin\":\"$maximizedwin\"}")
     done
 
     # Generar JSON

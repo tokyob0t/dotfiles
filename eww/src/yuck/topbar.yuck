@@ -16,25 +16,29 @@
   :windowtype "dock"
   :class "topbar_window"
   :reserve (struts :distance "50px" :side "top")
-
+  
+  :exclusive true
+  
   :geometry (geometry
     :x "0%"
     :y "0%"
     :width "100%"
     :height "50px"
     :anchor "top center"
-  )  
+  )
+  
   (eventbox
     :cursor "default"
-
+    
     (centerbox
-    :class "topbar_box"
-    :orientation "h"
- 
-    (left_module)
-    (center_module)
-    (right_module)
-  ))
+      :class "topbar_box"
+      :orientation "h"
+      
+      (left_module)
+      (center_module)
+      (right_module)
+    )
+  )
 )
 
 (defwidget left_module []
@@ -47,7 +51,7 @@
     (layout_widget)
     (time_module)
     (weather_module)
-    )
+  )
 )
 
 (defwidget center_module []
@@ -55,7 +59,7 @@
     :class "center_module_box module"
     :space-evenly false
     :halign "center"
-
+    
     (workspaces)
   )
 )
@@ -68,6 +72,6 @@
     (tray)
     (quicksettings)
     (notifButton)
-        
-    )
+    
+  )
 )

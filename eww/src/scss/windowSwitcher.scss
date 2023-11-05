@@ -9,23 +9,40 @@
 
     .workspaceWindowsBox {
       border-radius: 8px;
-      padding: 50px 100px;
+      // padding: 50px 100px;
+      border: 1px solid $base02;
       background: $base02;
       margin: 5px;
+      min-width: 300px;
+      min-height: 150px;
+
+      .windowTitlebar {
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
+        background: $base02;
+        padding: 0 5px;
+        .closeWindow {
+          .icon {
+            color: $base02;
+            transition: 250ms;
+          }
+        }
+        .closeWindow:hover {
+          .icon {
+            color: $baseA0;
+          }
+        }
+      }
     }
   }
+
   .workspaceWindowEventbox {
     // background: $base00;
     border-radius: 8px;
     transition: 250ms;
-}
+  }
 
   .workspaceWindowEventbox:hover {
     border: 5px solid $baseA0;
   }
-}
-
-.windowIcon {
-  background-size: cover;
-  background-position: center;
 }

@@ -8,8 +8,8 @@
   :windowtype "dock"
   :stacking "bg"
   
-    
-    (eventbox
+  
+  (eventbox
     :class "windowEventBoxes"
     :hexpand true
     :vexpand true
@@ -57,34 +57,35 @@
             )
           )
         )
-
+        
+      )
     )
-  ))
+  )
 )
 
 (defwidget windowWorkspace [workspace id name icon]
   (eventbox
-    :onclick "./scripts/bspwm_changeWorkspace --setnode ${id}"
+    :onclick "./scripts/bspwm_setWorkspace --setnode ${id}"
     :cursor "pointer"
     :class "workspaceWindowEventbox"
-
+    
     (box
       :space-evenly false
       :class "workspaceWindowsBox"
       :orientation "v"
-      
-      (label
-        :text name
-        :valign "start"
-        :halign "start"
-        :class "windowName"
-      )
-      
+        (label
+          :class "windowName"
+          :halign "center"
+          :hexpand true
+          :text {name == "Org.wezfurlong.wezterm" ? "Wezterm" : name}
+        )
       (image
         :path icon
-        :image-width 35
-        :image-height 35
+        :image-width 45
+        :image-height 45
         :class "windowIcon"
+        :tooltip name
+        :vexpand true
       )
     )
   )

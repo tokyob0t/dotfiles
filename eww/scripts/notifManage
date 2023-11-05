@@ -45,9 +45,9 @@ toggle_dnd() {
         org.freedesktop.Notifications.ToggleDND
 }
 
-if [[ $1 == 'dismiss' ]]; then dismiss $2 $3; fi
-if [[ $1 == 'close' ]]; then close $2; fi
-if [[ $1 == 'action' ]]; then action $2 $3; fi
-if [[ $1 == 'clear' ]]; then clear_all; fi
-if [[ $1 == 'listen' ]]; then listen; fi
-if [[ $1 == 'toggle' ]]; then toggle_dnd; fi
+if [[ $1 == '--dismiss' ]]; then dismiss $2 $3; fi
+if [[ $1 == '--close' ]]; then close $2; fi
+if [[ $1 == '--action' ]]; then action $2 $3; fi
+if [[ $1 == '--clear' ]]; then clear_all; fi
+if [[ $1 == '--listen' ]]; then listen; fi
+if [[ $1 == '--toggle' ]]; then toggle_dnd; fi

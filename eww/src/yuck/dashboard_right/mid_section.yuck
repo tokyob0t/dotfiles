@@ -3,17 +3,16 @@
   (box
     :class "quick_actions"
     :orientation "v"
-    (eventbox
-      :onclick "./scripts/toggle_var --toggle notifMuted &"
-      :cursor "pointer"
+    (button
+      :onclick "./scripts/notifManage --toggle"
       (box
         :space-evenly false
         :halign "center"
         :valign "center"
-        :class "Button ${notifMuted == false ? 'offButton' : 'onButton'}"
+        :class "Button ${notifications.dnd ? 'offButton' : 'onButton'}"
         
         (label
-          :text {notifMuted == true ? "󰂛" : "󰂚"}
+          :text {notifications.dnd ? "󰂛" : "󰂚"}
           :class "icon"
           :halign "center"
           :valign "center"
@@ -24,12 +23,11 @@
       :onclick "./scripts/airplanemode --toggle &"
       :cursor "pointer"
       (box
-
         :space-evenly false
         :halign "center"
         :valign "center"
         :class "Button ${airplaneMode == false ? 'offButton' : 'onButton'}"
-
+        
         (label
           :text ""
           :class "icon"
@@ -39,7 +37,8 @@
       )
     )
     (eventbox
-      :onclick "./scripts/screenshot &"
+      :onclick "./scripts/screenshot --sel &"
+      :onrightclick "./scripts/screenshot --all &"
       :cursor "pointer"
       (box
         :space-evenly false
@@ -240,7 +239,7 @@
 )
 
 
-(defwidget icon_sliders [icon ?value ?onClickButton onChangeSlider]
+(defwidget icon_sliders [icon ?value ?onClickButton onChangeSlider ?angle]
   (box
     :space-evenly false
     :hexpand true
@@ -251,6 +250,7 @@
         :class "icon"
         :tooltip "${value}%"
         :text icon
+        :angle angle
       )
     )
     (scale
@@ -401,15 +401,12 @@
 (defwidget media_player []
   (revealer
     :transition "slideup"
-    :reveal {
-    playerctlStatus == "Playing" ? true :
-    playerctlStatus == "Paused" ? true : false
-    }
+    :reveal {playerctlStatus == "Playing" || playerctlStatus == "Paused" ? true : false }
     
     (box
       :class "music_box"
-      :orientation "h"
       :space-evenly false
+
       (box
         :class "music_cover"
         :width 75
@@ -433,6 +430,7 @@
         (label
           :text {playerctl.artist}
           :class "music_artist label"
+          :limit-width 15
         )
         (box
           :space-evenly true
@@ -480,13 +478,13 @@
           
         )
         (scale
-            :class "music_scale Scale"
-            :value playerctlCTime
-            :min 0
-            :max {playerctl.length / 1000000}
-            :onchange "playerctl position {} &"
-            :visible {playerctl.length != ""}
-            :valign "end"
+          :class "music_scale Scale"
+          :value playerctlCTime
+          :min 0
+          :max {playerctl.length / 1000000}
+          :onchange "playerctl position {} &"
+          :visible {playerctl.length != ""}
+          :valign "end"
         )
       )
     )

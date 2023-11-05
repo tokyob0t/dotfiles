@@ -1,7 +1,8 @@
 (defwindow launcher
+    :monitor 0
   :stacking "fg"
   :windowtype "dialog"
-  
+  :focusable true
   :geometry (geometry
     :x "-11px"
     :y "0px"
@@ -9,7 +10,6 @@
     :height "50%"
     :anchor "center"
   )
-  
   (eventbox
     :onhoverlost "${EWW_CMD} close launcher"
     :cursor "default"

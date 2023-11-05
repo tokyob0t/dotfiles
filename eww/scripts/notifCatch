@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
-# https://github.com/juminai/dotfiles/
-### SCRIPT MADE BY @juminai
+# juminai @ github
 
 import gi
 import datetime
@@ -57,7 +56,9 @@ class NotificationDaemon(dbus.service.Object):
 
     @dbus.service.method("org.freedesktop.Notifications", in_signature="susssasa{sv}i", out_signature="u")
     def Notify(self, app_name, replaces_id, app_icon, summary, body, actions, hints, expire_timeout):
-        
+        command = "zsh /home/$(whoami)/.config/eww/scripts/notifClose  > /dev/null 2>&1 & "
+        subprocess.run(command, shell=True)
+
         if int(replaces_id) != 0:
             id = int(replaces_id)
         else:
@@ -164,11 +165,7 @@ class NotificationDaemon(dbus.service.Object):
 
 
     def write_log_file(self, data):
-
-        command = "zsh /home/$(whoami)/.config/eww/scripts/notifClose &"
-        subprocess.run(command, shell=True)
-
-        output_json = json.dumps(data, indent=2)
+        output_json = json.dumps(data)
         subprocess.run(["eww", "update", f"notifications={output_json}"])
 
 

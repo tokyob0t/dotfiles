@@ -1,0 +1,155 @@
+(defwindow wifi_menu
+  :stacking "fg"
+  :windowtype "dock"
+  :geometry (geometry
+    :x "-11px"
+    :y "58px"
+    :width "18%"
+    :anchor "top right"
+  )
+  
+  (box
+    :orientation "v"
+    :space-evenly false
+    :spacing 20
+    (wifi_entries)
+    (wifi_connect)
+  )
+  
+)
+
+(defwidget wifi_entries []
+  (box
+    :orientation "v"
+    :space-evenly false
+    :hexpand true
+    :spacing 10
+    :class "dashboard"
+    
+    (label
+      :text "Wifi Menu"
+    )
+    (scroll
+      :height 300
+      (box
+        :orientation "v"
+        :space-evenly false
+        
+        :spacing 5
+        (for wifi in {wifiList}
+          (wifi_entry
+            :BSSID {wifi.BSSID}
+            :SSID {wifi.SSID}
+            :SIGNAL {wifi.SIGNAL}
+            :SIGNAL_ICON {wifi.SIGNAL_ICON}
+            :SECURITY {wifi.SECURITY}
+            :SECURITY_ICON {wifi.SECURITY_ICON}
+            :CONNECTED {wifi.SSID == wifiInfo.name}
+          )
+        )
+      )
+    )
+  )
+)
+
+
+(defwidget wifi_entry [BSSID SSID SIGNAL SIGNAL_ICON SECURITY SECURITY_ICON CONNECTED]
+  (eventbox
+    :onclick "eww update wifiSelectedSSID='${SSID}'"
+    (box
+      :space-evenly false
+      :valign "start"
+      :hexpand true
+      :class "wifi_entryBox"
+      :tooltip "
+      BSSID: ${BSSID}
+      SSID: ${SSID}
+      SEC: ${SECURITY}
+      SIGNAL: ${SIGNAL}
+      "
+      (box
+        :orientation "v"
+        :halign "start"
+        :hexpand true
+        (box
+          :space-evenly false
+          :spacing 5
+          (label
+            :text SSID
+            :xalign 0
+            :class "SSID"
+          )
+        )
+        
+        (label
+          :text SECURITY
+          :xalign 0
+          :class "SECURITY"
+        )
+      )
+      
+      (box
+        :space-evenly false
+        :spacing 10
+        :halign "end"
+        :class "iconBox"
+        (label
+          :text {CONNECTED ? "" : SECURITY_ICON}
+          :xalign 0
+          :class "SECURITY_ICON icon ${
+          CONNECTED ? 'connected' :
+          SECURITY_ICON == '' ? 'locked' : 'unlocked'}"
+        )
+        (label
+          :text SIGNAL_ICON
+          :halign "end"
+          :class "SIGNAL_ICON icon"
+        )
+      )
+    )
+  )
+)
+
+
+
+(defwidget wifi_connect []
+  (revealer
+    :reveal {wifiSelectedSSID != "None"}
+    :transition "slideup"
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      :hexpand true
+      :spacing 10
+      :class "dashboard"
+      
+      (label
+        :text "Connect to ${wifiSelectedSSID}"
+      )
+      (box
+        :space-evenly false
+        :class "passInputBox"
+        :spacing 5
+        
+        (input
+          :height 30
+          :password wifiPassVisible
+          :hexpand true
+          :class "input"
+          :onchange "./scripts/wifi_connect {}"
+        )
+        (button
+          :onclick "./scripts/toggle_var --toggle wifiPassVisible"
+          :width 20
+          :class "button"
+          (label
+            :text {wifiPassVisible ? "󰈈" : "󰈉"}
+            :class "icon"
+          )
+        )
+      )
+    )
+  )
+)
+

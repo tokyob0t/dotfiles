@@ -1,6 +1,5 @@
 #!/usr/bin/bash
 
-#!/usr/bin/bash
 param="$1"
 
 current=$(eww get workspaces)

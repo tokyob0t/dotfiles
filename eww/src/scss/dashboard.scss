@@ -1,13 +1,10 @@
 //General dashboard Settings. for all sections
 
-.dashboardWindow {
-  padding: 5px 10px;
-}
-
 .dashboard {
   padding: 15px;
   background: $base00;
   border-radius: 20px;
+  border: 1px solid $base01;
 }
 
 .checkbox {
@@ -136,7 +133,6 @@
   .name {
     font-size: 14px;
   }
-
 }
 
 .circprogress {
@@ -221,14 +217,14 @@
 
 .music_box {
   background-color: $base01;
-  border-radius: 10px;
-  padding: 5px;
+  border-radius: 20px;
+  padding: 10px 5px;
 
   .music_cover {
-    border-radius: 5px;
-    margin: 5px;
-    background-size: cover;
     background-position: center;
+    background-size: cover;
+    border-radius: 2.5px;
+    margin: 5px;
   }
 
   .music_scale {
@@ -242,7 +238,6 @@
 // Notif section
 
 .notifmenuTopBox {
-    
   .notifTitle {
     font-size: 18px;
   }

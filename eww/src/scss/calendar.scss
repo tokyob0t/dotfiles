@@ -1,58 +1,90 @@
+// Event style
+
+.eventBox {
+  background: $base01;
+  border-radius: 10px;
+  padding: 5px;
+
+  .eventIcon {
+    color: $base00;
+    padding: 10px 12.5px;
+    border-radius: 10px;
+    font-size: 25px;
+  }
+  .eventIcon.default {
+    background: $base0D;
+  }
+
+  .eventIcon.mid {
+    background-image: linear-gradient(45deg, $base0E, $base0A);
+  }
+
+  .eventIcon.high {
+    background: $base0A;
+  }
+
+  .eventContent {
+    color: $base03;
+  }
+}
+
+// Calendar styles
 .weatherMainBox {
   background: $base00;
+  border: 1px solid $base01;
   padding: 10px;
-  border-radius: $outer_border-radius;
+  border-radius: 20px;
+
+  .weatherWidget {
+    border-radius: 10px;
+    background: $base01;
+    padding: 5px 10px;
+  }
+
+  .bigClock {
+    font-size: 45px;
+  }
 
   .weatherTop {
-
     > .icon {
       font-size: 100px;
     }
   }
   .weatherQuoteBox {
-    all: unset;
-    padding: 5px 2.5px;
+    padding: 5px 10px;
+    // background: $base01;
+    border-radius: 10px;
 
     .quoteTwo {
-      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-family: roboto;
       font-style: italic;
       font-weight: 200;
       color: $base03;
     }
   }
 
-  .weatherBottom {
-    border-radius: $inner_border-radius;
+  .calendar {
+    border-radius: 20px;
+  }
 
-    calendar {
-      color: $base03;
+  calendar {
+    color: $base03;
+    padding: 8px;
 
-      .header {
-        font-weight: bold;
-        border-radius: $outer_border-radius;
-        color: $base01;
-        background-color: $baseA0;
-      }
-
-      .button {
-        color: $base02;
-        color: transparent;
-      }
-
-      .highlight {
-        color: $baseA0;
-        font-weight: bold;
-      }
+    .header {
+      color: $baseA0;
     }
 
-    calendar:selected {
-      color: $base01;
-      background-color: $baseA0;
-      border-radius: $outer_border-radius;
+    .button {
+      color: transparent;
     }
+  }
 
-    calendar:indeterminate {
-      color: $base02;
-    }
+  calendar:indeterminate {
+    color: $base02;
+  }
+
+  calendar:selected {
+    color: $baseA0;
   }
 }

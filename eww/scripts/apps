@@ -1,15 +1,7 @@
 #!/usr/bin/python
 
-# https://github.com/juminai/dotfiles/
-### SCRIPT MADE BY @juminai AND MODIFIED BY @tokyob0t
-
-
-
 import glob, sys, os, json, subprocess, gi
 from configparser import ConfigParser
-
-
-
 
 gi.require_version("Gtk", "3.0")
 
@@ -22,10 +14,9 @@ jsonPath = os.path.expanduser("~/.cache/eww/apps.json")
 PREFERRED_APPS = []
 
 # List of applications to be blacklisted (hidden)
-BLACKLISTED_APPS = [
-]
+BLACKLISTED_APPS = []
 
-# List of substrings used to blacklist applications
+# List of substrings used to blacklist applications (hidden)
 BLACKLISTED_SUBSTRINGS = [
     "avahi",
     "wayland"
@@ -58,7 +49,7 @@ def get_desktop_entries(file_path):
     
     # Check if the app_name contains any substring in the blacklist,
     # if NoDisplay is set, or if app_name is in the BLACKLISTED_APPS list
-    if any(substring in app_name.lower() for substring in BLACKLISTED_SUBSTRINGS) or parser.getboolean("Desktop Entry", "NoDisplay", fallback=False) or app_name in BLACKLISTED_APPS:
+    if any(substring in app_name.lower() for substring in BLACKLISTED_SUBSTRINGS) or app_name in BLACKLISTED_APPS or parser.getboolean("Desktop Entry", "NoDisplay", fallback=False):
         return None  # Skip applications with blacklisted substrings or NoDisplay=true
 
     icon_path = get_gtk_icon(parser.get("Desktop Entry", "Icon", fallback=None))
@@ -111,11 +102,17 @@ def get_cached_entries():
     return {"apps": all_apps, "preferred": preferred_apps}
 
 def filter_entries(entries, query):
-    filtered_data = [
-        entry for entry in entries["apps"]
-        if query.lower() in entry["name"].lower()
-        or (entry["comment"] and query.lower() in entry["comment"].lower())
-    ]
+    query = query.lower()
+    filtered_data = []
+
+    for entry in entries["apps"]:
+        name = entry["name"].lower()
+        comment = entry["comment"].lower() if entry["comment"] else ""
+        
+        # Realiza una búsqueda por palabras clave en el nombre y el comentario
+        if any(keyword in name or keyword in comment for keyword in query.split()):
+            filtered_data.append(entry)
+    
     return filtered_data
 
 def update_eww(entries):

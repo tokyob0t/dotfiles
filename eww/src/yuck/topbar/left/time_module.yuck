@@ -7,7 +7,7 @@
       :space-evenly false
       :spacing 20
       :orientation "h"
-      (label :text {formattime(EWW_TIME, "%b %d - %I:%M:%S")})
+      (label :text {formattime(EWW_TIME, "%b %d - %I:%M:%S %p")})
     )
     
   )

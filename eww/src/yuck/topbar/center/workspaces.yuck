@@ -1,35 +1,27 @@
 (defwidget workspaces []
-  (box
-    :class "workspacesWidget"
-    :space-evenly false
-    (workspace :id {workspaces[0].id} :state {workspaces[0].state})
-    (workspace :id {workspaces[1].id} :state {workspaces[1].state})
-    (workspace :id {workspaces[2].id} :state {workspaces[2].state})
-    (workspace :id {workspaces[3].id} :state {workspaces[3].state})
-    (workspace :id {workspaces[4].id} :state {workspaces[4].state})
-    (workspace :id {workspaces[5].id} :state {workspaces[5].state})
-    (workspace :id {workspaces[6].id} :state {workspaces[6].state})
-    
-    ; I dunno why using "for" loop dont work with transition property in scss
-    ; (for w in {workspaces}
-    ;     (workspace :id {w.id} :state {w.state})
-    ; )
-
+  (eventbox
+    :onscroll "./scripts/bspwm_setWorkspace --{} &"
+    (box
+      :class "workspacesWidget"
+      :space-evenly false
+      (for num in "[0, 1, 2, 3, 4, 5, 6]"
+        (workspace :id {workspaces[num].id} :state {workspaces[num].state})
+      )
+    )
   )
 )
 
 (defwidget workspace [id state]
   (eventbox
     ; ; We create a class depending if active or not
-    :onclick "./scripts/bspwm_changeWorkspace --set ${id}"
-    :onscroll "./scripts/bspwm_changeWorkspace --{} &"
+    :onclick "./scripts/bspwm_setWorkspace --set ${id}"
     :cursor "pointer"
     (box
-        :class 'workspacesBox ${
-            state == "active" ? "activeWorkspace" :
-            state == "inactive" ? "inactiveWorkspace" :
-            "emptyWorkspace"
-        }'
+      :class 'workspacesBox ${
+      state == "active" ? "activeWorkspace" :
+      state == "inactive" ? "inactiveWorkspace" :
+      "emptyWorkspace"
+      }'
     )
   )
 )

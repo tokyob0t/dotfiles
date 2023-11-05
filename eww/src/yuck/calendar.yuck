@@ -1,88 +1,73 @@
-
-
+(include "./src/yuck/calendar/dateCalendar.yuck")
+(include "./src/yuck/calendar/weather.yuck")
+(include "./src/yuck/calendar/eventManager.yuck")
 (defwindow weather
-  :stacking "fg"
-  :windowtype "dock"
-  :wm-ignore true
-  
   :geometry (geometry
     :x "11px"
     :y "60px"
-    :width "300px"
-    ; :height "380px"
+    :width "400px"
     :anchor "top left"
   )
   
+  :windowtype "dock"
+  :stacking "fg"
+  
   (eventbox
     :onhoverlost "eww close weather"
-    (weather)
-  )
-)
-
-
-(defwidget weather []
-  
-  (box
-    :class "weatherMainBox"
-    :orientation "v"
-    :space-evenly false
-
     (box
+      :class "weatherMainBox"
       :space-evenly false
-      :orientation "h"
-      :class "weatherTop"
-      :halign "center"
-      :spacing 10
-
-      (label
-        :text {weather.icon}
-        :style "color: ${weather.hex};"
-        :halign "start"
-        :class "icon"
-        :hexpand true
-      )
-      
+      :hexpand true
       (box
         :space-evenly false
         :orientation "v"
-        :valign "center"
-        
-        (box
-          :space-evenly false
-          :halign "end"
-          :spacing 5
-          (label :text {weather.temperature} )
-          (label :text "" :class "icon")
-        )
-        
-        (label
-          :text {weather.description}
+        :spacing 5
+        :hexpand true
+        (weather)
+        (scroll
+          :vexpand true
+          :hexpand true
+          
+          (box
+            :space-evenly false
+            :orientation "v"
+            :spacing 5
+            :hexpand true
+            
+            ; (eventEntry
+              ;   :icon "󰃮"
+              ;   :date "November 13"
+              ;   :content "Low urgency."
+            ; )
+            ; (eventEntry
+              ;   :icon "󰧓"
+              ;   :date "November 13"
+              ;   :content "Mid urgency."
+              ;   :urgency "mid"
+            ; )
+            (eventEntry
+              :icon "󰨱"
+              :date "EVERY DAY"
+              :content "SEX."
+              :urgency "high"
+            )
+            (eventEntry
+              :icon "󰨱"
+              :date "EVERY DAY"
+              :content "SEX."
+              :urgency "high"
+            )
+            (eventEntry
+              :icon "󰨱"
+              :date "EVERY DAY"
+              :content "SEX."
+              :urgency "high"
+            )
+            
+          )
         )
       )
-    )
-    
-    (box
-      :space-evenly false
-      :class "weatherQuoteBox"
-      :orientation "v"
-      :halign "center"
-
-      (label
-        :text {weather.quoteOne}
-        :wrap true
-        :halign "center"
-        :class "quoteOne"
-      )
-      (label
-        :class "quoteTwo"
-        :text "\"${weather.quoteTwo}\""
-        :wrap true
-        :halign "center"
-    )
-    )
-    (box
-      :class "weatherBottom"
-      (calendar)
+      (dateCalendar)
     )
   )
 )

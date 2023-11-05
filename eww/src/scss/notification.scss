@@ -7,7 +7,6 @@
 
 .zeronotifLabel {
   color: $base02;
-  font-weight: bold;
   padding-left: 10px;
 }
 
@@ -23,7 +22,7 @@
 .notifBox {
   background: $base00;
   padding: 15px;
-  border-radius: 15px;
+  border-radius: 10px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 
   .titlebar {
@@ -51,13 +50,17 @@
     color: $base0D;
   }
 
+  .Firefox {
+    color: orange;
+  }
+
   .smallImage,
   .bigImage {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     border-radius: $outer_border-radius;
-}
+  }
 
   .smallImage {
     min-width: 60px;
@@ -65,36 +68,31 @@
   }
 
   .bigImage {
-    min-width: 384px;
-    min-height: 216px;
-  }
-}
-
-// Style for the DASHBOARD notification menu box
-
-.notifmenuBox {
-    padding: 10px 5px;
-  .notifBox {
-    background: $base01;  
-
-    .smallImage {
-      min-width: 50px;
-      min-height: 50px;
-    }
-  
-    .bigImage {
-      min-width: 256px;
-      min-height: 144px;
-    }
-}
-
-
-  .notifBox.Spotify {
-    border-left: 5px solid $base0D;
+    min-width: 290px;
+    min-height: 150px;
+    border: 1px solid $base01;
   }
 
-  .notifBox.VencordDesktop,
-  .notifBox.discord {
-    border-left: 5px solid $base0B;
+  .button {
+    background: $base01;
+    color: $base03;
+    padding: 5px 10px;
+    border-radius: 10px;
+
+    .icon {
+      color: $base00;
+      transition: 250ms;
+    }
+  }
+  .button {
+    background: $base01;
+    color: $base03;
+    padding: 5px 50px;
+    border-radius: 10px;
+    transition: 250ms;
+  }
+
+  .button:hover {
+    background: $base02;
   }
 }

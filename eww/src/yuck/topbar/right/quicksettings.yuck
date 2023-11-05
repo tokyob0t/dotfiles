@@ -11,16 +11,17 @@
         :space-evenly false
         :spacing 15
         :class "quicksettingsChildBox"
-
+        
         (eventbox
           :class "Eventbox"
-          
+          :onrightclick "${EWW_CMD} open wifi_menu --toggle"
           (label
             :class "icon wifiIcon"
             :tooltip {wifiInfo.name}
             :text {wifiInfo.icon}
           )
         )
+        
         (eventbox
           :class "Eventbox"
           :onscroll "./scripts/volume --{}"
@@ -42,25 +43,26 @@
             :onscroll "./scripts/brightness --{}"
             (label
               :class "icon ${
-                EWW_BATTERY.BAT1.status == 'Full' ? 'charging' :
-                EWW_BATTERY.BAT1.status == 'Charging' ? 'charging' :
-                EWW_BATTERY.BAT1.capacity <= 15 ? 'critical' :
-                EWW_BATTERY.BAT1.capacity <= 20 ? 'low' :
-                EWW_BATTERY.BAT1.capacity <= 40 ? 'normal' :
-                EWW_BATTERY.BAT1.status}"
-                :text {
-                    EWW_BATTERY.BAT1.capacity >= 80 ? "󰁹" :
-                    EWW_BATTERY.BAT1.capacity >= 65 ? "󰂂" :
-                    EWW_BATTERY.BAT1.capacity >= 50 ? "󰂁" :
-                    EWW_BATTERY.BAT1.capacity >= 45 ? "󰂀" :
-                    EWW_BATTERY.BAT1.capacity >= 30 ? "󰁿" :
-                    EWW_BATTERY.BAT1.capacity >= 25 ? "󰁾" :
-                    EWW_BATTERY.BAT1.capacity >= 20 ? "󰁽" :
-                    EWW_BATTERY.BAT1.capacity >= 15 ? "󰁼" :
-                    EWW_BATTERY.BAT1.capacity >= 10 ? "󰁻" :
-                    "󰂎"
-                }
-                :tooltip "${EWW_BATTERY.BAT1.status} ${EWW_BATTERY.BAT1.capacity}%"
+              EWW_BATTERY.BAT1.status == 'Full' ? 'charging' :
+              EWW_BATTERY.BAT1.status == 'Charging' ? 'charging' :
+              EWW_BATTERY.BAT1.capacity <= 15 ? 'critical' :
+              EWW_BATTERY.BAT1.capacity <= 20 ? 'low' :
+              EWW_BATTERY.BAT1.capacity <= 40 ? 'normal' :
+              EWW_BATTERY.BAT1.status}"
+              :text {
+              EWW_BATTERY.BAT1.status == "Full" ||  EWW_BATTERY.BAT1.status == "Charging" ? "󰂄" :
+              EWW_BATTERY.BAT1.capacity >= 80 ? "󰁹" :
+              EWW_BATTERY.BAT1.capacity >= 65 ? "󰂂" :
+              EWW_BATTERY.BAT1.capacity >= 50 ? "󰂁" :
+              EWW_BATTERY.BAT1.capacity >= 45 ? "󰂀" :
+              EWW_BATTERY.BAT1.capacity >= 30 ? "󰁾" :
+              EWW_BATTERY.BAT1.capacity >= 25 ? "󰁽" :
+              EWW_BATTERY.BAT1.capacity >= 20 ? "󰁼" :
+              EWW_BATTERY.BAT1.capacity >= 15 ? "󰁻" :
+              EWW_BATTERY.BAT1.capacity >= 10 ? "󰂎" :
+              "󰂎"
+              }
+              :tooltip "${EWW_BATTERY.BAT1.status} ${EWW_BATTERY.BAT1.capacity}%"
             )
           )
         )

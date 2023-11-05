@@ -1,6 +1,7 @@
 (include "./src/yuck/dashboard_right/top_section.yuck")
 (include "./src/yuck/dashboard_right/mid_section.yuck")
 (include "./src/yuck/dashboard_right/bot_section.yuck")
+(include "./src/yuck/dashboard_right/wifi_section.yuck")
 
 (defwindow dashboardWindow_right
   :stacking "fg"
@@ -9,7 +10,7 @@
   :geometry (geometry
     :x "-11px"
     :y "58px"
-    :width "18%"
+    :width "19%"
     :anchor "top right"
   )
   
@@ -23,31 +24,8 @@
       (aboutme)
       (quick_buttons)
       (quick_sliders)
-        (media_player)
+      (media_player)
       (quick_info)
     )
   )
 )
-
-(defwindow wifi_menu
-    :stacking "fg"
-    :windowtype "dock"
-    :wm-ignore true
-    :geometry (geometry
-      :x "-11px"
-      :y "58px"
-      :width "18%"
-      :anchor "top right"
-    )
-    
-    (eventbox
-      :onhoverlost "eww open wifi_menu --toggle"
-      (box
-        :class "dashboard"
-        :orientation "v"
-        :space-evenly false
-        :spacing 15
-
-      )
-    )
-  )

@@ -1,0 +1,35 @@
+.wifi_entryBox {
+  background: $base01;
+  padding: 10px 20px;
+  border-radius: 10px;
+
+  .SECURITY,
+  .SECURITY_ICON.locked {
+    color: $base03;
+  }
+
+  .SECURITY_ICON.unlocked {
+    color: $base0B;
+  }
+
+  .SECURITY_ICON.connected {
+    color: $base0D;
+  }
+}
+
+.passInputBox {
+  .input {
+    border-radius: 10px;
+    background: $base01;
+    color: $base04;
+    padding: 10px;
+    font-family: monospace;
+    font-weight: bold;
+  }
+
+  .button {
+    padding: 10px;
+    background: $base01;
+    border-radius: 10px;
+  }
+}

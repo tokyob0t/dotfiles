@@ -11,7 +11,7 @@ wifi_off(){
 }
 
 wifi_info() {
-    connected=$(nmcli -t -f STATE connection show --active | sed 1d | grep -c "activated")
+    connected=$(nmcli --fields WIFI g | sed 1d | grep -c "enabled")
     if [ "$connected" -eq 0 ]; then
         wifi_status="disconnected"
     else
@@ -23,32 +23,45 @@ wifi_info() {
 }
 
 wifi_name() {
-    wifi_name=$(nmcli connection show --active | grep wifi | awk '{print $1}')
-    if [ -z "$wifi_name" ]; then
-        echo "Wi-Fi"
+    wired_connection=$(nmcli -t -f DEVICE,TYPE connection show --active | grep "ethernet" | cut -d':' -f1)
+
+    if [ -n "$wired_connection" ]; then
+        echo "Ethernet"
     else
-        echo "$wifi_name"
+        wifi_name=$(nmcli connection show --active | grep wifi | awk '{print $1}')
+        if [ -z "$wifi_name" ]; then
+            echo "Wi-Fi"
+        else
+            echo "$wifi_name"
+        fi
     fi
 }
 
-wifi_icon() {
-    connected=$(nmcli -t -f STATE connection show --active | sed 1d | grep -c "activated")
-    signal=$(nmcli -t -f IN-USE,SIGNAL device wifi | grep '*' | cut -d':' -f2)
 
-    if [ "$connected" -eq 0 ]; then
-        icon="󰤮"
-    elif [ "$signal" -ge -50 ]; then
-        icon="󰤨"
-    elif [ "$signal" -ge -60 ]; then
-        icon="󰤥"
-    elif [ "$signal" -ge -70 ]; then
-        icon="󰤢"
-    elif [ "$signal" -ge -80 ]; then
-        icon="󰤟"
+wifi_icon() {
+    # Check if there is a wired connection
+    wired_connection=$(nmcli -t -f DEVICE,TYPE connection show --active | grep "ethernet" | cut -d':' -f1)
+
+    if [ -n "$wired_connection" ]; then
+        echo "󰈀"
     else
-        icon="󰤯"
+        # If no wired connection, check Wi-Fi signal strength
+        signal=$(nmcli -t -f IN-USE,SIGNAL device wifi | grep '*' | cut -d':' -f2)
+
+        if [ "$signal" -ge 50 ]; then
+            icon="󰤨"
+        elif [ "$signal" -ge 60 ]; then
+            icon="󰤥"
+        elif [ "$signal" -ge 70 ]; then
+            icon="󰤢"
+        elif [ "$signal" -ge 80 ]; then
+            icon="󰤟"
+        else
+            icon="󰤯"
+        fi
+
+        echo $icon
     fi
-    echo $icon
 }
 
 if [[ $choice == "--on" ]]; then
@@ -57,4 +70,7 @@ elif [[ $choice == "--off" ]]; then
     wifi_off
 elif [[ $choice == "--info" ]]; then
     wifi_info
+elif [[ $choice == "--scan" ]]; then
+    nmcli device wifi rescan
+    python $HOME/.config/eww/scripts/wifi_scan &
 fi

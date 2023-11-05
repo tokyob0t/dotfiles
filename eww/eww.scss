@@ -21,7 +21,6 @@ $baseA0: #6791da;
 
 $AltbaseA0: #6791da;
 
-
 $shadow00: 5px 5px 2px rgb(0, 0, 0, 0.4);
 $outer_border-radius: 10px;
 $inner_border-radius: 4px;
@@ -30,38 +29,39 @@ $button_icon: 5px 16px 5px 10px;
 
 * {
   all: unset;
-  font-family: "JetBrainsMono Nerd Font","Tilt Neon", monospace;
+  font-family: "JetBrainsMono Nerd Font", "Tilt Neon", monospace;
   font-size: 14.6px;
-  font-weight: 600;
   color: $base04;
 }
 
 .wallpaperBox {
-    background-color: $base00;
-    padding: 53px 5px 5px 5px;
-    
-    .wallpaperImage {
-        border-radius: $outer_border-radius;
-        background-color: $base01;
-        // background-image: url("./img/wallpaper.png");
-        background-size: 100% 100%;
-        background-position: center;
-    }
+  background-color: $base00;
+  padding: 53px 5px 5px 5px;
+
+  .wallpaperImage {
+    border-radius: $outer_border-radius;
+    background-color: $base01;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    // background-image: url("./img/wallpaper.png");
+  }
 }
 
 .icon {
   font-family: "Symbols Nerd Font";
   font-size: 20px;
+  min-width: 0.9em;
+  min-height: 1em;
 }
 
 tooltip {
-    font-weight: 500;
-    font-size: 1rem;
-    color: $base04;
-    background: $base01;
-    border: 3px solid $base00;
-    border-radius: .5rem;
-    padding: 5px
+  font-weight: 500;
+  color: $base04;
+  background: $base01;
+  border: 3px solid $base00;
+  border-radius: 0.5rem;
+  padding: 5px 10px;
 }
 
 @import "./src/scss/topbar.scss";
@@ -74,6 +74,7 @@ tooltip {
 
 @import "./src/scss/launcher.scss";
 @import "./src/scss/dashboard.scss";
+@import "./src/scss/wifi_section.scss";
 @import "./src/scss/notification.scss";
 @import "./src/scss/osd.scss";
 @import "./src/scss/calendar.scss";

@@ -1,18 +1,57 @@
 .notifHistoryBox {
-    background-color: $base00;
-    padding: 15px;
-    border-radius: $outer_border-radius;
+  background-color: $base00;
+  padding: 15px;
+  border-radius: $outer_border-radius;
 }
 
 .notifButton {
-    background-color: $base01;
-    border-radius: $outer_border-radius;
-    transition: 0.25s;
-    margin: 10px 5px;
+  background-color: $base01;
+  border-radius: $outer_border-radius;
+  transition: 0.25s;
+  margin: 10px 5px;
 
-    .icon {
-        padding: 0 13px;
-        color: $base0F;
-        margin: unset;
+  .icon {
+    padding: 0 13px;
+    color: $base0F;
+    margin: unset;
+  }
+}
+
+// Style for the DASHBOARD notification menu box
+
+.notifmenuBox {
+  padding: 10px 5px;
+
+  .notifBox {
+    background: $base01;
+
+    .titlebar {
+        color: $base04;
+    }    
+
+    .button {
+        background: $base02;
+        color: $base04;
     }
+
+    .button:hover {
+        background: $base03;
+        color: $base04;
+        border-radius: 10px;
+    }
+
+    .smallImage {
+      min-width: 50px;
+      min-height: 50px;
+    }
+  }
+
+  .notifBox.Spotify {
+    border-left: 5px solid $base0D;
+  }
+
+  .notifBox.VencordDesktop,
+  .notifBox.discord {
+    border-left: 5px solid $base0B;
+  }
 }
