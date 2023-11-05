@@ -2,7 +2,7 @@
 
 ## Details  
 
-###### (Updated Oct 28)  
+###### (Updated Nov 04)  
   
 - **OS:** Arch btw
 - **Window Manager:** [BSPWM](https://github.com/baskerville/bspwm) & [bsp-layout](https://github.com/phenax/bsp-layout)
@@ -22,4 +22,4 @@
 ![desktop4](img/wall4.png)  
 
 ### Based on  
-* [Juminai](https://github.com/juminai/dotfiles/)
+- [Juminai](https://github.com/juminai/dotfiles/)
