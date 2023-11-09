@@ -25,7 +25,6 @@
 ![desktop3](./img/wall3.png)  
 ![desktop4](./img/wall4.png)  
 
-![Alt text](image.png)
 #### Credits
 - [Juminai](https://github.com/juminai/dotfiles/)  
 - [end-4](https://github.com/end-4/dots-hyprland)  
