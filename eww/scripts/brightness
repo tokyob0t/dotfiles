@@ -24,7 +24,8 @@ getValue() {
 
 if [[ $1 == "--get" ]]; then
     while inotifywait -e modify "$backlight_device/brightness" > /dev/null 2>&1; do
-        getValue
+        icon=$(icon "$(getValue)")
+        echo "{\"icon\": \"$icon\", \"value\": \"$(getValue)\"}"
     done
 
 elif [[ $1 == "--set" ]]; then
@@ -35,12 +36,12 @@ elif [[ $1 == "--up" ]]; then
 
     icon=$(icon "$(getValue)")
     
-    zsh "$dir/osd" "$icon" "$(getValue)" > /dev/null 2>&1 &
+    zsh "$dir/osd" "$icon" "$(getValue)" "int" > /dev/null 2>&1 &
 
 elif [[ $1 == "--down" ]]; then
     brightnessctl set 5%-
 
     icon=$(icon "$(getValue)")
-    zsh "$dir/osd" "$icon" "$(getValue)" > /dev/null 2>&1 &
+    zsh "$dir/osd" "$icon" "$(getValue)" "int" > /dev/null 2>&1 &
 
 fi

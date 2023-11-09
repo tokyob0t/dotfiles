@@ -13,4 +13,6 @@ eww open wallpaper
 ## This now is managed by the notifCatch script
 
 bash $dir/airplanemode --get > /dev/null 2>&1 &
+
+## If you are in bspwm then uncomment
 # bash $dir/bspwm_hideTopbar  > /dev/null 2>&1 &

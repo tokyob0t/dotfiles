@@ -8,7 +8,7 @@ if [[ $1 == '--close' ]]; then
 	fi
 else
 
-	eww update osd="{ \"icon\": \"$1\", \"value\": \"$2\" }"
+	eww update osd="{ \"icon\": \"$1\", \"value\": \"$2\", \"valueType\": \"$3\" }"
 
 	if [[ $STATE != '*' ]]; then
 		eww open osd_window

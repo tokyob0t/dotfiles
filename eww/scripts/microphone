@@ -3,13 +3,23 @@
 
 dir="/home/$(whoami)/.config/eww/scripts"
 
+icon() {
+    local value="$1"
+
+    if [[ $value == "no"  ]]; then
+        echo ""
+    else
+        echo ""
+    fi
+}
 
 if [[ $1 == "--get" ]]; then
-    pactl get-source-volume @DEFAULT_SOURCE@ | grep -Po '[0-9]{1,3}(?=%)' | head -1
-
-elif [[ $1 == "--getState" ]]; then
-    pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}'
-    
+    pactl subscribe | grep --line-buffered "on source" | while read -r _ ; do
+            vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -Po '[0-9]{1,3}(?=%)' | head -1)
+            muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+            icon=$(icon "$muted")
+            echo "{\"icon\": \"$icon\", \"value\": \"$vol\"}"
+    done
 elif [[ $1 == "--set" ]]; then
     pactl set-source-volume @DEFAULT_SOURCE@ $2%
     
@@ -20,17 +30,12 @@ elif [[ $1 == "--down" ]]; then
     pactl set-source-volume @DEFAULT_SOURCE@ -10%
     
 elif [[ $1 == "--toggle" ]]; then
-    mute=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
-    
-    if [[ $mute == "yes" ]]; then
-        pactl set-source-mute @DEFAULT_SOURCE@ toggle
-        current_volume=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -Po '[0-9]{1,3}(?=%)' | head -1)
-        volume_icon=""
-        volume_level=$current_volume
-    else
-        pactl set-source-mute @DEFAULT_SOURCE@ toggle
-        volume_icon=""
-        volume_level=--
-    fi
-    zsh "$dir/osd" "$volume_icon" "$volume_level"
+    pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+    muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+    vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | grep -Po '[0-9]{1,3}(?=%)' | head -1)
+    icon=$(icon "$muted")
+
+    zsh "$dir/osd" "$icon" "$vol" "int" > /dev/null 2>&1 &
+
 fi

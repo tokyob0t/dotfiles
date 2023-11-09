@@ -62,10 +62,14 @@ for line in wifi_output:
 
     # Check if the network should be hidden based on the hide_wifi setting and if it's already processed
     # Check if the SSID is invalid and skip it
+
     if hide_wifi and ssid in processed_ssids or ssid == '--':
         continue
 
     # Assign signal strength icons based on the provided signal strength indicators
+    if signal ==  "--" or ssid == "--":
+        continue
+
     if signal == "▂▄▆█":
         sigIcon = "󰤨"
     elif signal == "▂▄▆_":
@@ -100,4 +104,5 @@ for line in wifi_output:
     networkList.append(dict)
 
 # Update the Eww widget with the updated network list in JSON format
+print(networkList)
 subprocess.run(f"eww update wifiList='{json.dumps(networkList)}'", shell=True)
