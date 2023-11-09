@@ -7,7 +7,7 @@
 - **OS:** Arch btw
 
    
-- **Main Window Manager:** [BSPWM](https://github.com/baskerville/bspwm) & [bsp-layout](https://github.com/phenax/bsp-layout)
+- **Window Manager:** [BSPWM](https://github.com/baskerville/bspwm) & [bsp-layout](https://github.com/phenax/bsp-layout)
 - **Compositor:** Picom Pijulius [Aur Fork](https://github.com/allusive-dev/picom-allusive)
 - **Terminal:** [Alacritty](https://github.com/alacritty/alacritty)
 - **Widgets, Topbar, Notifications, Window Switcher, App Launcher, All:** [eww](https://github.com/elkowar/eww)
