@@ -13,26 +13,18 @@
 ;                Variables Section                  ;
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 
+
 ; ; Workspaces, Windows and layout
-(deflisten workspaces
-  :initial '[
-    {"id":"1","state":"active"},
-    {"id":"2","state":"empty"},
-    {"id":"3","state":"empty"},
-    {"id":"4","state":"empty"},
-    {"id":"5","state":"empty"},
-    {"id":"6","state":"empty"},
-    {"id":"7","state":"empty"}
-    ]'
-    "./scripts/bspwm_getWorkspace"
-)
-; (deflisten workspaces :initial 1 "./scripts/hyprland_getWorkspace")
+(deflisten workspaces :initial "{}" "./scripts/bspwm_getWorkspace")
+(deflisten windows :initial "[]" "./scripts/bspwm_getWindows.py &")
 
-; (defvar windows_rev false)
-(deflisten windows :initial "{}" "python ./scripts/bspwm_getWindows &")
-(defpoll layout :initial "./img/layouts/dwindlew.png" :interval "0.5s" "./scripts/bspwm_getLayout --icon")
-
+(defpoll layout :initial "./img/layouts/tile.png" :interval "0.5s" "./scripts/bspwm_getLayout --icon")
 (defvar tray_icon "")
+
+
+(defvar jqMenu_cursorPos '{"x": 0, "y": 60}')
+(defvar jqMenu_Visible false)
+(defvar jqMenu_Selected 0)
 
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 ;                Dashboard Variables                ;
@@ -47,21 +39,10 @@
 
 ; ; ; ; Quick settings variables
 
-; ; Volume variables
-(deflisten volume :initial '{
-    "value": "50",
-    "muted": "no"
-    }'
-    "./scripts/volume --get"
-)
-
-; ; Brightness variables
-(deflisten brightness :initial 100 "./scripts/brightness --get")
-
-; ; Microphone variables
-(defpoll microphone :interval "1s" "./scripts/microphone --get")
-(defpoll microphone_muted :interval "1s" "./scripts/microphone --getState")
-(defvar microphone_revealer false)
+; ; Volume, Brightness, Microphone variables 
+(deflisten volume :initial '{"icon": "", "value": "50" }' "./scripts/volume --get")
+(deflisten brightness :initial '{"icon": "󰃠", "value": "100"}' "./scripts/brightness --get")
+(deflisten microphone :initial '{"icon": "", "value": "100"}' "./scripts/microphone --get")
 
 ; Notifications
 (deflisten  notifications :initial '{
@@ -78,7 +59,7 @@
 (defvar taskTitle "")
 (defvar taskBody "")
 
-(defvar osd '{ "icon": "", "value": 50 }')
+(defvar osd '{ "icon": "", "value": 50, "valueType": "int" }')
 
 ; Wi-Fi
 (deflisten wifiList :initial "{}" "./scripts/wifi --scan")
@@ -110,7 +91,7 @@
 (defvar airplaneMode false)
 
 ; Apps json variable
-(deflisten apps :initial "{}" "./scripts/apps" )
+(deflisten apps :initial "{}" "./scripts/apps.py" )
 
 ; Playerctl main variables
 (deflisten playerctlStatus :initial false "playerctl --follow status")

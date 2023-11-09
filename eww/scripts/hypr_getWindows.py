@@ -26,13 +26,13 @@ def get_workspace_windows():
             }
 
         dict = {
-            "window_id": entry["address"],
+            "window_id": str(entry["address"]),
             "window_icon": getIcon(entry["class"]),
-            "window_name": entry["class"].capitalize(),
-            "focused": True if entry["address"] == get_active_window() else False,
-            "floating": True if entry["floating"] else False,
-            "at": entry["at"],
-            "size": entry["size"]
+            "window_name": str(entry["class"].capitalize()),
+            "focused": str(entry["address"] == get_active_window()),
+            "floating": str(entry["floating"]),
+            "at": str(entry["at"]),
+            "size": str(entry["size"])
         }
 
         workspaces_info[workspace_id]["windows"].append(dict)
@@ -48,7 +48,7 @@ def get_active_window():
     return out
 
 def update_eww(entries):
-    subprocess.run(["eww", "update", f"windows={json.dumps(entries)}"])
+    subprocess.run(["eww", "update", f"windows='{json.dumps(entries)}'"])
 
 
 if __name__ == "__main__":

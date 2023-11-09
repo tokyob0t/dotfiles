@@ -19,6 +19,7 @@
       :orientation "v"
       :class "launcherBox"
       :spacing 20
+      
       (box
         :space-evenly false
         :class "launcherInputBox"
@@ -45,13 +46,16 @@
           :orientation "v"
           :spacing 20
           
-          (app_entry
-            :visible {arraylength(apps.math) > 0} 
-            :icon {apps.math[0].icon}
-            :name {apps.math[0].name}
-            :desc {apps.math[0].comment}
-            :desktop {apps.math[0].desktop}
-          )
+          (box
+            :visible {objectlength(apps) > 2}
+            
+            (app_entry
+              :icon {apps.math[0].icon}
+              :name {apps.math[0].name}
+              :desc {apps.math[0].comment}
+              :desktop {apps.math[0].desktop}
+            )
+        )
           
           (for app in {apps.preferred}
             (app_entry

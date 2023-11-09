@@ -1,7 +1,7 @@
 (defwindow windowSwitcher
   :geometry (geometry
     :width "90%"
-    :height "30%"
+    :height "35%"
     :anchor "top center"
     :y "10%"
   )
@@ -23,43 +23,15 @@
         :spacing 20
         :halign "center"
         :valign "center"
-        (for i in {[0, 1, 2, 3]}
+        (for workspaces in windows
           (box
             :class "windowsContainers"
             :space-evenly false
             :height {1080/5}
             :width {1920/5}
             
-            (for j in {windows[i].windows}
+            (for j in {workspaces.windows}
               
-              (windowWorkspace
-                :id {j.window_id}
-                :icon {j.window_icon}
-                :name {j.window_name}
-                :focused {j.focused}
-                :floating {j.floating}
-                :atX {j.at[0]}
-                :atY {j.at[1]}
-                :X {j.size[0]}
-                :Y {j.size[1]}
-              )
-            )
-          )
-        )
-      )
-      (box
-        :space-evenly false
-        :spacing 20
-        :halign "center"
-        :valign "center"
-        (for i in {[4, 5, 6]}
-          (box
-            :class "windowsContainers"
-            :space-evenly false
-            :height {1080/5}
-            :width {1920/5}
-
-            (for j in {windows[i].windows}              
               (windowWorkspace
                 :id {j.window_id}
                 :icon {j.window_icon}
@@ -92,7 +64,7 @@
     (eventbox
       :cursor "pointer"
       :class "workspaceWindowEventbox"
-      
+      :onclick "./scripts/bspwm_setWorkspace --setnode ${id}"      
       (overlay
         (box
           :class "workspaceWindowsBox ${floating ? 'Floating' : ''} "
@@ -101,9 +73,9 @@
             :image-width {round(X / 5 * 45 / 100, 0)}
             :image-height {round(Y / 5 * 45 / 100, 0)}
             :class "windowIcon"
-            :tooltip {name == "Org.wezfurlong.wezterm" ? "Wezterm" : name}
-            :valign true
-            :halign true
+            :tooltip name
+            :valign "center"
+            :halign "center"
           )
         )
         (box
