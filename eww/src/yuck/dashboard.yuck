@@ -4,15 +4,15 @@
 (include "./src/yuck/dashboard_right/wifi_section.yuck")
 
 (defwindow dashboardWindow_right
-  :stacking "fg"
-  :windowtype "dock"
-  :wm-ignore true
   :geometry (geometry
-    :x "-11px"
-    :y "58px"
-    :width "19%"
+    :x "-2.5%"
+    :y "5%"
+    :width "20%"
     :anchor "top right"
   )
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
   
   (eventbox
     :onhoverlost "eww open dashboardWindow_right --toggle"

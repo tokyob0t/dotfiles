@@ -2,10 +2,12 @@
 
 ## Details  
 
-###### (Updated Nov 04)  
-  
+###### (Updated Nov 08)  
+###### Hyprland is also supported, but you need to change some values, e.g. the workspace module and some deflisten variables.  
 - **OS:** Arch btw
-- **Window Manager:** [BSPWM](https://github.com/baskerville/bspwm) & [bsp-layout](https://github.com/phenax/bsp-layout)
+
+   
+- **Main Window Manager:** [BSPWM](https://github.com/baskerville/bspwm) & [bsp-layout](https://github.com/phenax/bsp-layout)
 - **Compositor:** Picom Pijulius [Aur Fork](https://github.com/allusive-dev/picom-allusive)
 - **Terminal:** [Alacritty](https://github.com/alacritty/alacritty)
 - **Widgets, Topbar, Notifications, Window Switcher, App Launcher, All:** [eww](https://github.com/elkowar/eww)
@@ -15,11 +17,18 @@
   - **Icons:** [Bearded Icons](https://marketplace.visualstudio.com/items?itemName=BeardedBear.beardedicons)
 - **Scripts:** Some made by me, some not  
 
+
+###### ~~Dependency list~~  (TODO)
+
+
+## Preview
 ![desktop1](img/wall1.png)  
 ![desktop5](img/wall5.png)
 ![desktop2](img/wall2.png)  
 ![desktop3](img/wall3.png)  
 ![desktop4](img/wall4.png)  
 
-### Based on  
-- [Juminai](https://github.com/juminai/dotfiles/)
+
+#### Credits
+- [Juminai](https://github.com/juminai/dotfiles/)  
+- [end-4](https://github.com/end-4/dots-hyprland)  

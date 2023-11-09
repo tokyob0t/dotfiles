@@ -1,5 +1,5 @@
 (defwindow launcher
-    :monitor 0
+  :monitor 0
   :stacking "fg"
   :windowtype "dialog"
   :focusable true
@@ -30,7 +30,7 @@
         
         (input
           :class "launcherInput"
-          :onchange "./scripts/apps --query {}"
+          :onchange "./scripts/apps.py --query '{}' &"
           :onaccept "gtk-launch ${apps.apps[0].desktop} & ${EWW_CMD} close launcher"
           :hexpand true
         )
@@ -43,45 +43,31 @@
         (box
           :space-evenly false
           :orientation "v"
-          :spacing 5
+          :spacing 20
           
-          (box
-            :orientation "v"
-            :spacing 20
-            :visible {arraylength(apps.preferred) > 0}
-            
-            (label
-              :text "Preferred Apps"
-              :halign "start"
-            )
-            
-            (for app in {apps.preferred}
-              (app_entry
-                :icon {app.icon}
-                :name {app.name}
-                :desc {app.comment}
-                :desktop {app.desktop}
-              )
+          (app_entry
+            :visible {arraylength(apps.math) > 0} 
+            :icon {apps.math[0].icon}
+            :name {apps.math[0].name}
+            :desc {apps.math[0].comment}
+            :desktop {apps.math[0].desktop}
+          )
+          
+          (for app in {apps.preferred}
+            (app_entry
+              :icon {app.icon}
+              :name {app.name}
+              :desc {app.comment}
+              :desktop {app.desktop}
             )
           )
           
-          (box
-            :orientation "v"
-            :spacing 20
-            (label
-              :text "Other Apps"
-              :halign "start"
-              :visible {arraylength(apps.preferred) > 0}
-              :class "launcherTitle"
-            )
-            
-            (for app in {apps.apps}
-              (app_entry
-                :icon {app.icon}
-                :name {app.name}
-                :desc {app.comment}
-                :desktop {app.desktop}
-              )
+          (for app in {apps.apps}
+            (app_entry
+              :icon {app.icon}
+              :name {app.name}
+              :desc {app.comment}
+              :desktop {app.desktop}
             )
           )
         )
@@ -107,7 +93,7 @@
       (box
         :orientation "v"
         :space-evenly false
-
+        
         (label
           :text name
           :class "appName"

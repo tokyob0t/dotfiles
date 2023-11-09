@@ -189,51 +189,25 @@
   
   (box
     :space-evenly false
-    :class "quick_sliders"
     :orientation "v"
-    
+    :spacing 10
     
     (icon_sliders
-      :icon {brightness >= 60 ? "󰃠" : brightness >= 50 ? "󰃟" :"󰃞"}
-      :value brightness
+      :icon {brightness.icon}
+      :value {brightness.value}
       :onChangeSlider "./scripts/brightness --set {} &"
     )
-    
-    (box
-      :orientation "v"
-      :space-evenly false
-      (box
-        :space-evenly false
-        
-        (icon_sliders
-          :icon {volume.muted == "yes" || volume.value == 0 ? "󰝟" : volume.value >= 35 ? "" : volume.value >= 25 ? "" : ""}
-          :value {volume.value}
-          :onChangeSlider "./scripts/volume --set {} &"
-          :onClickButton "./scripts/volume --toggle &"
-        )
-        
-        (eventbox
-          :halign "end"
-          :class "CheckBox"
-          :onclick "./scripts/toggle_var --toggle microphone_revealer"
-          
-          (label
-            :text {microphone_revealer == false ? "" : "" }
-            :class "icon"
-          )
-        )
-        
-      )
-      (revealer
-        :reveal microphone_revealer
-        :transition "slideup"
-        (icon_sliders
-          :icon {microphone_muted == "yes" ? "" : ""}
-          :value microphone
-          :onChangeSlider "./scripts/microphone --set {} &"
-          :onClickButton "./scripts/microphone --toggle &"
-        )
-      )
+    (icon_sliders
+      :icon {microphone.icon}
+      :value {microphone.value}
+      :onChangeSlider "./scripts/microphone --set {} &"
+      :onClickButton "./scripts/microphone --toggle &"
+    )
+    (icon_sliders
+      :icon {volume.icon}
+      :value {volume.value}
+      :onChangeSlider "./scripts/volume --set {} &"
+      :onClickButton "./scripts/volume --toggle &"
     )
   )
 )
@@ -243,6 +217,7 @@
   (box
     :space-evenly false
     :hexpand true
+    :class "quick_sliders"
     
     (button
       :onclick onClickButton
@@ -406,7 +381,7 @@
     (box
       :class "music_box"
       :space-evenly false
-
+      
       (box
         :class "music_cover"
         :width 75

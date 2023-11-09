@@ -1,14 +1,15 @@
 (include "./src/yuck/calendar/dateCalendar.yuck")
 (include "./src/yuck/calendar/weather.yuck")
 (include "./src/yuck/calendar/eventManager.yuck")
+
 (defwindow weather
   :geometry (geometry
-    :x "11px"
-    :y "60px"
-    :width "400px"
+    :x "20px"
+    :y "20px"
+    :width "700px"
     :anchor "top left"
   )
-  
+  :monitor 0
   :windowtype "dock"
   :stacking "fg"
   
@@ -17,13 +18,13 @@
     (box
       :class "weatherMainBox"
       :space-evenly false
-      :hexpand true
+      :hexpand false
       (box
         :space-evenly false
         :orientation "v"
         :spacing 5
         :hexpand true
-        (weather)
+        :width 300
         (scroll
           :vexpand true
           :hexpand true
@@ -33,18 +34,6 @@
             :orientation "v"
             :spacing 5
             :hexpand true
-            
-            ; (eventEntry
-              ;   :icon "󰃮"
-              ;   :date "November 13"
-              ;   :content "Low urgency."
-            ; )
-            ; (eventEntry
-              ;   :icon "󰧓"
-              ;   :date "November 13"
-              ;   :content "Mid urgency."
-              ;   :urgency "mid"
-            ; )
             (eventEntry
               :icon "󰨱"
               :date "EVERY DAY"

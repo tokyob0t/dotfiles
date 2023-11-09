@@ -1,0 +1,190 @@
+
+(defwidget optContainer []
+  (box
+    :space-evenly false
+    :orientation "v"
+    :valign "start"
+    :halign "start"
+    (eventbox
+      :onhoverlost "${EWW_CMD} update jqMenu_Selected=0 & ${EWW_CMD} update jqMenu_Visible='false'"
+      
+      (box
+        :space-evenly false
+        :orientation "v"
+        
+        (box
+          :space-evenly false
+          
+          ; ; ; ENTRIES FOR THE MAIN MENU
+          (box
+            :space-evenly false
+            :spacing 10
+            :orientation "v"
+            :class "jgMenu ${jqMenu_Visible ? 'active' : 'inactive'} "
+            
+            (revealer
+              :reveal jqMenu_Visible
+              :transition "slidedown"
+              (box
+                :orientation "v"
+                :space-evenly false
+                (optEntry :icon "" :name "Launch Terminal" :commandclick "wezterm")
+                (optEntry :icon "󰖟" :name "Open Browser" :commandclick "firefox")
+                (optEntry :icon "" :name "File Manager" :commandclick "nautilus" )
+              )
+            )
+            (optDivider)
+            
+            (revealer
+              :reveal jqMenu_Visible
+              :transition "slidedown"
+              (box
+                :orientation "v"
+                :space-evenly false
+                (optEntry :icon "" :name "Color Picker" :commandclick "hyprpicker" )
+                (optEntry :icon "" :name "Screenshot" :commandclick "$HOME/.config/eww/scripts/screenshot_wl --all" )
+                (optEntry
+                  :subMenu true
+                  :icon "󰜬"
+                  :name "Launch Apps"
+                  :commandclick "eww open launcher"
+                  :class "launchApps"
+                  :commandhover "${EWW_CMD} update jqMenu_Selected=2"
+                )
+              )
+            )
+            (optDivider)
+            (revealer
+              :reveal jqMenu_Visible
+              :transition "slidedown"
+              (box
+                :orientation "v"
+                :space-evenly false
+                (optEntry :icon "󰊞" :name "Sex Mode" )
+              )
+            )
+            (optDivider)
+            (revealer
+              :reveal jqMenu_Visible
+              :transition "slidedown"
+              (box
+                :orientation "v"
+                :space-evenly false
+                (optEntry
+                  :subMenu true
+                  :icon ""
+                  :name "Power Menu"
+                  :class "power"
+                  :commandhover "${EWW_CMD} update jqMenu_Selected=1"
+                )
+              )
+            )
+          )
+          ; ; ; BOXES FOR THE SUBMENUS
+          (optSubmenu
+            :id 1
+            :valign "end"
+            :options '
+            (optEntry :icon "" :name "Lock Session")
+            (optEntry :icon "" :name "Suspend")
+            (optEntry :icon "󰍃" :name "Hibernate")
+            (optEntry :icon "󰁪" :name "Reboot")
+            (optEntry :icon "󰤆" :name "Power Off")
+            '
+          )
+          
+          (optSubmenu
+            :id 2
+            :valign "end"
+            :options '
+            
+            (scroll
+              :vscroll true
+              :height 200
+              :width 200
+                (box
+                  :space-evenly false
+                  :orientation "v"
+                  
+                  (for i in {apps["apps"]}
+                    (optEntry
+                      :image {i.icon}
+                      :name {i.name}
+                    )
+                )
+                )
+            )'
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget optEntry [?icon ?image name ?commandclick ?commandhover ?commandhoverlost ?class ?subMenu]
+  (eventbox
+    :onclick "${EWW_CMD} update jqMenu_Selected=0 && ${EWW_CMD} update jqMenu_Visible='false' & ${commandclick} &"
+    :onhover commandhover
+    :onhoverlost commandhoverlost
+    :class "jqMenuEntryEventBox"
+    :valign "start"
+    :hexpand true
+    
+    (box
+      :space-evenly false
+      :class "jqMenuEntry"
+      :spacing 10
+      (label
+        :text icon
+        :class "icon ${class}"
+        :halign "start"
+        :xalign 0
+        :visible {strlength(icon) > 1}
+      )
+      (image
+        :visible {strlength(image) > 1}
+        :path image
+        :image-width 20
+        :image-height 20
+      )
+      
+      (label
+        :text name
+        :halign "start"
+        :class "name"
+        :limit-width 15
+      )
+      
+      (label
+        :halign "end"
+        :xalign 1
+        :class "subMenu"
+        :visible {subMenu == true}
+        :text ""
+        :hexpand true
+      )
+    )
+  )
+)
+
+(defwidget optDivider [] (box :class "jqMenuDivider"))
+
+
+(defwidget optSubmenu [id options ?valign]
+  (eventbox
+    :onhoverlost "${EWW_CMD} update jqMenu_Selected=0"
+    :active {jqMenu_Selected == id}
+    (revealer
+      :reveal {jqMenu_Selected == id}
+      (literal
+        :valign valign
+        :visible {jqMenu_Selected == id}
+        :content '
+        (box :orientation "v" :space-evenly false :class "jgMenu"
+          ${options}
+        )'
+      )
+      
+    )
+  )
+)

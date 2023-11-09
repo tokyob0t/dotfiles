@@ -19,17 +19,21 @@
   background: $base01;
   border-radius: 20px;
   transition: 250ms;
+  
   .appEntryBox {
     padding: 10px;
+  
     .appName {
       color: $base04;
       transition: 250ms;
     }
+  
     .appDesc {
       color: $base03;
       transition: 250ms;
     }
   }
+  
   &:hover {
     background-color: $base02;
   }

@@ -25,6 +25,7 @@
   border-radius: 10px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 
+
   .titlebar {
     color: $base02;
   }
@@ -35,11 +36,12 @@
 
   .content {
     color: $base03;
-  }
+    font-family: "IBM Plex Sans Mono";
+  
+}
 
   .icon {
     color: $base03;
-    font-weight: bold;
   }
 
   .VencordDesktop,

@@ -1,28 +1,35 @@
+(include "./src/yuck/desktop/jgmenu.yuck")
+
 (defwindow wallpaper
+  
   :geometry (geometry
+    :y "4.8%"
     :width "100%"
-    :height "100%"
-    :anchor "center"
+    :height "95.2%"
+    :anchor "top left"
   )
   
+  :monitor 0
   :windowtype "desktop"
-  :stacking "fg"
-
+  :stacking "bg"
+    ;; dont work in bspwm  
   (eventbox
-    :cursor "pointer"
-    :hexpand true
-    :vexpand true
-    :onclick "notify-send 'Click Detectado'"
+    :cursor "default"
+    :onclick "${EWW_CMD} update jqMenu_Selected=0 && ${EWW_CMD} update jqMenu_Visible='false'"
+    :onrightclick "./scripts/hypr_getCursorPos && ${EWW_CMD} update jqMenu_Visible='true' &"
+    :onhover "${EWW_CMD} update jqMenu_Visible=false"
+    
     (box
       :class "wallpaperBox"
-      :hexpand true
-      :vexpand true
-      :orientation "v"
-      :space-evenly false
       (box
-        :hexpand true
-        :vexpand true
         :class "wallpaperImage"
+        :vexpand true
+        :hexpand true
+        :style "
+        padding-top: ${jqMenu_cursorPos.y > 700 ? 700 : jqMenu_cursorPos.y - 60}px;
+        padding-left: ${jqMenu_cursorPos.x - 10}px;
+        "
+        (optContainer)
       )
     )
   )

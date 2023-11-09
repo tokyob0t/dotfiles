@@ -1,48 +1,50 @@
 .windowEventBoxes {
   background: $base00;
+  border-radius: 20px;
+  border: 5px solid $base01;
 
   .windowsContainers {
     background: $base01;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 0 10px;
-
-    .workspaceWindowsBox {
-      border-radius: 8px;
-      // padding: 50px 100px;
-      border: 1px solid $base02;
-      background: $base02;
-      margin: 5px;
-      min-width: 300px;
-      min-height: 150px;
-
-      .windowTitlebar {
-        border-top-right-radius: 8px;
-        border-top-left-radius: 8px;
-        background: $base02;
-        padding: 0 5px;
-        .closeWindow {
-          .icon {
-            color: $base02;
-            transition: 250ms;
-          }
-        }
-        .closeWindow:hover {
-          .icon {
-            color: $baseA0;
-          }
-        }
-      }
-    }
+    border-radius: 10px;
   }
 
   .workspaceWindowEventbox {
-    // background: $base00;
     border-radius: 8px;
-    transition: 250ms;
+
+    .workspaceWindowsBox {
+      border-radius: 8px;
+      transition: 250ms;
+      background-size: 100%;
+      background: $base00;
+
+      .windowIcon {
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+    .workspaceWindowsBox.Floating {
+      background: $base01;
+    }
   }
 
-  .workspaceWindowEventbox:hover {
-    border: 5px solid $baseA0;
+  .focused {
+    border: 1.5px solid $baseA0;
+    border-radius: 8px;
+  }
+  .unfocused {
+    border: 1.5px solid $base01;
+  }
+
+  .windowButton {
+    font-size: 7px;
+  }
+  .windowButton_1 {
+    color: $base02;
+  }
+  .windowButton_2 {
+    color: $base03;
+  }
+  .windowButton_3 {
+    color: $baseA0;
   }
 }

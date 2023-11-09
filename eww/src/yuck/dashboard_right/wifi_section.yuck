@@ -1,9 +1,10 @@
 (defwindow wifi_menu
   :stacking "fg"
   :windowtype "dock"
+  :monitor 0
   :geometry (geometry
-    :x "-11px"
-    :y "58px"
+    :x "0px"
+    :y "0px"
     :width "18%"
     :anchor "top right"
   )
@@ -78,6 +79,7 @@
             :text SSID
             :xalign 0
             :class "SSID"
+            :limit-width 20
           )
         )
         

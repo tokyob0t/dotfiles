@@ -4,7 +4,7 @@
     :height "10%"
     :anchor "center"
   )
-  
+  :monitor 0
   :windowtype "dialog"
   (powermenu)
 )
@@ -44,7 +44,7 @@
         :cursor "pointer"
         (button
           :class "exit"
-          :onclick "bspc quit"
+          :onclick "hyprctl dispatch exit"
           (label
             :text "󰍃"
             :class "icon"

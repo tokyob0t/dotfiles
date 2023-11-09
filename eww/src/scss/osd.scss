@@ -2,7 +2,7 @@
   background-color: $base00;
   border-radius: 100px;
   padding: 5px 15px;
-
+  border: 3px solid $base01;
   .scale {
     @extend .Scale;
     margin: 10px;
@@ -16,7 +16,7 @@
       highlight {
         background: $baseA0;
         border-radius: 100px;
-    }
+      }
     }
   }
 }

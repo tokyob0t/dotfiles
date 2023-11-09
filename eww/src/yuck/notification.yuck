@@ -1,4 +1,5 @@
 (defwindow notifpopup
+  :monitor 0
   :stacking "fg"
   :windowtype "dock"
   :geometry (geometry
@@ -111,22 +112,21 @@
             :text title
             :tooltip title
             :class "title"
-            :halign "center"
+            :halign {strlength(title) < 20  ? "center" : "start"}
             :valign "start"
             :limit-width 20
-            :xalign 0
+            :xalign {strlength(content) < 25 ? 0.5 : 0}
           )
           
           (label
             :text content
             :tooltip content
-            :halign "start"
+            :halign {strlength(content) < 25 ? "center" : "start"}
             :valign "start"
             :class "content"
-            :limit-width 25
+            :limit-width 30
             :wrap true
-            :xalign 0
-            
+            :xalign {strlength(content) < 15 ? 0.5 : 0}
           )
         )
         (box

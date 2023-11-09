@@ -1,0 +1,48 @@
+.jgMenu {
+  background: $base00;
+  padding: 10px;
+  border-radius: 20px;
+  border-top-left-radius: 5;
+  transition: 250ms;
+
+  .jqMenuEntryEventBox:hover {
+    background: $base01;
+    transition: 250ms;
+  }
+
+  .jqMenuEntryEventBox {
+    border-radius: 8px;
+    .jqMenuEntry {
+      padding: 5px 10px;
+      .icon {
+        color: $Altbase03;
+        font-size: 20px;
+        opacity: 0.7;
+      }
+
+      .name {
+        font-size: 15px;
+        color: $base04;
+        font-family: "IBM Plex Sans Mono";
+      }
+      .power {
+        color: $base0A;
+      }
+    }
+
+    .subMenu {
+      color: $Altbase03;
+    }
+  }
+
+  .jqMenuDivider {
+    border-bottom: 1px solid $base01;
+    background: $base01;
+    margin: 0 10px;
+    border-radius: 20px;
+  }
+}
+
+.inactive {
+  opacity: 0;
+}

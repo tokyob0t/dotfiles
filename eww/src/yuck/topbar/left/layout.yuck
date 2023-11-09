@@ -2,7 +2,6 @@
   
   (eventbox
     :cursor "pointer"
-    :onclick "rofi -i -show drun -modi drun -show-icons &"
     (box
       :class "layoutBox"
       :space-evenly false

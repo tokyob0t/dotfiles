@@ -20,6 +20,7 @@
           :year {formattime(EWW_TIME, "%Y")}
         )
       )
+      (weather)
     )
   )
   

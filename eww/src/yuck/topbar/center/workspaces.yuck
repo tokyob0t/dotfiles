@@ -1,27 +1,62 @@
+
+
+; ; ; ONLY FOR HYPRLAND
+; (defwidget workspaces []
+;   (eventbox
+;     :onscroll "./scripts/hypr_setWorkspace --{} &"
+;     (box
+;       :class "workspacesWidget"
+;       :space-evenly false
+      
+;       (for num in {[0, 1, 2, 3, 4, 5]}
+;         (workspace :id {workspaces.workspaces[num].id} :windows {workspaces.workspaces[num].windows} )
+;       )
+;     )
+;   )
+; )
+
+; (defwidget workspace [id ?windows]
+;   (eventbox
+;     ; ; We create a class depending if active or not
+;     :onclick "./scripts/hypr_setWorkspace --set ${id}"
+;     :cursor "pointer"
+
+;     (box
+;       :class 'workspacesBox ${
+;       id == workspaces.active ? "activeWorkspace" :
+;       windows > 0 ? "inactiveWorkspace" :
+;       "emptyWorkspace"
+;       }'
+;     )
+;   )
+; )
+
+
+; ; ; ONLY FOR BSPWM
 (defwidget workspaces []
-  (eventbox
-    :onscroll "./scripts/bspwm_setWorkspace --{} &"
-    (box
-      :class "workspacesWidget"
-      :space-evenly false
-      (for num in "[0, 1, 2, 3, 4, 5, 6]"
-        (workspace :id {workspaces[num].id} :state {workspaces[num].state})
+    (eventbox
+      :onscroll "./scripts/bspwm_setWorkspace --{} &"
+      (box
+        :class "workspacesWidget"
+        :space-evenly false
+        (for num in "[0, 1, 2, 3, 4, 5, 6]"
+          (workspace :id {workspaces[num].id} :state {workspaces[num].state})
+        )
       )
     )
   )
-)
-
-(defwidget workspace [id state]
-  (eventbox
-    ; ; We create a class depending if active or not
-    :onclick "./scripts/bspwm_setWorkspace --set ${id}"
-    :cursor "pointer"
-    (box
-      :class 'workspacesBox ${
-      state == "active" ? "activeWorkspace" :
-      state == "inactive" ? "inactiveWorkspace" :
-      "emptyWorkspace"
-      }'
+  
+  (defwidget workspace [id state]
+    (eventbox
+      ; ; We create a class depending if active or not
+      :onclick "./scripts/bspwm_setWorkspace --set ${id}"
+      :cursor "pointer"
+      (box
+        :class 'workspacesBox ${
+        state == "active" ? "activeWorkspace" :
+        state == "inactive" ? "inactiveWorkspace" :
+        "emptyWorkspace"
+        }'
+      )
     )
   )
-)

@@ -4,7 +4,7 @@
     :transition "slideleft"
     
     (eventbox
-      :onclick "eww open notifDashboard --toggle"
+      :onclick "${EWW_CMD} open notifDashboard --toggle &"
       :cursor "pointer"
       (box
         :class "notifButton"
@@ -20,12 +20,13 @@
 )
 
 (defwindow notifDashboard
+  :monitor 0
   :stacking "fg"
   :windowtype "dock"
   :wm-ignore true
   :geometry (geometry
-    :x "-11px"
-    :y "58px"
+    :x "20px"
+    :y "20px"
     :width "20%"
     :anchor "top right"
   )

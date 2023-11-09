@@ -44,7 +44,7 @@
       
       (button
         :class "logoutButton"
-        
+        :onclick "hyprctl dispatch exit"
         (label
           :text "󰍃"
           :class "icon"

@@ -29,13 +29,20 @@
           (label
             :class "icon volumeIcon"
             :tooltip {volume.value}
-            :text {
-            volume.muted == "yes" || volume.value == 0 ? "󰝟" :
-            volume.value >= 35 ? "" :
-            volume.value >= 25 ? "" : ""
-            }
+            :text {volume.icon}
           )
         )
+        (eventbox
+          :class "Eventbox"
+          :onscroll "./scripts/microphone --{}"
+          :visible {microphone.icon == ""}
+          :active {microphone.icon == ""}
+          (label
+            :class "icon micIcon"
+            :text {microphone.icon}
+            :tooltip {microphone.value}
+          ))
+        
         (box
           :space-evenly false
           (eventbox
