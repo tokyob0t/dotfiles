@@ -32,7 +32,7 @@
         (input
           :class "launcherInput"
           :onchange "./scripts/apps.py --query '{}' &"
-          :onaccept "gtk-launch ${apps.apps[0].desktop} & ${EWW_CMD} close launcher"
+          :onaccept "gtk-launch ${arraylength(apps.math) > 0 ? apps.math[0].desktop : arraylength(apps.preferred) > 0 ? apps.preferred[0] : arraylength(apps.apps) > 0 ? apps.apps[0] : '--version' } & ${EWW_CMD} close launcher"
           :hexpand true
         )
       )
@@ -47,13 +47,13 @@
           :spacing 20
           
           (box
-            :visible {objectlength(apps) > 2}
+            :visible {apps.math[0]}
             
             (app_entry
-              :icon {apps.math[0].icon}
-              :name {apps.math[0].name}
-              :desc {apps.math[0].comment}
-              :desktop {apps.math[0].desktop}
+              :icon {apps.math[1].icon}
+              :name {apps.math[1].name}
+              :desc {apps.math[1].comment}
+              :desktop {apps.math[1].desktop}
             )
         )
           

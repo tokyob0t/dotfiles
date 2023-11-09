@@ -13,24 +13,24 @@
   (eventbox
     :onhoverlost "eww close windowSwitcher"
     (box
-      :orientation "v"
       :space-evenly false
       :spacing 20
       :class "windowEventBoxes"
+      :orientation "v"
       
       (box
         :space-evenly false
         :spacing 20
         :halign "center"
         :valign "center"
-        (for workspaces in windows
+        (for i in {[0, 1, 2, 3]}
           (box
             :class "windowsContainers"
             :space-evenly false
             :height {1080/5}
             :width {1920/5}
             
-            (for j in {workspaces.windows}
+            (for j in {windows[i].windows}
               
               (windowWorkspace
                 :id {j.window_id}
@@ -47,13 +47,41 @@
           )
         )
       )
+      (box
+        :space-evenly false
+        :spacing 20
+        :halign "center"
+        :valign "center"
+        (for k in {[4, 5, 6]}
+          (box
+            :class "windowsContainers"
+            :space-evenly false
+            :height {1080/5}
+            :width {1920/5}
+            
+            (for l in {windows[k].windows}
+              
+              (windowWorkspace
+                :id {l.window_id}
+                :icon {l.window_icon}
+                :name {l.window_name}
+                :focused {l.focused}
+                :floating {l.floating}
+                :atX {l.at[0]}
+                :atY {l.at[1]}
+                :X {l.size[0]}
+                :Y {l.size[1]}
+              )
+            )
+          )
+        )
+      )
     )
   )
 )
 
 (defwidget windowWorkspace [id ?name icon X Y atX atY ?floating focused]
   (box
-    :class "${focused ? 'focused' : ''}"
     :style "
     margin-left: ${round(atX /5, 0)}px;
     margin-top: ${round((atY ) /5, 0)}px;
@@ -64,7 +92,7 @@
     (eventbox
       :cursor "pointer"
       :class "workspaceWindowEventbox"
-      :onclick "./scripts/bspwm_setWorkspace --setnode ${id}"      
+      :onclick "./scripts/bspwm_setWorkspace --setnode ${id}"
       (overlay
         (box
           :class "workspaceWindowsBox ${floating ? 'Floating' : ''} "

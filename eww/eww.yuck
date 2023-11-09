@@ -43,6 +43,7 @@
 (deflisten volume :initial '{"icon": "", "value": "50" }' "./scripts/volume --get")
 (deflisten brightness :initial '{"icon": "󰃠", "value": "100"}' "./scripts/brightness --get")
 (deflisten microphone :initial '{"icon": "", "value": "100"}' "./scripts/microphone --get")
+(defvar microphone_revealer false)
 
 ; Notifications
 (deflisten  notifications :initial '{
@@ -91,7 +92,7 @@
 (defvar airplaneMode false)
 
 ; Apps json variable
-(deflisten apps :initial "{}" "./scripts/apps.py" )
+(deflisten apps :initial '{"math": [False], "apps": {}, "preferred": {}}' "./scripts/apps.py" )
 
 ; Playerctl main variables
 (deflisten playerctlStatus :initial false "playerctl --follow status")

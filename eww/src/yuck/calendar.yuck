@@ -4,9 +4,9 @@
 
 (defwindow weather
   :geometry (geometry
-    :x "20px"
-    :y "20px"
-    :width "700px"
+    :x "0.5%"
+    :y "5.5%"
+    :width "250px"
     :anchor "top left"
   )
   :monitor 0
@@ -18,44 +18,44 @@
     (box
       :class "weatherMainBox"
       :space-evenly false
-      :hexpand false
-      (box
-        :space-evenly false
-        :orientation "v"
-        :spacing 5
-        :hexpand true
-        :width 300
-        (scroll
-          :vexpand true
-          :hexpand true
+      :halign "center"
+    ;   (box
+    ;     :space-evenly false
+    ;     :orientation "v"
+    ;     :spacing 5
+    ;     :hexpand true
+    ;     :width 300
+    ;     (scroll
+    ;       :vexpand true
+    ;       :hexpand true
           
-          (box
-            :space-evenly false
-            :orientation "v"
-            :spacing 5
-            :hexpand true
-            (eventEntry
-              :icon "󰨱"
-              :date "EVERY DAY"
-              :content "SEX."
-              :urgency "high"
-            )
-            (eventEntry
-              :icon "󰨱"
-              :date "EVERY DAY"
-              :content "SEX."
-              :urgency "high"
-            )
-            (eventEntry
-              :icon "󰨱"
-              :date "EVERY DAY"
-              :content "SEX."
-              :urgency "high"
-            )
+    ;       (box
+    ;         :space-evenly false
+    ;         :orientation "v"
+    ;         :spacing 5
+    ;         :hexpand true
+    ;         (eventEntry
+    ;           :icon "󰨱"
+    ;           :date "EVERY DAY"
+    ;           :content "SEX."
+    ;           :urgency "high"
+    ;         )
+    ;         (eventEntry
+    ;           :icon "󰨱"
+    ;           :date "EVERY DAY"
+    ;           :content "SEX."
+    ;           :urgency "high"
+    ;         )
+    ;         (eventEntry
+    ;           :icon "󰨱"
+    ;           :date "EVERY DAY"
+    ;           :content "SEX."
+    ;           :urgency "high"
+    ;         )
             
-          )
-        )
-      )
+    ;       )
+    ;     )
+    ;   )
       (dateCalendar)
     )
   )

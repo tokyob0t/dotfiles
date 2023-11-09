@@ -74,14 +74,13 @@
           :class "titlebar"
         )
         
-        (eventbox
+        (button
           :class "eventbox icon"
           :onclick onClose2
-          :cursor "pointer"
           :halign "end"
           (label
             :text time
-            :class "titlebar"
+            :class "titlebar closebutton"
           )
         )
         

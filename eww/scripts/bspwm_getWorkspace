@@ -1,57 +1,39 @@
-#!/bin/bash
+#!/usr/bin/python
 
-# Función para verificar si una ventana está maximizada en el espacio de trabajo actual
-is_workspace_maximized() {
-    # Obtener la lista de ventanas en el espacio de trabajo actual
-    windows=$(bspc query -N -d focused)
-    
-    # Verificar si alguna ventana está maximizada
-    for window in $windows; do
-        if bspc query -T -n "$window" | grep -q '"state":"fullscreen"'; then
-            return 0  # Ventana maximizada encontrada
-        fi
-    done
-    return 1  # Ninguna ventana maximizada encontrada
-}
+from subprocess import PIPE
+from subprocess import run as shellRun
+from subprocess import getoutput as shellOut
+from subprocess import Popen as shellPopen
+import json
+from sys import exit as sysexit
 
-# Obtener información de workspaces y crear un JSON
-get_workspace_info() {
-    monitor=""
-    [ -n "$1" ] && monitor="--monitor $1"
-    
+def get_workspace_info(monitor=None):
+
     # Almacenar los resultados de bspc para evitar llamadas innecesarias
-    desktops=($(bspc query -D --names $monitor))
-    focused_desktop=($(bspc query -D -d focused --names $monitor))
-    occupied_desktops=($(bspc query -D -d .occupied --names $monitor))
-    
-    workspaces=()
-    
-    for d in "${desktops[@]}"; do
-        if [[ " ${focused_desktop[@]} " =~ " $d " ]]; then
-            class="active"
-        elif [[ " ${occupied_desktops[@]} " =~ " $d " ]]; then
-            class="inactive"
-        else
-            class="empty"
-        fi
+    desktops = shellOut(f"bspc query -D --names").strip().split()
+    focused_desktop = shellOut(f"bspc query -D -d focused --names").strip().split()
+    occupied_desktops = shellOut(f"bspc query -D -d .occupied --names").strip().split()
 
-        # Verificar si hay una ventana maximizada en este espacio de trabajo
-        if is_workspace_maximized; then
-            maximizedwin="true"
-        else
-            maximizedwin="false"
-        fi
+    workspaces = []
 
-        workspaces+=("{\"id\":\"$d\",\"state\":\"$class\",\"maximizedwin\":\"$maximizedwin\"}")
-    done
+    for d in desktops:
+        if d in focused_desktop:
+            state = "active"
+        elif d in occupied_desktops:
+            state = "inactive"
+        else:
+            state = "empty"
+
+        workspaces.append({"id": d, "state": state})
 
     # Generar JSON
-    echo "["$(IFS=','; echo "${workspaces[*]}")"]"
-}
+    return json.dumps(workspaces)
 
 # Escuchar cambios en bspwm
-bspc subscribe desktop node_transfer | while read -r _ ; do
-    workspace_info=$(get_workspace_info)
-    eww update workspaces="$workspace_info"
-    echo "$workspace_info"
-done
+proc = shellPopen(["bspc", "subscribe", "desktop_focus"], stdout=PIPE, text=True)
+
+if __name__ == "__main__":
+    while True:
+        _ = proc.stdout.readline()
+        workspace_info = get_workspace_info()
+        shellRun(f"eww update workspaces={json.dumps(workspace_info)}", shell=True)

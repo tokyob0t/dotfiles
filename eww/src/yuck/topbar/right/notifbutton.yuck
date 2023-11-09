@@ -25,14 +25,14 @@
   :windowtype "dock"
   :wm-ignore true
   :geometry (geometry
-    :x "20px"
-    :y "20px"
+    :x "-0.5%"
+    :y "5.5%"
     :width "20%"
     :anchor "top right"
   )
   
   (eventbox
-    :onhoverlost "eww close notifDashboard"
+    :onhoverlost "eww close notifDashboard &"
     (box
       :class "dashboard notifHistoryBox"
       (notifHistory)
@@ -113,8 +113,7 @@
             :content {notif.body}
             :imgPath {notif.image}
             :time {notif.time}
-            :onClose "zsh ./scripts/notifManage dismiss ${notif.id}"
-            :onClose2 "zsh ./scripts/notifManage close ${notif.id}"
+            :onClose "zsh ./scripts/notifManage close ${notif.id}"
           )
         )
         (box

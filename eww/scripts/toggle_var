@@ -1,19 +1,11 @@
 #!/usr/bin/bash
 
-choice=$1
-var=$2
+var=$1
 state=$(eww get $var)
 
-toggleVar(){
 
 if [[ $state == false ]]; then
     eww update $var=true
 elif [[ $state == true ]]; then
     eww update $var=false
-fi
-}
-
-
-if [[ $choice == "--toggle" ]]; then
-    toggleVar
 fi

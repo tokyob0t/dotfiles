@@ -1,83 +1,63 @@
 #!/usr/bin/python
 
 import json
-
+from sys import exit as sysexit
 from sys import argv as args
-from subprocess import PIPE
-from subprocess import run as shellRun
-from subprocess import getoutput as shellOut
-from subprocess import Popen as shellPopen
+from subprocess import PIPE, run as shellRun, getoutput as shellOut, Popen as shellPopen
 
 from apps import get_gtk_icon as getIcon
 
-
-# Function to obtain window get_window_info(window)rmation including position and size
-def test():
-    data = json.loads(shellOut("bspc query -T -n $(bspc query -N -n focused)"))
-    return data["client"]["className"]
-
 def get_window_info(window_id):
-
     try:
         data = json.loads(shellOut(f"bspc query -T -n {window_id}"))
+        client = data["client"]
         id = data["id"]
-        icon = getIcon(data["client"]["className"])
-        name = data["client"]["className"].capitalize()
-        focused = data["id"] == window_active
-        floating = data["client"]["state"] == "floating"
-        at = [data["client"]["floatingRectangle"]["x"], data["client"]["floatingRectangle"]["y"]] if data["client"]["state"] == "floating" else [data["client"]["tiledRectangle"]["x"], data["client"]["tiledRectangle"]["y"]]
-        size = [data["client"]["floatingRectangle"]["width"], data["client"]["floatingRectangle"]["height"]] if data["client"]["state"] == "floating" else [data["client"]["tiledRectangle"]["width"], data["client"]["tiledRectangle"]["height"]]
-
+        icon = getIcon(client["className"])
+        name = client["className"].capitalize()
+        floating = client["state"] == "floating"
+        key = "floatingRectangle" if floating else "tiledRectangle"
         
-        dict = {
+        at = [client[key]["x"], client[key]["y"]]
+        size = [client[key]["width"], client[key]["height"]]
+        
+        return {
             "window_id": str(id),
             "window_icon": str(icon),
             "window_name": str(name),
-            "focused": focused,
             "floating": floating,
             "at": at,
             "size": size
         }
-
-        return dict
     except:
         pass
 
 def get_workspace_windows():
-    list2 = []
+    workspace_info = []
 
-    for workspace in shellOut("bspc query -D -d '.occupied' --names").split():
-        list = []
-        for window in shellOut(f"bspc query -N -d {workspace}").split():
-            if get_window_info(window) != None:
-                list.append(get_window_info(window))
-
-        dict = {
+    for workspace in shellOut("bspc query -D --names").split():
+        windows_info = [get_window_info(window) for window in shellOut(f"bspc query -N -d {workspace}").split() if get_window_info(window)]
+        
+        workspace_dict = {
             "workspace": str(workspace),
-            "windows": list
+            "windows": windows_info
         }
-        list2.append(dict)
-    return list2
+        workspace_info.append(workspace_dict)
+    
+    return workspace_info
 
 # Function to update Eww with window entries
 def update_eww(entries):
-    shellRun(["eww", "update", "windows={}".format(json.dumps(entries))])
+    shellRun(["eww", "update", f"windows={json.dumps(entries)}"])
 
 # Subscribe to window changes
-proc = shellPopen(["bspc", "subscribe", "node"], stdout=PIPE, text=True)
+proc = shellPopen(["bspc", "subscribe", "node_add", "node_remove"], stdout=PIPE, text=True)
 
 if __name__ == "__main__":
-
     if "--once" in args:
         print(get_workspace_windows())
-        window_active = (json.loads(shellOut("bspc query -T -n $(bspc query -N -n focused)")))["id"]
         update_eww(get_workspace_windows())
-
     else:
         while True:
-            try:
-                _ = proc.stdout.readline()
-                window_active = (json.loads(shellOut("bspc query -T -n $(bspc query -N -n focused)")))["id"]
-                update_eww(get_workspace_windows())
-            except:
-                pass
+            _ = proc.stdout.readline()
+            window_active = (json.loads(shellOut("bspc query -T -n $(bspc query -N -n focused)")))["id"]
+            update_eww(get_workspace_windows())

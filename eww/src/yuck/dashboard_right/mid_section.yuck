@@ -188,44 +188,69 @@
 (defwidget quick_sliders []
   
   (box
-    :space-evenly false
     :orientation "v"
-    :spacing 10
+    :space-evenly false
+    :class "quick_sliders"
+    :spacing 5
     
     (icon_sliders
       :icon {brightness.icon}
       :value {brightness.value}
       :onChangeSlider "./scripts/brightness --set {} &"
+      :customClass "unset"
     )
-    (icon_sliders
-      :icon {microphone.icon}
-      :value {microphone.value}
-      :onChangeSlider "./scripts/microphone --set {} &"
-      :onClickButton "./scripts/microphone --toggle &"
+    (box
+      :space-evenly false
+      :spacing 10
+      (icon_sliders
+        :icon {volume.icon}
+        :value {volume.value}
+        :onChangeSlider "./scripts/volume --set {} &"
+        :onClickButton "./scripts/volume --toggle &"
+        :customClass "unset"
+      )
+      
+      (button
+        :onclick "./scripts/toggle_var microphone_revealer"
+        :halign "end"
+        (label :text {microphone_revealer ? "" : ""})
+      )
     )
-    (icon_sliders
-      :icon {volume.icon}
-      :value {volume.value}
-      :onChangeSlider "./scripts/volume --set {} &"
-      :onClickButton "./scripts/volume --toggle &"
+    (revealer
+      :reveal microphone_revealer
+      :transition "slidedown"
+      (icon_sliders
+        :icon {microphone.icon}
+        :value {microphone.value}
+        :onChangeSlider "./scripts/microphone --set {} &"
+        :onClickButton "./scripts/microphone --toggle &"
+        :customClass "unset"
+      )
     )
+    
+    
   )
 )
 
 
-(defwidget icon_sliders [icon ?value ?onClickButton onChangeSlider ?angle]
+(defwidget icon_sliders [icon ?value ?onClickButton onChangeSlider ?angle ?customClass]
   (box
     :space-evenly false
+    :class {customClass == "unset" ? "" : "quick_sliders"}
     :hexpand true
-    :class "quick_sliders"
-    
+    :valign "center"
+
     (button
       :onclick onClickButton
+      :halign "start"
+      
       (label
         :class "icon"
         :tooltip "${value}%"
         :text icon
         :angle angle
+        :halign "start"
+        :xalign 0
       )
     )
     (scale

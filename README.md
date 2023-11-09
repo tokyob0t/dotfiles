@@ -2,7 +2,7 @@
 
 ## Details  
 
-###### (Updated Nov 08)  
+###### (Updated Nov 09)  
 ###### Hyprland is also supported, but you need to change some values, e.g. the workspace module and some deflisten variables.  
 - **OS:** Arch btw
 
@@ -19,16 +19,13 @@
 
 
 ###### ~~Dependency list~~  (TODO)
-
-
 ## Preview
-![desktop1](img/wall1.png)  
-![desktop5](img/wall5.png)
-![desktop2](img/wall2.png)  
-![desktop3](img/wall3.png)  
-![desktop4](img/wall4.png)  
+![desktop1](./img/wall1.png)  
+![desktop2](./img/wall2.png)  
+![desktop3](./img/wall3.png)  
+![desktop4](./img/wall4.png)  
 
-
+![Alt text](image.png)
 #### Credits
 - [Juminai](https://github.com/juminai/dotfiles/)  
 - [end-4](https://github.com/end-4/dots-hyprland)  
