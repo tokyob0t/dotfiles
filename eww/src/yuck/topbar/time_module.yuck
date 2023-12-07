@@ -1,0 +1,36 @@
+(defwidget time_module []
+  (eventbox
+    :onclick "eww open weather --toggle"
+    :cursor "pointer"
+    (box
+      :class "time_module module"
+      :space-evenly false
+      :orientation "v"
+      (label :text {formattime(EWW_TIME, "%I:%M %p")} :style "font-family: 'IBM Plex Sans Mono'; font-size: 12.5px;")
+      (label :text {formattime(EWW_TIME, "%d/%m/%y")} :style "font-family: 'IBM Plex Sans Mono'; font-size: 12.5px;" :xalign 1)
+    )
+  )
+)
+
+(defwidget weather_module []
+  (eventbox
+    :onclick "eww open weather --toggle"
+    :cursor "pointer"
+    (box
+      :class "time_module module"
+      :space-evenly false
+      :spacing 15
+      (label
+        :text {weather.icon}
+        :style "color: ${weather.hex}; font-size: 20px"
+        :yalign 0.5
+        :xalign 0
+      )
+      (label
+        :text "${weather.temperature}°C"
+        :style "color: ${weather.hex}"
+        :xalign 1
+      )
+    )
+  )
+)

@@ -1,0 +1,113 @@
+
+(defwidget button_Dashboard [?id btn_name btn_icon ?btn_subname ?force_subname ?submenu state ?onclick]
+  (box
+    :orientation "v"
+    :space-evenly false
+    :class "button_DashboardBox"
+    :spacing 5
+    (button
+      :onclick onclick
+      (box
+        :class "button_Dashboard"
+        :space-evenly false
+        :tooltip btn_subname
+        :width 90
+        :height 45
+        :halign "center"
+        
+        
+        (overlay
+          :hexpand true
+          
+          (label
+            :text btn_icon
+            :class "icon btn_icon"
+            :halign "center"
+            :xalign 0.5
+          )
+          (revealer
+            :reveal {state}
+            :duration 250
+            :halign "start"
+            (box
+              :space-evenly false
+              ; :hexpand true
+              :valign "center"
+              :class "button_DashboardIndicator ${state ? 'active' : 'inactive'}"
+            )
+          )
+        )
+        
+        (revealer
+          :transition "slideleft"
+          :valign "center"
+          :reveal {state && submenu != false}
+          :duration 250
+          :halign "end"
+          
+          (button
+            :onclick "${EWW_CMD} update dashboard_SubMenu=${id}"
+            :width 25
+            (label
+              :text ""
+              :class "icon"
+            )
+          )
+        )
+      )
+    )
+    (box
+      :space-evenly false
+      :orientation "v"
+      (revealer
+      :reveal {!state || strlength(btn_subname) == 0}
+      :transition "slidedown"
+      (label
+        :text btn_name
+        :halign "center"
+        :class "btn_subname"
+      )
+    )
+    (revealer
+      :reveal {state && strlength(btn_subname) != 0}
+      :transition "slideup"
+      
+      (label
+        :text btn_subname
+        :limit-width 10
+        :halign "center"
+        :class "btn_subname"
+      )
+    )
+  )
+  )
+)
+
+
+(defwidget slider_Dashboard [icon value onchange]
+  (box
+    :class "slider_Dashboard"
+    :space-evenly false
+    :spacing 10
+    (label
+      :text icon
+      :class "icon sliderIcon"
+      :halign "start"
+      :valign "center"
+    )
+    (scale
+      :min 0
+      :max 100
+      :value value
+      :onchange onchange
+      :class "sliderScale"
+      :width 300
+      :style "min-height: 10px;"
+      :valign "center"
+    )
+    ; (label
+      ;   :text "${value}%"
+      ;   :class "sliderLabel"
+    ; )
+  )
+)

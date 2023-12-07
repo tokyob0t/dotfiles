@@ -1,14 +1,30 @@
 // scheme: "#Oxocarbon\ Dark";
 // author: "#shaunsingh/IBM";
 
-
+//Dark Mode
 $base00: #161616;
 $base01: #232323;
 $base02: #393939;
 $base03: #525252;
+$Altbase03: #8f9091;
 $base04: #dde1e6;
 $base05: #f2f4f8;
 $base06: #ffffff;
+// Highlight Color
+$baseA0: #6791da;
+
+// // //Light Mode
+// // $base00: #ffffff;
+// // $base01: #f2f2f2;
+// // $base02: #d0d0d0;
+// // $base03: #8f9091;
+// // $Altbase03: #161616;
+// // $base04: #37474F;
+// // $base05: #90A4A3;
+// // $base06: #525252;
+// // // Highlight Color
+// // $baseA0: #ee5396;
+
 $base07: #08bdba;
 $base08: #3ddbd9;
 $base09: #78a9ff;
@@ -19,30 +35,78 @@ $base0D: #43b365;
 $base0E: #be95ff;
 $base0F: #82cfff;
 
-$baseA0: #6791da;
-$baseA1: #747474;
 
-$shadow00: 5px 5px 2px rgb(0, 0, 0, 0.4);
-$outer_border-radius: 8px;
-$inner_border-radius: 10px;
+
+
+
+$shadow00: 5px 5px 2px rgba(0, 0, 0, 0.4);
+$outer_border-radius: 10px;
+$inner_border-radius: 4px;
+
 $button_icon: 5px 16px 5px 10px;
 
 * {
-    all: unset;
-    font-family: monospace;
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", "Tilt Neon", monospace;
+  font-size: 14.6px;
+  color: $base04;
 }
 
 .icon {
-    font-family: "FiraCode Nerd Font";
-    font-weight: bold;
-    font-size: 20px;
+  font-family: "Symbols Nerd Font";
+  font-size: 20px;
+  // min-width: 1rem;
+  // min-height: 1rem;
+  min-width: 1em;
+  min-height: 1em;
+
 }
 
-@import './scss/menu_topRight.scss';
-@import "./scss/menu_topLeft.scss";
-@import "./scss/menu_brsound.scss";
-@import "./scss/menu_music.scss";
-@import "./scss/menu_upper.scss";
-@import "./scss/menu_stats.scss";
-@import "./scss/menu_quicksettings.scss";
-// @import "./scss/menu_launcher.scss";
+.pfpImage {
+  margin: 0;
+  background-image: url("./img/pfp3.png");
+  background-size: 100%;
+  background-position: center;
+  border-radius: 50px;
+  background-repeat: no-repeat;
+
+  &.Big {
+    min-width: 60px;
+    min-height: 60px;
+  }
+  &.Small {
+    margin: 7.5px;
+    border-radius: 100px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+
+
+
+
+@import "./src/scss/general.scss";
+@import "./src/scss/topbar.scss";
+@import "./src/scss/topbar/left/time.scss";
+@import "./src/scss/topbar/center/workspaces.scss";
+@import "./src/scss/topbar/right/layout.scss";
+@import "./src/scss/topbar/right/battery.scss";
+@import "./src/scss/topbar/right/quicksettings.scss";
+@import "./src/scss/topbar/right/media_player.scss";
+@import "./src/scss/supermenu.scss";
+
+@import "./src/scss/dashboard.scss";
+@import "./src/scss/dashboard/elements.scss";
+@import "./src/scss/dashboard/wifimenu.scss";
+
+@import "./src/scss/launcher.scss";
+@import "./src/scss/wifi_section.scss";
+@import "./src/scss/notification.scss";
+@import "./src/scss/osd.scss";
+@import "./src/scss/calendar.scss";
+@import "./src/scss/powermenu.scss";
+@import "./src/scss/windowSwitcher.scss";
+@import "./src/scss/jgmenu.scss";
+@import "./src/scss/hyprsettings.scss";
+@import "./src/scss/wallpaper.scss";

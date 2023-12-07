@@ -1,0 +1,61 @@
+(include "./src/yuck/wallpaper/jgmenu.yuck")
+(include "./src/yuck/wallpaper/desktop.yuck")
+
+(defwindow wallpaper
+  
+  :geometry (geometry
+    :width "1920px"
+    :height "1080px"
+    :anchor "top left"
+  )
+  
+  :monitor 0
+  :windowtype "desktop"
+  :stacking "background"
+  ; For hyprland
+  (eventbox
+    :cursor "default"
+    :onrightclick "
+    ./scripts/python/hypr_getCursorPos.py &&
+    ${EWW_CMD} update jgMenu_Visible='true' &
+    ${EWW_CMD} update desktopEntrySelected=None &
+    "
+    
+    :onclick "
+    ${EWW_CMD} update desktopEntrySelected=None &
+    ${EWW_CMD} update jgMenu_Selected=0 &&
+    ${EWW_CMD} update jgMenu_Visible='false'"
+    
+    (box
+      :class "wallpaperBox"
+      (overlay
+        (box
+          ; :class "wallpaperImage"
+          :class "wallpaperImage"
+          :vexpand true
+          :hexpand true
+          :space-evenly false
+          (desktopApps)
+        )
+        (eventbox
+          :visible jgMenu_Visible
+          (box
+            :style "
+            margin-top: ${jgMenu_cursorPos.y - 10}px;
+            margin-left: ${jgMenu_cursorPos.x - 10}px;
+            "
+            
+            :space-evenly false
+            :valign "start"
+            :halign "start"
+            
+            (jgMenu)
+          )
+        )
+      )
+    )
+  )
+)
+
+
+

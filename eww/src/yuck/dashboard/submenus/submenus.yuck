@@ -1,0 +1,35 @@
+(defwidget submenu_Dashboard [id title]
+  (revealer
+    :reveal {dashboard_SubMenu == id}
+    :transition "slideleft"
+    :halign "end"
+    :duration 250
+
+    (box
+      :orientation "v"
+      :space-evenly false
+      ; :style "padding: 10px;"
+      :spacing 10
+      (box
+        :space-evenly false
+        :class "submenuTitleBar"
+        :spacing 5
+        (button
+          :halign "start"
+          :onclick "${EWW_CMD} update dashboard_SubMenu='-1'"
+          :class "submenuButton"
+          (label :text "" :class "icon" :xalign 0.5 )
+        )
+        (label
+          :text title
+          :class "submenuTitle"
+          :halign "center"
+          :xalign 0.5
+          :hexpand true
+        )
+        
+      )
+      (children)
+    )
+  )
+)

@@ -1,0 +1,49 @@
+(include "./src/yuck/supermenu/launcher.yuck")
+
+
+(defwidget supermenu_button []
+  (eventbox
+    ; :onclick "${EWW_CMD} open supermenu --toggle"
+    :cursor "pointer"
+    :class "supermenuEventBox"
+    :onclick "${EWW_CMD} open launcher --toggle"
+    (label
+      :text "󰕮"
+      ; :text "󰀻"
+      ; :text "󰩄"
+      ; :text "󰨦"
+      :class "icon supermenuBox"
+      :style "font-size: 25px;"
+      :valign "center"
+      :halign "center"
+    )
+  )
+)
+
+; ; Maybe in the future i will make this useful, maybe.......
+
+(defwindow supermenu
+  :geometry (geometry
+    :width "500px"
+    :height "500px"
+    :anchor "bottom left"
+  )
+  :monitor 0
+  :stacking "fg"
+  (supermenu)
+)
+(defwidget supermenu []
+  (box
+    :style "background: red;"
+    :space-evenly false
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      (label :text "A")
+      (label :text "B")
+      (label :text "C")
+      (label :text "D")
+    )
+  )
+)

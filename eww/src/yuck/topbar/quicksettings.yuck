@@ -1,0 +1,59 @@
+; Main widget that contains quicksettings
+(defwidget quicksettings []
+  (box
+    :class "quicksettingsBox module"
+    
+    (eventbox
+      :class "quicksettingsEventbox"
+      :onclick "./scripts/toggle_rev dashboard_Revealer dashboardWindow &"
+      :cursor "pointer"
+      (box
+        :space-evenly false
+        :spacing 10
+        :class "quicksettingsChildBox"
+        
+        (eventbox
+          :class "Eventbox"
+          :onrightclick "${EWW_CMD} open wifi_menu --toggle"
+          (label
+            :class "icon wifiIcon"
+            :tooltip {wifiInfo.name}
+            :text {wifiInfo.icon}
+          )
+        )
+        
+        (eventbox
+          :class "Eventbox"
+          :onscroll "./scripts/volume --{}"
+          
+          (label
+            :class "icon volumeIcon"
+            :tooltip {volume.value}
+            :text {volume.icon}
+          )
+        )
+        (eventbox
+          :class "Eventbox"
+          :onscroll "./scripts/microphone --{}"
+          :visible {microphone.icon == ""}
+          :active {microphone.icon == ""}
+          (label
+            :class "icon micIcon"
+            :text {microphone.icon}
+            :tooltip {microphone.value}
+          )
+        )
+        (eventbox
+          :class "Eventbox"
+          :onscroll "./scripts/brightness --{}"
+          (label
+            :class "icon ${battery.class}"
+            :text {battery.icon}
+            :tooltip "${battery.state} ${battery.percentage}%"
+
+          )
+        )
+      )
+    )
+  )
+)

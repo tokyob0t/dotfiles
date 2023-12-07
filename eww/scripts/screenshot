@@ -1,3 +1,51 @@
 #!/bin/bash
 
-$HOME/.config/dunst/scripts/main.py screenshot
+screenshot_dir="$HOME/Pictures/Screenshots"
+file_name="Screenshot_$(date +'%m%d%H%M%S').png"
+file_path="$screenshot_dir/$file_name"
+
+screenshot_wl() {
+    mode="$1"
+    if [ "$mode" = "--sel" ]; then
+        grim -g "$(slurp -d)" "$file_path"
+    elif [ "$mode" = "--all" ]; then
+        grim "$file_path"
+    fi
+    [ "$WAYLAND_DISPLAY" ] && wl-copy < "$file_path"
+    
+}
+screenshot_x11() {
+    mode="$1"
+    if [ "$mode" = "--sel" ]; then
+        maim -slu --color=0.74,0.58,1,0.85 | tee "$file_path" | xclip -selection clipboard -t image/png
+    elif [ "$mode" = "--all" ]; then
+        maim -u --color=0.74,0.58,1,0.85 | tee "$file_path" | xclip -selection clipboard -t image/png
+    else
+        echo "Invalid mode. Use --sel to select a region or --all to capture the entire screen."
+        exit 1
+    fi
+}
+
+# Check the command line arguments
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <mode>"
+    echo "Available modes: --sel (select region), --all (capture entire screen)"
+    exit 1
+fi
+
+if [ "$WAYLAND_DISPLAY" ]; then
+    screenshot_wl "$1"
+    elif [ "$DISPLAY" ]; then
+    screenshot_x11 "$1"
+else
+    echo "Unable to determine display server type. Make sure you are running a supported display server."
+    exit 1
+fi
+
+if [ -s "$file_path" ]; then
+
+    notify-send -i "$file_path" -a "Screenshot" "Captured successfully" "The screenshot was saved and copied to the clipboard."
+
+else
+    [ -e "$file_path" ] && rm "$file_path"
+fi

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 choice=$1
 
@@ -6,23 +6,19 @@ pacman_packages() {
     echo "$(pacman -Qq | wc -l)"
 }
 
-upTime_h(){
-    hour="$(uptime -p | awk '{print $4 "h"}')"
-    if [ "$hour" == "h" ]; then 
-        echo ""
-    else 
-        echo "$hour,"
-    fi
-}
-
-upTime_m(){
-    min="$(uptime -p | awk '{print $2 "m"}')"
-    echo "$min"
-}
 
 userHost() {
-    echo "$(whoami)@$(hostname)"
+    echo "$(whoami)@$(hostnamectl --json=pretty | jq .Hostname  | sed 's/"//g')"
 }
+
+Host() {
+    echo "@$(hostnamectl --json=pretty | jq .Hostname  | sed 's/"//g')"
+}
+
+User() {
+    echo "$(whoami)"
+}
+
 
 kernel(){
     echo "$(uname -r)"
@@ -46,22 +42,23 @@ systemGPU(){
     fi
 }
 
-
-
-
-
-if [ $choice == "--pacman" ]; then
+if [[ $choice == "--pacman" ]]; then
     pacman_packages; 
-elif [ $choice == "--userHost" ]; then
+elif [[ $choice == "--userHost" ]]; then
     userHost
-elif [ $choice == "--uptimeH" ]; then
-    upTime_h
-elif [ $choice == "--uptimeM" ]; then
-    upTime_m
-elif [ $choice == "--kernel" ]; then
+elif [[ $choice == "--user" ]]; then
+    User
+elif [[ $choice == "--host" ]]; then
+    Host
+
+elif [[ $choice == "--uptime" ]]; then
+    echo $(uptime -p)
+elif [[ $choice == "--kernel" ]]; then
     kernel
-elif [ $choice == "--systemCPU" ]; then
+elif [[ $choice == "--systemCPU" ]]; then
     systemCPU
-elif [ $choice == "--systemGPU" ]; then
+elif [[ $choice == "--systemGPU" ]]; then
     systemGPU
+else
+    echo "Usage ./stats --parameter"
 fi

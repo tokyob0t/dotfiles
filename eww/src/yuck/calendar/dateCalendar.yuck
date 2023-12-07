@@ -1,0 +1,40 @@
+
+(defwidget dateCalendar []
+  (box
+    :orientation "v"
+    :space-evenly false
+    
+    (label
+      :text {formattime(EWW_TIME, "%k:%M")}
+      :class "bigClock"
+    )
+    (label :text {formattime(EWW_TIME, "%B %d")})
+    
+    (box
+      :space-evenly false
+      :halign "center"
+      :orientation "v"
+      :spacing 5
+      :class "calendarBox"
+      
+      (for i in {calendar}
+        (box
+          :space-evenly false
+          :spacing 5
+          :class "calendarBoxChild"
+          (for j in {i}
+            (button
+              :hexpand true
+              :class "calendarButton"
+              (label
+                :hexpand true
+                :text {j.day}
+              )
+            )
+          )
+        )
+      )
+    )
+    ; (weather)
+  )
+)

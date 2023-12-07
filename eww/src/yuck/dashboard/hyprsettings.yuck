@@ -1,0 +1,256 @@
+(defwidget settingsContainer []
+  (box
+    :class "hyprsettingsBox"
+    :orientation "v"
+    :space-evenly false
+    :spacing 10
+    
+    (settingsBox
+      :icon "󰂵"
+      :title "Blur"
+      :spacing 10
+      (settingsCheckbox
+        :title "Lorem Ipsum"
+        :value false
+        :onclick ""
+      )
+      (box
+        :orientation "v"
+        :space-evenly false
+        (settingsSlider
+          :title "Lorem Ipsum"
+          :value 35
+          :onchange ""
+        )
+        (settingsSlider
+          :title "Lorem Ipsum"
+          :value 70
+          :onchange ""
+        )
+      )
+    )
+    (settingsBox
+      :icon ""
+      :classIcon "small"
+      :title "Input"
+      :spacing 10
+      (box
+        :space-evenly false
+        :orientation "v"
+        (settingsSlider
+          :title "Lorem Ipsum"
+          :value 70
+          :onchange ""
+        )
+        (settingsCheckbox
+          :title "Lorem Ipsum"
+          :value true
+          :onclick ""
+        )
+      )
+      (settingsComboBox
+        :title "Lorem Ipsum"
+        :values {["Lorem", "Ipsum", "Dolor"]}
+        :onselected ""
+      )
+    )
+    
+    (settingsBox
+      :icon ""
+      :title "Gaps"
+      :spacing 10
+      (settingsSlider
+        :title "Lorem Ipsum"
+        :value 25
+        :onchange ""
+      )
+      (settingsSlider
+        :title "Lorem Ipsum"
+        :value 5
+        :onchange ""
+      )
+      
+      (settingsSlider
+        :title "Lorem Ipsum"
+        :value 60
+        :onchange ""
+      )
+      (settingsSlider
+        :title "Lorem Ipsum"
+        :value 100
+        :onchange ""
+      )
+    )
+    (settingsBox
+        :icon ""
+        :title "Window"
+        :spacing 10
+        (settingsSlider
+          :title "Lorem Ipsum"
+          :value 25
+          :onchange ""
+        )
+        (settingsSlider
+          :title "Lorem Ipsum"
+          :value 5
+          :onchange ""
+        )
+        
+        (settingsSlider
+          :title "Lorem Ipsum"
+          :value 60
+          :onchange ""
+        )
+        (settingsSlider
+          :title "Lorem Ipsum"
+          :value 100
+          :onchange ""
+        )
+      )
+      (settingsBox
+        :icon "󰐱"
+        :classIcon "small"
+        :title "Plugins"
+        :spacing 10
+        
+        (settingsCheckbox
+          :title "Lorem Ipsum"
+          :value true
+          :onclick ""
+        )
+        
+        (settingsCheckbox
+          :title "Lorem Ipsum"
+          :value false
+          :onclick ""
+        )
+        (settingsSlider
+          :value 70
+          :onchange ""
+        )
+        (settingsCheckbox
+          :title "Lorem Ipsum"
+          :value false
+          :onclick ""
+        )
+        (settingsCheckbox
+          :title "Lorem Ipsum"
+          :value true
+          :onclick ""
+        )
+      )
+  )
+)
+
+
+
+; ; ; ; ; MAIN CUSTOM BASE WIDGETS 
+
+
+(defwidget settingsBox [icon ?classIcon ?title spacing]
+  (box
+    :space-evenly false
+    :class "settingsBox"
+    :orientation "v"
+    :spacing 15
+    (box
+      :space-evenly false
+      :spacing 10
+      (label
+        :text icon
+        :class "icon ${classIcon}"
+        :xalign 0
+        :valign 0
+        :style "margin-left: 10px;"
+      )
+      
+      (label
+        :text title
+        :class "settingsTitle"
+        :xalign 0
+        :valign 0
+        :style "margin-bottom: -2.5px"
+      )
+    )
+    
+    (box
+      :class "settingsBoxChild"
+      :space-evenly false
+      :orientation "v"
+      :spacing spacing
+      (children)
+    )
+  )
+)
+
+
+
+(defwidget settingsSlider [?title value onchange]
+  (box
+    :space-evenly false
+    :orientation "v"
+    :spacing 0
+    (label
+      :text title
+      :xalign 0
+      :visible {strlength(title) > 0}
+    )
+    
+    (scale
+      :marks true
+      :value value
+      :min 0
+      :max 100
+      :hexpand true
+    )
+  )
+)
+
+(defwidget settingsCheckbox [title value onclick ?spacing ?style]
+  (eventbox
+    :onclick onclick
+    (box
+      :space-evenly false
+      :hexpand true
+      :spacing spacing
+      :style style
+      (label
+        :text title
+        :halign "start"
+      )
+      (box
+        :class "settingsCheckboxBox ${value ? 'checked' : ''}"
+        :halign "end"
+        :hexpand true
+        
+        (label
+          :text {value ? "" : "" }
+          :class "icon"
+          :xalign 0.5
+        )
+      )
+    )
+  )
+)
+
+(defwidget settingsComboBox [title values onselected ?spacing ?style]
+  (box
+    :space-evenly false
+    :hexpand true
+    :spacing spacing
+    :style style
+    (label
+      :text title
+      :halign "start"
+    )
+    (box
+      :class "settingsComboBox"
+      :halign "end"
+      :hexpand true
+      (combo-box-text
+        :items values
+        :onchange onselected
+      )
+    )
+  )
+)

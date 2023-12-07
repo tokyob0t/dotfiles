@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+echo $(eww get NightLight | jq -r .value)

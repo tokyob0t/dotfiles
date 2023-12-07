@@ -1,0 +1,41 @@
+.wifi_entryBox {
+  padding: 10px 20px;
+  border-radius: 10px;
+  &.selected {
+    border-left: 3px solid $baseA0;
+  }
+  &.unselected {
+    border-left: 3px solid $base01;
+  }
+  .SECURITY,
+  .SECURITY_ICON.locked {
+    color: $base03;
+  }
+
+  .SECURITY_ICON.unlocked {
+    color: $base0B;
+  }
+
+  .SECURITY_ICON.connected {
+    color: $base0D;
+  }
+}
+
+
+.passInputBox {
+  
+  entry {
+    border-radius: 10px;
+    color: $base04;
+    padding: 10px;
+    font-family: monospace;
+    font-weight: bold;
+    background-color: $base02;
+  }
+
+  button {
+    padding: 10px;
+    background: $base02;
+    border-radius: 10px;
+  }
+}

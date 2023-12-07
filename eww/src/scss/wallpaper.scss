@@ -1,0 +1,15 @@
+.wallpaperBox {
+  background-color: $base00;
+  padding-bottom: 45px;
+
+  .wallpaperImage {
+    border-radius: 20px;
+    background: $base01;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75% 75%;
+    background-image: linear-gradient(rgba(22,22,22,0.4), rgba(22, 22, 22, 0.6)), url("./img/wallpapers/wallpaper3.png");
+    // background-image: url("./img/wallpaper3.png");
+    // box-shadow: inset 0 0 5px 5px $base00;
+  }
+}

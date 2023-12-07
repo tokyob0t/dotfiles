@@ -1,0 +1,52 @@
+.media_player {
+  border-radius: 10px;
+  background-size: 100%;
+  background-position: center;
+  padding: 0 15px;
+  transition: 500ms;
+  .spotify {
+    color: $base0D;
+  }
+  .generic {
+    color: $base0E;
+  }
+  .firefox {
+    color: $base0B;
+  }
+}
+
+.media_playerBig {
+  padding: 15px;
+  background: $base00;
+  border-radius: 20px;
+  background-size: 100%;
+  background-position: center;
+  box-shadow: inset 0 0 5px 5px $base00;
+  .media_playerAlbumArt {
+    border-radius: 20px;
+    background-size: 100%;
+    background-position: center;
+    // box-shadow: 0 0 5px 5px $base00;
+  }
+  .title,
+  .artist {
+    font-family: "IBM Plex Sans Mono";
+  }
+  .title {
+    color: $base04;
+    font-weight: 600;
+  }
+  .artist {
+    color: $Altbase03;
+  }
+
+  .spotify {
+    color: $base0D;
+  }
+  .generic {
+    color: $base0E;
+  }
+  .firefox {
+    color: $base0B;
+  }
+}
