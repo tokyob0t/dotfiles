@@ -1,0 +1,10 @@
+(defwidget local_ip []
+  (box
+    :style "padding: 5px 10px;"
+    
+    (label
+      :text {ipInfo.IP}
+      :tooltip {ipInfo.status}
+    )
+  )
+)

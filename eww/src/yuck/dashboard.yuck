@@ -1,0 +1,66 @@
+(include "./src/yuck/dashboard/aboutme.yuck")
+(include "./src/yuck/dashboard/hyprsettings.yuck")
+(include "./src/yuck/dashboard/elements.yuck")
+(include "./src/yuck/dashboard/containers.yuck")
+(include "./src/yuck/dashboard/submenus/submenus.yuck")
+(include "./src/yuck/dashboard/submenus/wifimenu.yuck")
+
+
+(defwindow dashboardWindow
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  :geometry (geometry
+    :x "0.25%"
+    :y "0.5%"
+    :width "400px"
+    :height "500px"
+    :anchor "bottom right"
+  )
+  
+  
+  
+  (eventbox
+    :onhoverlost "${EWW_CMD} update dashboard_SubMenu='-1' & ./scripts/toggle_rev dashboard_Revealer dashboardWindow &"
+    :halign "end"
+    :valign "end"
+    (revealer
+      :reveal true
+      ; :reveal dashboard_Revealer
+      :transition "slideleft"
+      :duration 250
+      
+      (box
+        :space-evenly false
+        :orientation "v"
+        :valign "end"
+        ; (notifHistory)
+          (media_playerBig)
+        (box
+          :space-evenly false
+          :class "dashboard"
+          (revealer
+            :reveal {dashboard_SubMenu == "-1"}
+            :transition "slideleft"
+            :duration 250
+            
+            (box
+              :orientation "v"
+              :space-evenly false
+              :spacing 10
+              (aboutme)
+              (box :space-evenly false :height 10)
+              (buttonsContainer)
+              (slidersContainer)
+            )
+          )
+          (submenu_Dashboard
+            :id 1
+            :title "Wi-fi Menu"
+            (wifi_entries)
+          )
+        )
+      )
+    )
+  )
+)

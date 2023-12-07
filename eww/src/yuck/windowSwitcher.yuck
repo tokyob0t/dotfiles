@@ -1,0 +1,77 @@
+(defwidget windowSwitcher []
+  (revealer
+    :reveal windows_revealer
+    :transition "slideup"
+    :duration 250
+    :valign "end"
+    (scroll
+      :hscroll true
+      :height {1080/4}
+      :width {1920/4}
+      :class "windowSwitcherBox"
+      
+      (box
+        :space-evenly false
+        :spacing 20
+        :hexpand true
+        :class "windowEventBoxes"
+        (for i in {windows}
+          (box
+            :class "windowsContainers"
+            :space-evenly false
+            :height {1080/5}
+            :width {1920/5}
+            (for j in {i.windows}
+              (windowWorkspace
+                :id {j.window_id}
+                :icon {j.window_icon}
+                :name {j.window_name}
+                :floating {j.floating}
+                :atX {j.at[0]}
+                :atY {j.at[1] + 45}
+                :X {j.size[0]}
+                :Y {j.size[1] - 45}
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget windowWorkspace [id ?name icon X Y atX atY ?floating]
+  (box
+    :tooltip name
+    :style "
+    margin-left: ${round(atX /5, 0)}px;
+    margin-top: ${round((atY ) /5, 0)}px;
+    margin-right: -${round((atX + X) /5, 0)}px;
+    margin-bottom: ${round(1080 /5 - ((atY + Y) /5), 0)}px;
+    "
+    
+    (eventbox
+      :cursor "pointer"
+      :class "workspaceWindowEventbox"
+      :onclick "
+      ./scripts/toggle_var windows_revealer > /dev/null 2>&1 &
+      ./scripts/hypr_setWorkspace --setnode ${id} &"
+      ; :onrightclick "./scripts/hypr_setWorkspace --setnode ${id}"
+      :onmiddleclick "hyprctl dispatch closewindow pid:${id}"
+      ; :dragtype "text"
+      ; :dragvalue id
+      
+      (box
+        :class "workspaceWindowsBox ${floating ? 'Floating' : ''} "
+        (image
+          :path icon
+          :image-width {round(X / 5 * 45 / 100, 0)}
+          :image-height {round(Y / 5 * 45 / 100, 0)}
+          :class "windowIcon"
+          :valign "center"
+          :halign "center"
+        )
+      )
+    )
+  )
+)

@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+var=$1
+STATE=$(eww windows | grep $var | awk '{print substr ($0, 0, 1)}')
+
+if [[ $STATE != '*' ]]; then
+    eww open $var
+
+elif [[ $STATE == '*' ]]; then
+    eww close $var
+fi

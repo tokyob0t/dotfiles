@@ -1,0 +1,43 @@
+
+(defwidget tray_button []
+  (box
+    :space-evenly false
+    :class "module tray_box"
+    
+    (revealer
+      :reveal tray_revealer
+      :transition "slideleft"
+      (box
+        :spacing 5
+        :space-evenly false
+        (for i in {tray}
+          (tray_entry
+            :entry i
+          )
+        )
+      )
+    )
+    
+    (button
+      :onclick "./scripts/toggle_var tray_revealer &"
+      :class "tray_icon"
+      (label
+        :class "icon"
+        :text {tray_revealer ? "" : ""}
+      )
+    )
+  )
+)
+
+
+(defwidget tray_entry [entry]
+  (eventbox
+    :onclick "${entry.Call} &"
+    :onrightclick "${entry.MenuCall} &"
+    (image
+      :path {entry.IconPath}
+      :image-width 20
+      :image-height 20
+    )
+  )
+)

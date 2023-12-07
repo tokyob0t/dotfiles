@@ -1,0 +1,19 @@
+(defwidget layout_widget []
+  
+  (eventbox
+    :cursor "pointer"
+    :onclick "./scripts/toggle_rev setrevealer hyprsettings &"
+
+    (box
+      :class "layoutBox"
+      :space-evenly false
+      (image
+        ; :path layout
+        :path ""
+        :image-width 20
+        :image-height 20
+      )
+    )
+  )
+  
+)

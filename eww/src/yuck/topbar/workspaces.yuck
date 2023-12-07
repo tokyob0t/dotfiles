@@ -1,0 +1,68 @@
+(defwidget workspaces []
+  (eventbox
+    :onscroll "./scripts/hypr_setWorkspace --{} &"
+    
+    (box
+      :class "workspacesWidget"
+      :space-evenly false
+      :spacing 5
+      :valign "center"
+      :height 5
+
+      ; (for i in {[0, 1, 2, 3, 4, 5]}
+      ;   (workspace :id {workspaces[i].id} :state {workspaces[i].state})
+      ; )
+
+      (for i in {workspaces}
+        (workspace :id {i.id} :state {i.state})
+      )
+    )
+  )
+)
+
+(defwidget workspace [id state]
+  (eventbox
+    :onclick "./scripts/hypr_setWorkspace --set ${id}"
+    :cursor "pointer"
+    (box
+      ; :class "workspacesBox ${state}"
+      :class "workspacesBox"
+      (label
+        :class "icon"
+        :text {
+        state == "activeWorkspace" ? "" :
+        state == "inactiveWorkspace" ? "" : ""
+        }
+      )
+    )
+  )
+)
+
+
+(defwidget apps_topbar []
+  (box
+    :space-evenly false
+    (for i in {windows}
+      (box
+        :space-evenly false
+        (for j in {i.windows}
+          (app_entry_topbar
+            :id {j.window_id}
+            :icon {j.window_icon}
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget app_entry_topbar [id icon]
+  (button
+    :onclick "./scripts/hypr_setWorkspace --node id"
+    (image
+      :path icon
+      :image-width 30
+      :image-height 30
+    )
+  )
+)

@@ -1,0 +1,54 @@
+#!/bin/bash
+
+DIR="/tmp/colorpicker"
+
+mkdir -p "$DIR"
+
+convert_color() {
+    srgba=$1
+    IFS=',' read -r -a components <<< $(echo $srgba | sed -n 's/.*(\(.*\)).*/\1/p' | tr -d '[:space:]')
+    
+    r=${components[0]}
+    g=${components[1]}
+    b=${components[2]}
+    a=${components[3]}
+
+    printf "#%02X%02X%02X%02X\n" $r $g $b $((a * 255))
+}
+
+colorpicker_wl() {
+    HEX=$(hyprpicker -a)
+
+    [[ -z $HEX ]] && exit 1
+
+    COLOR="${HEX#\#}"
+
+
+    convert -size 100x100 xc:"$HEX" "$DIR/${COLOR}.png"
+    notify-send -i "$DIR/${COLOR}.png" -a "Color Picker" "$HEX" "Copied to clipboard"
+}
+
+colorpicker_x11() {
+    ARGB_COLOR=$(maim -r crosshair -ust 0 | convert - -resize 1x1\! -format '%[pixel:p{0,0}]' info:-)
+
+    if [ -z "$ARGB_COLOR" ]; then
+        return
+    fi
+
+    HEX_COLOR=$(convert_color $ARGB_COLOR)
+
+    FILE="${DIR}/${HEX_COLOR:1}.png"
+
+    convert -size 100x100 xc:"$ARGB_COLOR" "$FILE"
+
+    echo -n "$HEX_COLOR" | xclip -selection clipboard && notify-send -u low -a 'Color Picker' -i "$FILE" "$HEX_COLOR" 'Copied to clipboard'
+}
+
+if [ "$WAYLAND_DISPLAY" ]; then
+    colorpicker_wl
+elif [ "$DISPLAY" ]; then
+    colorpicker_x11
+else
+    echo "Unable to determine display server type. Make sure you are running a supported display server."
+    exit 1
+fi

@@ -1,0 +1,77 @@
+; ; Include left modules for topbar
+(include "./src/yuck/topbar/time_module.yuck")
+(include "./src/yuck/topbar/layout.yuck")
+; ; Include center modules for topbar
+(include "./src/yuck/topbar/workspaces.yuck")
+; ; Include right modules for topbar
+(include "./src/yuck/topbar/media_player.yuck")
+(include "./src/yuck/topbar/quicksettings.yuck")
+(include "./src/yuck/topbar/local_ip.yuck")
+(include "./src/yuck/topbar/tray.yuck")
+; ; Topbar with modules, left, center and right, like waybar modules
+
+(defwindow topbar
+  :geometry (geometry
+    :width "1920px"
+    :height "45px"
+    :anchor "bottom center"
+  )
+  :reserve (struts :distance "40px" :side "bottom")
+
+  :monitor 0
+  ; :stacking "overlay"
+  :stacking "bottom"
+  :windowtype "dock"
+  :exclusive true
+  
+  
+  (box
+    :orientation "v"
+    :space-evenly false
+    (centerbox
+      :class "topbar_box"
+      :orientation "h"
+      :hexpand true
+      (box
+        :class "left_module_box"
+        :space-evenly false
+        :orientation "h"
+        :halign "start"
+        :spacing 5
+        (supermenu_button)
+        (workspaces)
+          ; (apps_topbar)
+        
+        ; (box :class "pfpImage Small module")
+        (label :text windows :visible false)
+        ; (label :text tray :visible false)
+      )
+      (box
+        :class "center_module_box"
+        :space-evenly false
+        :halign "center"
+        ; (label
+          ;   :text "A"
+        ; )
+      )
+      (box
+        :class "right_module_box"
+        :space-evenly false
+        :halign "end"
+        :spacing 5
+        (local_ip)
+        (tray_button)
+        ; (weather_module)
+            
+        (time_module)
+        (quicksettings)
+        (media_playerSmall)
+        (notifButton)
+      )
+    )
+    
+    (windowSwitcher)
+    
+  )
+)
+

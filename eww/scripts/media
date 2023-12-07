@@ -1,0 +1,32 @@
+#!/usr/bin/bash
+
+update_eww() {
+	player=$(playerctl -l | awk '{print $1}' | awk -F '.' '{print $1}' | head -n 1)
+
+	# Verificar si hay un reproductor disponible
+	if [ -n "$player" ]; then
+		line=$(playerctl metadata --format "{\"source\": \"$(playerctl -l | awk '{print $1}' | awk -F '.' '{print $1}' | head -n 1)\",\"shuffle\": \"$(playerctl shuffle)\", \"loop\": \"$(playerctl loop)\", \"status\": \"$(playerctl status)\", \"length\": \"{{mpris:length}}\", \"artist\": \"{{xesam:artist}}\", \"title\": \"$(playerctl metadata title | sed 's/"/\\"/g')\",\"artUrl\":\"{{mpris:artUrl}}\"}")
+	else
+		line='{"source": "", "shuffle": "", "loop": "", "status": "", "length":"", "artist":"", "title":"", "artUrl":""}'
+	fi
+
+	echo $line
+	eww update playerctl="$line"
+}
+
+
+playerctl --follow status --format '' | while read -r _; do
+	update_eww
+done &
+
+playerctl --follow metadata --format '' | while read -r _; do
+	update_eww
+done &
+
+playerctl --follow shuffle --format '' | while read -r _; do
+	update_eww
+done &
+
+playerctl --follow loop --format '' | while read -r _; do
+	update_eww
+done

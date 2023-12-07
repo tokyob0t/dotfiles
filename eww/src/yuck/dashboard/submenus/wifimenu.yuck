@@ -1,0 +1,118 @@
+
+(defwidget wifi_entries []
+  
+  (scroll
+    :width 350
+    :height 300
+    
+    (box
+      :orientation "v"
+      :space-evenly false
+      :hexpand true
+      :vexpand true
+      :spacing 5
+
+      (for wifi in {wifiList}
+        (wifi_entry
+          :BSSID {wifi.BSSID}
+          :SSID {wifi.SSID}
+          :SIGNAL {wifi.SIGNAL}
+          :SIGNAL_ICON {wifi.SIGNAL_ICON}
+          :SECURITY {wifi.SECURITY}
+          :SECURITY_ICON {wifi.SECURITY_ICON}
+          :CONNECTED {wifi.SSID == wifiInfo.name}
+        )
+      )
+    )
+  )
+  
+)
+
+
+(defwidget wifi_entry [BSSID SSID SIGNAL SIGNAL_ICON SECURITY SECURITY_ICON CONNECTED]
+  (eventbox
+    :onclick "eww update wifiSelected='${BSSID}'"
+    (box
+      :space-evenly false
+      :class "wifi_entryBox ${wifiSelected == BSSID ? 'selected' : 'unselected'}"
+      :orientation "v"
+      :spacing 5
+      
+      (box
+        :space-evenly false
+        :valign "start"
+        :tooltip "
+        BSSID: ${BSSID}
+        SSID: ${SSID}
+        SEC: ${SECURITY}
+        SIGNAL: ${SIGNAL}
+        "
+        (box
+          :orientation "v"
+          :halign "start"
+          :hexpand true
+          (box
+            :space-evenly false
+            :spacing 5
+            (label
+              :text SSID
+              :xalign 0
+              :class "SSID"
+            )
+          )
+          
+          (label
+            :text SECURITY
+            :xalign 0
+            :class "SECURITY"
+          )
+        )
+        
+        (box
+          :space-evenly false
+          :spacing 10
+          :halign "end"
+          :class "iconBox"
+          (label
+            :text {CONNECTED ? "" : SECURITY_ICON}
+            :xalign 0
+            :class "SECURITY_ICON icon ${
+            CONNECTED ? 'connected' :
+            SECURITY_ICON == '' ? 'locked' : 'unlocked'}"
+          )
+          (label
+            :text SIGNAL_ICON
+            :halign "end"
+            :class "SIGNAL_ICON icon"
+          )
+        )
+      )
+      (revealer
+        :reveal {wifiSelected == BSSID}
+        :transition "slidedown"
+        (box
+          :space-evenly false
+          :class "passInputBox"
+          :spacing 5
+          
+          (input
+            :height 30
+            :password wifiPassVisible
+            ; :onchange "./scripts/wifi_connect {}"
+            :hexpand true
+          )
+          (button
+            :onclick "./scripts/toggle_var wifiPassVisible"
+            :width 20
+            
+            (label
+              :text {wifiPassVisible ? "󰈈" : "󰈉"}
+              :class "icon"
+            )
+          )
+        )
+      )
+    )
+  )
+)
+

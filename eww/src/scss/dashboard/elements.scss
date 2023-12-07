@@ -1,0 +1,71 @@
+.button_DashboardBox {
+
+  .button_Dashboard {
+    background: $base01;
+    border-radius: 15px;
+    padding: 5px 10px;
+    transition: 500ms;
+    
+    .button_DashboardIndicator {
+      border-radius: 15px;
+      padding: 17.5px 2.5px;
+      // margin: 5px 0;
+      // transition: 250ms;
+      
+      &.active {
+        background-color: $baseA0;
+      }
+  
+      &.inactive {
+        background-color: transparent;
+      }
+  
+    }
+    .icon {
+      font-size: 23px;
+      transition: 250ms;  
+    }
+
+  }
+  .btn_subname {
+    font-family: 'IBM Plex Sans Mono';
+    font-size: 13px;
+  }
+}
+
+.submenuButton {
+  // background: $base01;
+  // padding: 5px 8px;
+  border-radius: 8px;
+}
+
+.submenuTitle {
+  color: $base04;
+  font-family: 'IBM Plex Sans Mono';
+}
+
+.slider_Dashboard {
+  // background: $base01;
+  padding: 10px 15px;
+  border-radius: 20px;
+  .sliderLabel {
+      font-family: 'IBM Plex Sans Mono';
+  }
+  .sliderIcon {
+    // padding: 0.5rem;
+    // background: $base01;
+    // border-radius: 2rem;
+    color: $base04;
+  }
+  .sliderScale {
+    trough {
+      border-radius: 15px;
+      background: $base02;
+
+      highlight {
+        background: $baseA0;
+        border-radius: 15px;
+      }
+    }
+  }
+}

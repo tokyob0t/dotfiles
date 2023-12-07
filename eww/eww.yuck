@@ -1,70 +1,176 @@
-; Is this a mess? Yes
-
-(defvar wifi.toggle "$HOME/.config/eww/scripts/wifi --toggle")
-(defpoll wifi.icon :interval "1s" "$HOME/.config/eww/scripts/wifi --icon")
-(defpoll wifi.color :interval "1s" "$HOME/.config/eww/scripts/wifi --col")
-
-(defvar bt.toggle "$HOME/.config/eww/scripts/bt --toggle")
-(defpoll bt.icon :interval "1s" "$HOME/.config/eww/scripts/bt --icon")
-(defpoll bt.color :interval "1s" "$HOME/.config/eww/scripts/bt --col")
-
-(defvar screen.screenshot "eww update \"bigmenu\"=false && $HOME/.config/eww/scripts/screenshot")
-
-
-
-(defpoll volume :interval "0s" "pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]{1,3}(?=%)' | head -1")
-(defpoll brightness :interval "0s" "light -G")
-(defpoll mic :interval "1s" "pactl list sources | grep -A 10 'Name: alsa_input.pci-0000_00_1f.3.analog-stereo' | awk -F '/' '/Volume:/{gsub(/[^0-9]/, \"\", $2); print $2; exit}'")
-(defpoll SONG       :interval "1s" "~/.config/eww/scripts/music --song")
-(defpoll ARTIST     :interval "1s" "~/.config/eww/scripts/music --artist"   )
-(defpoll STATUS     :interval "1s"  "~/.config/eww/scripts/music --status"  )
-(defpoll CURRENT    :interval "1s" "~/.config/eww/scripts/music --time"     )
-(defpoll COVER      :interval "1s"  "~/.config/eww/scripts/music --cover"   )
-(defpoll CTIME      :interval "1s"  "~/.config/eww/scripts/music --ctime"   )
-(defpoll TTIME      :interval "1s"  "~/.config/eww/scripts/music --ttime"   )
-(defpoll active     :interval "1s" "~/.config/eww/scripts/music --visible"  )
+; ; ; ; Topbar Yuck ; ; ; ;
+(include "./src/yuck/topbar.yuck")
+(include "./src/yuck/notification.yuck")
+(include "./src/yuck/dashboard.yuck")
+(include "./src/yuck/wallpaper.yuck")
+(include "./src/yuck/calendar.yuck")
+(include "./src/yuck/osd.yuck")
+(include "./src/yuck/powermenu.yuck")
+(include "./src/yuck/windowSwitcher.yuck")
+(include "./src/yuck/supermenu.yuck")
+(include "./src/yuck/test.yuck")
 
 
-(defpoll battery_icon :interval "1s" "~/.config/eww/scripts/battery --icon")
-(defvar battery_charging "")
-(defpoll battery_percentaje :interval "1s" "~/.config/eww/scripts/battery --per")   
-(defpoll battery_status  :interval "1s" "~/.config/eww/scripts/battery --state")
-(defpoll battery_iterator :interval "0s" "~/.config/eww/scripts/battery --anim")
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+;                Variables Section                  ;
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 
 
-(defvar bigmenu false)
-(defvar calendar_hover false)
+; ; Workspaces, Windows and layout
+(defvar windows_revealer false)
+(deflisten windows :initial '[]' "./scripts/python/hypr_getWindows.py")
 
-(defpoll greeting :interval "60s" "~/.config/eww/scripts/greeting")
+(deflisten workspaces :initial '[
+  {"id": 1, "state": "activeWorkspace"},
+  {"id": 2, "state": "emptyWorkspace"},
+  {"id": 3, "state": "emptyWorkspace"},
+  {"id": 4, "state": "emptyWorkspace"},
+  {"id": 5, "state": "emptyWorkspace"},
+  {"id": 6, "state": "emptyWorkspace"}
+  ]'
+  "./scripts/python/hypr_getWorkspace.py"
+)
 
-(defpoll pacman :interval "20m" "./scripts/stats --pacman")
-(defpoll kernel :interval "60m" "~/.config/eww/scripts/stats --kernel")
-
-(defpoll uptimeM :interval "60m" "./scripts/stats --uptimeM")
-(defpoll uptimeH :interval "1m" "./scripts/stats --uptimeH")
-(defpoll CPU :interval "60m" "./scripts/stats --systemCPU")
-(defpoll GPU :interval "60m" "./scripts/stats --systemGPU")
-(defvar real_name "Kevin")
-(defpoll user :interval "40m" "./scripts/stats --userHost" )
-(defvar arch_logo "./img/arch.png")
-
-
-(defpoll weather-stat-side :interval "30s"  "~/.config/eww/scripts/weather_get")
-(defpoll weather-quote :interval "15m"  "echo -e $(bat ~/.cache/eww/weather/weather-quote) | head -n1")
-(defpoll weather-quote2 :interval "15m"  "echo -e $(bat ~/.cache/eww/weather/weather-quote) | tail -n1")
-(defpoll weather-icon :interval "15m"  "bat ~/.cache/eww/weather/weather-icon")
-(defpoll temperature :interval "15m"  "bat ~/.cache/eww/weather/weather-degree")
-(defpoll weather-hex :interval "15m"  "bat ~/.cache/eww/weather/weather-hex")
-(defpoll weather-stat :interval "15m"  "bat ~/.cache/eww/weather/weather-stat")
+; (defvar layout "./img/layouts/tile.png")
 
 
-(include "./yuck/menu_topRight.yuck")
-(include "./yuck/menu_topLeft.yuck")
-(include "./yuck/menu_brsound.yuck")
-(include "./yuck/menu_music.yuck")
-(include "./yuck/menu_upper.yuck")
-(include "./yuck/menu_stats.yuck")
-(include "./yuck/menu_quicksettings.yuck")
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+;                       Desktop                     ;
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 
-; (include "./yuck/menu_launcher.yuck")
+(deflisten splash "hyprctl splash")
+(deflisten desktopEntry :initial '[]' "./scripts/python/desktopEntry.py")
+(defvar desktopEntriesVisible true)
+(defvar desktopEntrySelected "-1")
 
+(defvar jgMenu_cursorPos '{"x": 0, "y": 60}')
+(defvar jgMenu_Visible false)
+(defvar jgMenu_Selected 0)
+
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+;                Dashboard Variables                ;
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+
+(defvar dashboard_Revealer false)
+(defvar dashboard_SubMenu -1)
+
+; ; ; AbotMe section
+(defpoll uptime :interval "1m" "./scripts/stats --uptime")
+(defpoll user :interval "24h" "./scripts/stats --user")
+(defpoll host :interval "24h" "./scripts/stats --host")
+
+; ; ; ; Quick settings variables
+
+; ; Battery, Volume, Brightness, Microphone variables
+(deflisten volume :initial '{"icon": "", "value": "50" }' "./scripts/volume --get")
+(deflisten brightness :initial '{"icon": "󰛨", "value": "100"}' "./scripts/brightness --get")
+(deflisten microphone :initial '{"icon": "", "value": "100"}' "./scripts/microphone --get")
+(defvar microphone_revealer false)
+(deflisten battery :initial '{"state": "Discharging", "percentage": "100", "icon": "󰁹"}' "./scripts/python/battery.py")
+
+
+; Notifications
+(defvar notifRevealer false)
+(deflisten notifications :initial '{
+  "count": 0,
+  "dnd": false,
+  "notifications": [],
+  "popups": []
+  }'
+  "./scripts/python/notifCatch.py"
+)
+
+; (defvar  notifications '{
+  ;     "count": 0,
+  ;     "dnd": false,
+  ;     "notifications": [],
+  ;     "popups": []
+  ;     }'
+; )
+
+(deflisten tray :initial '[]' "./scripts/python/systray/main.py" )
+(defvar tray_revealer false)
+
+
+(defvar osd '{ "icon": "", "value": 50, "valueType": "int" }')
+
+; Wi-Fi
+(defvar wifiSelected "-1")
+(defvar wifiPassVisible true)
+(deflisten wifiList :initial '[]' "./scripts/wifi --scan")
+(deflisten wifiInfo :initial '{"status": false, "name": "Wi-Fi", "icon": "󰤮"}' "./scripts/python/wifi.py --monitor")
+
+
+
+(defpoll ipInfo :interval "5s" :initial '{
+  "text": "Disconnected",
+  "tooltip": "VPN Status: Disconnected",
+  "IP": "0.0.0.0"
+  }'
+  "./scripts/python/local_ip.py"
+)
+
+; (defpoll btInfo :interval "1m" :initial '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}' "./scripts/bluetooth --info" )
+(defvar btInfo '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}')
+
+; AirplaneMode
+(defvar airplaneMode false)
+
+; NightLight
+(defvar NightLight false)
+
+; Apps json variable
+(deflisten apps :initial '{"cmd": [], "math": [] ,"apps": [], "preferred": []}' "./scripts/python/apps.py")
+(defvar apps_query "")
+
+; Playerctl main variables
+(defvar media_playerHover false)
+(defpoll playerctlCTime
+  :initial 0
+  :interval "1s"
+  :run-while '{
+  playerctl.status == "Playing" &&
+  playerctl.length > 0
+  }'
+  "playerctl position"
+)
+
+(deflisten playerctl :initial '{
+  "source": "",
+  "shuffle": "",
+  "loop": "",
+  "status": "",
+  "length":"",
+  "artist":"",
+  "title":"",
+  "artUrl":""
+  }'
+  "./scripts/media"
+)
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+;                Calendar  Variables                ;
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+
+; ; Timer
+(deflisten calendar "./scripts/python/getCalendar.py")
+(defvar timer_sec 0)
+(defvar timer_min 0)
+(defvar timer_hour 0)
+
+; ; ; ToDo list
+; ; (defvar taskList '[]')
+; ; (defvar taskTitle "")
+; ; (defvar taskBody "")
+
+(defpoll weather
+  :interval "30s"
+  :initial '{
+  "icon": "󰖐",
+  "description": "Weather Unavailable",
+  "temperature": "-",
+  "quoteOne": "Ah well, no weather huh?",
+  "quoteTwo": "Even if there\'s no weather, it\'s gonna be a great day!",
+  "hex": "#adadff"
+  }'
+  "./scripts/weather"
+)

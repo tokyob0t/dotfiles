@@ -1,0 +1,62 @@
+(defwidget timer []
+  (box
+    :space-evenly false
+    :halign "center"
+    :spacing 10
+    (box
+      :orientation "v"
+      :space-evenly false
+      :halign "start"
+      (button
+        :halign "center"
+        (label :text "󰐕" :class "icon")
+        
+      )
+      (eventbox
+        :halign "center"
+        (label :text timer_hour)
+      )
+      (button
+        :halign "center"
+        (label :text "󰍴" :class "icon")
+      )
+    )
+    (label :text ":")
+    (box
+      :orientation "v"
+      :space-evenly false
+      :halign "center"
+      (button
+        :halign "center"
+        (label :text "󰐕" :class "icon")
+      )
+      (eventbox
+        :halign "center"
+        (label :text timer_hour)
+      )
+      (button
+        :halign "center"
+        (label :text "󰍴" :class "icon")
+      )
+    )
+    (label :text ":")
+    (box
+      :orientation "v"
+      :space-evenly false
+      :halign "end"
+      (button
+        :halign "center"
+        (label :text "󰐕" :class "icon")
+        
+      )
+      (eventbox
+        :halign "center"
+        (label :text timer_hour)
+      )
+      (button
+        :halign "center"
+        (label :text "󰍴" :class "icon")
+      )
+    )
+  )
+)

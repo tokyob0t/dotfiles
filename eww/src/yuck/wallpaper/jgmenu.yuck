@@ -1,0 +1,143 @@
+
+(defwidget jgMenu []
+  (eventbox
+    :onhoverlost "
+    ${EWW_CMD} update jgMenu_Visible='false' &
+    ${EWW_CMD} update jgMenu_Selected=0 &
+    "
+    :valign "start"
+    :halign "start"
+    (box
+      :space-evenly false
+      :visible jgMenu_Visible
+      :valign "start"
+      :halign "start"
+      :orientation "h"
+      :spacing 5
+      
+      (box
+        :space-evenly false
+        :spacing 10
+        :orientation "v"
+        :class "jgMenu"
+        
+        (optEntry :icon "" :name "Launch Terminal" :onclick "hyprctl dispatch exec '[float]' wezterm")
+        (optEntry :icon "󰖟" :name "Open Browser" :onclick "hyprctl dispatch exec '[float]' firefox")
+        (optEntry :icon "" :name "File Manager" :onclick "hyprctl dispatch exec '[float]' nautilus" )
+        
+        (optDivider)
+        
+        (optEntry :icon "" :name "Color Picker" :onclick "$HOME/.config/eww/scripts/colorpicker" )
+        (optEntry :icon "" :name "Screenshot" :subMenu true :subMenuId 2 )
+        (optEntry :icon "󰜬" :name "Launch Apps" :onclick "eww open launcher" :class "launchApps")
+        (optEntry :icon "" :name "Hide Icons" :onclick "./scripts/toggle_var desktopEntriesVisible")
+        
+        (optDivider)
+        
+        (optEntry :icon "󰊞" :name "Sex Mode")
+        
+        (optDivider)
+        
+        (optEntry :icon "" :name "Power Menu" :subMenu true  :class "power" :subMenuId 1)
+        
+      )
+      ; ; ; BOXES FOR THE SUBMENUS
+      ; ; ; SUBMENU 1
+      
+      (optSubmenu
+        :id 1
+        :valign "end"
+        (optEntry :icon "" :name "Lock Screen" :onclick "swaylock")
+        (optEntry :icon "" :name "Suspend" :onclick "systemctl suspend")
+        (optEntry :icon "󰍃" :name "Log Out" :onclick "hyprctl dispatch exit")
+        (optEntry :icon "󰁪" :name "Reboot" :onclick "systemctl reboot -i")
+        (optEntry :icon "󰤆" :name "Power Off" :onclick "systemctl poweroff -i")
+      )
+      ; ; ; SUBMENU 2
+      (optSubmenu
+        :id 2
+        :valign "center"
+        (optEntry :icon "" :name "Entire Screen" :onclick "./scripts/screenshot_wl --all" )
+        (optEntry :icon "" :name "Select Region" :onclick "./scripts/screenshot_wl --sel" )
+      )
+    )
+  )
+)
+
+
+(defwidget optDivider [] (box :class "jgMenuDivider"))
+
+
+(defwidget optEntry [?icon ?image name ?onclick ?commandhover ?commandhoverlost ?class ?subMenu ?subMenuId]
+  (eventbox
+    :onclick "
+    ${EWW_CMD} update jgMenu_Selected=0 &
+    ${EWW_CMD} update jgMenu_Visible='false' &&
+    ${onclick} &"
+    
+    :onhover {strlength(subMenuId) > 0 ? "${EWW_CMD} update jgMenu_Selected=${subMenuId}" : ""}
+    :class "jgMenuEntryEventBox"
+    :valign "start"
+    :hexpand true
+    
+    (box
+      :space-evenly false
+      :class "jgMenuEntry"
+      :spacing 10
+      (label
+        :text icon
+        :class "icon ${class}"
+        :halign "start"
+        :xalign 0
+        :visible {strlength(icon) > 1}
+      )
+      (image
+        :visible {strlength(image) > 1}
+        :path image
+        :image-width 20
+        :image-height 20
+      )
+      
+      (label
+        :text name
+        :halign "start"
+        :class "name"
+        :limit-width 15
+      )
+      
+      (label
+        :halign "end"
+        :xalign 1
+        :class "subMenu"
+        :visible {subMenu == true}
+        :text ""
+        :hexpand true
+      )
+    )
+  )
+)
+
+
+
+(defwidget optSubmenu [id ?valign]
+  (eventbox
+    :onhoverlost "${EWW_CMD} update jgMenu_Selected=0 &"
+    :active {jgMenu_Selected == id}
+    :visible {jgMenu_Selected == id}
+    :valign valign
+    
+    (expander
+      :expanded {jgMenu_Selected == id}
+      (revealer
+        :reveal {jgMenu_Selected == id}
+        (box
+          :orientation "v"
+          :space-evenly false
+          :class "jgMenu"
+          :valign valign
+          (children)
+        )
+      )
+    )
+  )
+)

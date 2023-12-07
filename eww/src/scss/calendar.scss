@@ -1,0 +1,84 @@
+// Event style
+
+.eventBox {
+  background: $base01;
+  border-radius: 10px;
+  padding: 5px;
+  transition: 250ms;
+  .eventIcon {
+    color: $base00;
+    padding: 10px 12.5px;
+    border-radius: 10px;
+    font-size: 25px;
+  }
+  .eventIcon.default {
+    background: $base0D;
+  }
+
+  .eventIcon.high {
+    background: $base0A;
+  }
+
+  .eventContent {
+    color: $base03;
+  }
+}
+
+// Calendar styles
+.weatherMainBox {
+  background: $base00;
+  border: 1px solid $base01;
+  padding: 10px;
+  border-radius: 20px;
+  .button {
+    background: $base01;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+
+  .weatherWidget {
+    border-radius: 10px;
+    background: $base01;
+    padding: 5px 10px;
+  }
+
+  .bigClock {
+    font-size: 45px;
+  }
+
+  .weatherTop {
+    > .icon {
+      font-size: 50px;
+    }
+  }
+  .weatherQuoteBox {
+    padding: 5px 10px;
+    // background: $base01;
+    border-radius: 10px;
+
+    .quoteTwo {
+      font-family: roboto;
+      font-style: italic;
+      font-weight: 200;
+      color: $base03;
+    }
+  }
+}
+
+.calendarBox {
+  background-color: $base01;
+  border-radius: 15px;
+  .calendarBoxChild {
+    .calendarButton {
+      &:hover {
+        background-color: $base02;
+      }
+      background-color: red;
+      padding: 5px;
+      min-width: 1.25rem;
+      label {
+        font-family: "IBM Plex Sans Mono";
+      }
+    }
+  }
+}

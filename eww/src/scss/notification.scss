@@ -1,0 +1,194 @@
+// Estilo para el popup
+
+.icon.zeronotifIcon {
+  color: $base01;
+  font-size: 100px;
+}
+
+.zeronotifLabel {
+  color: $base02;
+  padding-left: 10px;
+}
+
+.Box_Spotify {
+  border-left: 5px solid $base0D;
+}
+
+.Box_VencordDesktop,
+.Box_discord {
+  border-left: 5px solid $base0B;
+}
+
+
+.notifBox {
+  border: 2px solid $base01;
+  border-radius: 8px;
+
+  .titlebar {
+    color: $base02;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+
+    .title {
+      color: $base04;
+      font-family: "IBM Plex Sans Mono";
+    }
+
+    .closebutton {
+      .icon {
+        font-weight: bold;
+        transition: 250ms;
+        font-size: 19px;
+        color: $base04;
+      }
+    }
+    .time {
+      color: $base03;
+    }
+
+    .closebutton:hover {
+      .icon {
+        color: $base0A;
+      }
+    }
+  }
+
+  .body {
+    .title,
+    .content {
+      font-family: "IBM Plex Sans Mono";
+    }
+
+    .content {
+      color: $base03;
+    }
+  }
+
+  .smallImage,
+  .bigImage {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 15px;
+  }
+
+  .bigImage {
+    min-width: 290px;
+    min-height: 150px;
+  }
+
+  .button {
+    background: $base01;
+    color: $base03;
+    padding: 5px 15px;
+    border-radius: 10px;
+    transition: 250ms;
+
+    .icon {
+      color: $base00;
+      transition: 250ms;
+    }
+  }
+
+  .button {
+    background: $base01;
+  }
+
+  .button:hover {
+    background: $base02;
+  }
+
+}
+
+// Estilo para la caja de menú de notificaciones en el DASHBOARD
+
+.notifHistoryBox {
+  background-color: $base00;
+  border-radius: $outer_border-radius;
+
+  .checkbox {
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: 0.25s;
+    color: transparent;
+  }
+}
+
+.notifmenuTopBox {
+  padding: 5px 10px;
+}
+
+.notifmenuBox  {
+  .notifBox {
+    border: 2px solid $base01;
+  }
+  :first-child {
+    .notifBox {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+  }
+
+  :last-child {
+    .notifBox {
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+  }
+}
+
+// Sección de notificaciones
+
+.notifmenuTopBox {
+  .notifTitle {
+    font-size: 18px;
+  }
+
+  .clearEventbox {
+    label {
+      padding: 10px;
+      background-color: $base01;
+      border-radius: 5px;
+      transition: 0.25s;
+    }
+  }
+
+  .clearEventbox:hover {
+    label {
+      background-color: $base02;
+    }
+  }
+
+  .clearEventbox:active {
+    label {
+      background-color: $baseA0;
+      color: $base01;
+    }
+  }
+}
+
+.notifBox {
+  background: $base00;
+  border: 2px solid $base00;
+  padding: 10px 15px;
+
+  .titlebar {
+    color: $base04;
+
+    .button {
+      background: $base02;
+      color: $base04;
+    }
+
+    .button:hover {
+      background: $base03;
+      color: $base04;
+      border-radius: 10px;
+    }
+  }
+}
+.notifButton {
+  label {
+    color: $base0F;
+  }
+}
