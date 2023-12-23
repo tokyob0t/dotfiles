@@ -53,23 +53,18 @@
     (eventbox
       :cursor "pointer"
       :class "workspaceWindowEventbox"
-      :onclick "
-      ./scripts/toggle_var windows_revealer > /dev/null 2>&1 &
-      ./scripts/hypr_setWorkspace --setnode ${id} &"
-      ; :onrightclick "./scripts/hypr_setWorkspace --setnode ${id}"
-      :onmiddleclick "hyprctl dispatch closewindow pid:${id}"
+      :onclick "./scripts/toggle_var windows_revealer & ./scripts/hypr --setnode ${id} &"
+      :onmiddleclick "./scripts/hypr --close ${id}"
       ; :dragtype "text"
       ; :dragvalue id
       
       (box
         :class "workspaceWindowsBox ${floating ? 'Floating' : ''} "
-        (image
-          :path icon
-          :image-width {round(X / 5 * 45 / 100, 0)}
-          :image-height {round(Y / 5 * 45 / 100, 0)}
+        (icon-widget
+          :icon icon
+          :width {round(X / 5 * 45 / 100, 0)}
+          :height {round(Y / 5 * 45 / 100, 0)}
           :class "windowIcon"
-          :valign "center"
-          :halign "center"
         )
       )
     )

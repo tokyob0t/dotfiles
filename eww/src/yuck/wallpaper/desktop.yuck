@@ -6,17 +6,23 @@
     
     (box
       :space-evenly false
-      :orientation "v"
       :halign "start"
       :valign "start"
       :style "margin-top: 50px; margin-left: 50px;"
       :spacing 5
-      (for i in {desktopEntry}
-        (desktopEntry
-          :id {i.id}
-          :name {i.name}
-          :icon {i.icon}
-          :onclick {i.onclick}
+      (for j in {desktopEntry}
+        (box
+          :space-evenly false
+          :orientation "v"
+          :spacing 5
+          (for i in {j}
+            (desktopEntry
+              :id {i.id}
+              :name {i.name}
+              :icon {i.icon}
+              :onclick {i.onclick}
+            )
+          )
         )
       )
     )
@@ -27,7 +33,7 @@
   (button
     :onclick {
     id == desktopEntrySelected ?
-    "${EWW_CMD} update desktopEntrySelected=\"-1\" && ${onclick} & " :
+    "${onclick} & ${EWW_CMD} update desktopEntrySelected='-1'" :
     "${EWW_CMD} update desktopEntrySelected='${id}' &"
     }
     :visible {desktopEntriesVisible}

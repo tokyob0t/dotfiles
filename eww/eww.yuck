@@ -1,38 +1,15 @@
-; ; ; ; Topbar Yuck ; ; ; ;
-(include "./src/yuck/topbar.yuck")
-(include "./src/yuck/notification.yuck")
-(include "./src/yuck/dashboard.yuck")
-(include "./src/yuck/wallpaper.yuck")
-(include "./src/yuck/calendar.yuck")
-(include "./src/yuck/osd.yuck")
-(include "./src/yuck/powermenu.yuck")
-(include "./src/yuck/windowSwitcher.yuck")
-(include "./src/yuck/supermenu.yuck")
-(include "./src/yuck/test.yuck")
-
-
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 ;                Variables Section                  ;
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 
+;; Other trash
+(deflisten iconDict "./scripts/python/gtk_icon.py --getDict &")
 
 ; ; Workspaces, Windows and layout
 (defvar windows_revealer false)
-(deflisten windows :initial '[]' "./scripts/python/hypr_getWindows.py")
+(defvar windows "")
 
-(deflisten workspaces :initial '[
-  {"id": 1, "state": "activeWorkspace"},
-  {"id": 2, "state": "emptyWorkspace"},
-  {"id": 3, "state": "emptyWorkspace"},
-  {"id": 4, "state": "emptyWorkspace"},
-  {"id": 5, "state": "emptyWorkspace"},
-  {"id": 6, "state": "emptyWorkspace"}
-  ]'
-  "./scripts/python/hypr_getWorkspace.py"
-)
-
-; (defvar layout "./img/layouts/tile.png")
-
+(deflisten workspaces "./scripts/python/hypr.py --getWorkspaces &")
 
 ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
 ;                       Desktop                     ;
@@ -62,11 +39,11 @@
 ; ; ; ; Quick settings variables
 
 ; ; Battery, Volume, Brightness, Microphone variables
+(deflisten battery :initial '{"state": "Discharging", "percentage": "100", "icon": "󰁹"}' "./scripts/python/battery.py")
 (deflisten volume :initial '{"icon": "", "value": "50" }' "./scripts/volume --get")
 (deflisten brightness :initial '{"icon": "󰛨", "value": "100"}' "./scripts/brightness --get")
 (deflisten microphone :initial '{"icon": "", "value": "100"}' "./scripts/microphone --get")
 (defvar microphone_revealer false)
-(deflisten battery :initial '{"state": "Discharging", "percentage": "100", "icon": "󰁹"}' "./scripts/python/battery.py")
 
 
 ; Notifications
@@ -77,18 +54,10 @@
   "notifications": [],
   "popups": []
   }'
-  "./scripts/python/notifCatch.py"
+  "./scripts/python/notification.py"
 )
 
-; (defvar  notifications '{
-  ;     "count": 0,
-  ;     "dnd": false,
-  ;     "notifications": [],
-  ;     "popups": []
-  ;     }'
-; )
-
-(deflisten tray :initial '[]' "./scripts/python/systray/main.py" )
+(deflisten tray :initial '[]' "./scripts/python/systray/tray.py" )
 (defvar tray_revealer false)
 
 
@@ -97,31 +66,36 @@
 ; Wi-Fi
 (defvar wifiSelected "-1")
 (defvar wifiPassVisible true)
-(deflisten wifiList :initial '[]' "./scripts/wifi --scan")
-(deflisten wifiInfo :initial '{"status": false, "name": "Wi-Fi", "icon": "󰤮"}' "./scripts/python/wifi.py --monitor")
-
-
-
-(defpoll ipInfo :interval "5s" :initial '{
-  "text": "Disconnected",
-  "tooltip": "VPN Status: Disconnected",
-  "IP": "0.0.0.0"
+(deflisten networkList :initial '[]' "./scripts/python/wifi.py --scan")
+(deflisten networkInfo :initial '{
+  "wifi": {
+    "status": false,
+    "name": "Wi-Fi",
+    "icon": "󰤮"
+    },
+  "ip": {
+    "text": "Disconnected",
+    "tooltip": "VPN Status: Disconnected",
+    "IP": "0.0.0.0"
+    }
   }'
-  "./scripts/python/local_ip.py"
+  "./scripts/python/wifi.py --monitor &"
 )
 
-; (defpoll btInfo :interval "1m" :initial '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}' "./scripts/bluetooth --info" )
+
 (defvar btInfo '{"status":"disconnected","name":"Bluetooth","icon":"󰂲"}')
 
 ; AirplaneMode
 (defvar airplaneMode false)
 
 ; NightLight
-(defvar NightLight false)
+(deflisten NightLight :initial false "./scripts/nightlight --get")
 
-; Apps json variable
-(deflisten apps :initial '{"cmd": [], "math": [] ,"apps": [], "preferred": []}' "./scripts/python/apps.py")
-(defvar apps_query "")
+; Apps, math and cmd entries
+(deflisten apps_query :initial "" "echo \ ")
+(deflisten apps "./scripts/python/apps.py --apps")
+(deflisten math "echo \"{'name': '', 'icon': '', 'comment': '', 'desktop': '', 'success': false}\"")
+(deflisten cmd "echo \"{'name': 'Run a Command','icon': '','comment': '','desktop': ''}\"")
 
 ; Playerctl main variables
 (defvar media_playerHover false)
@@ -153,9 +127,15 @@
 
 ; ; Timer
 (deflisten calendar "./scripts/python/getCalendar.py")
-(defvar timer_sec 0)
-(defvar timer_min 0)
-(defvar timer_hour 0)
+(defvar timer '{
+  "hour": "00",
+  "min": "00",
+  "sec": "00",
+  "total_time": 1,
+  "current_time": 1,
+  "active": false
+}'
+)
 
 ; ; ; ToDo list
 ; ; (defvar taskList '[]')
@@ -174,3 +154,17 @@
   }'
   "./scripts/weather"
 )
+
+
+; ; ; ; Topbar Yuck ; ; ; ;
+(include "./src/yuck/topbar.yuck")
+(include "./src/yuck/notification.yuck")
+(include "./src/yuck/dashboard.yuck")
+(include "./src/yuck/wallpaper.yuck")
+(include "./src/yuck/calendar.yuck")
+(include "./src/yuck/osd.yuck")
+(include "./src/yuck/powermenu.yuck")
+(include "./src/yuck/windowSwitcher.yuck")
+(include "./src/yuck/supermenu.yuck")
+;; Various things
+(include "./src/yuck/various/things.yuck")

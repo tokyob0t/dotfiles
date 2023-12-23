@@ -1,61 +1,146 @@
 (defwidget timer []
   (box
     :space-evenly false
-    :halign "center"
     :spacing 10
+    :class "timer"
+    :orientation "v"
     (box
-      :orientation "v"
-      :space-evenly false
-      :halign "start"
-      (button
-        :halign "center"
-        (label :text "󰐕" :class "icon")
-        
-      )
-      (eventbox
-        :halign "center"
-        (label :text timer_hour)
-      )
-      (button
-        :halign "center"
-        (label :text "󰍴" :class "icon")
-      )
-    )
-    (label :text ":")
-    (box
-      :orientation "v"
       :space-evenly false
       :halign "center"
-      (button
-        :halign "center"
-        (label :text "󰐕" :class "icon")
-      )
+      :spacing 5
+      
       (eventbox
-        :halign "center"
-        (label :text timer_hour)
+        :onscroll "./scripts/python/timer.py --{} hour &"
+        :active {!timer.active}
+        (box
+          :orientation "v"
+          :space-evenly false
+          :halign "start"
+          (button
+            :halign "center"
+            :class "buttonTimer ${timer.active ? 'actived' : '' }"
+            :onclick "./scripts/python/timer.py --up hour &"
+            :active {!timer.active}
+            
+            (label :text "" :class "icon" :valign "center" :halign "center")
+            
+          )
+          (label :text {timer.hour} :style "font-size: 35px; font-family: 'IBM Plex Sans Mono';")
+          
+          (button
+            :halign "center"
+            :class "buttonTimer ${timer.active ? 'actived' : '' }"
+            :onclick "./scripts/python/timer.py --down hour"
+            :active {!timer.active}
+            (label :text "" :class "icon" :valign "center" :halign "center")
+          )
+        )
       )
-      (button
-        :halign "center"
-        (label :text "󰍴" :class "icon")
+      
+      (label :text ":" :class "timerLabel")
+      
+      (eventbox
+        :onscroll "./scripts/python/timer.py --{} min &"
+        :active {!timer.active}
+        (box
+          :orientation "v"
+          :space-evenly false
+          :halign "center"
+          
+          (button
+            :halign "center"
+            :onclick "./scripts/python/timer.py --up min &"
+            :class "buttonTimer ${timer.active ? 'actived' : '' }"
+            :active {!timer.active}
+            (label :text "" :class "icon" :valign "center" :halign "center")
+          )
+          
+          (label :text {timer.min} :style "font-size: 35px; font-family: 'IBM Plex Sans Mono';")
+          
+          (button
+            :halign "center"
+            :class "buttonTimer ${timer.active ? 'actived' : '' }"
+            :onclick "./scripts/python/timer.py --down min"
+            :active {!timer.active}
+            (label :text "" :class "icon" :valign "center" :halign "center")
+          )
+        )
+      )
+      
+      (label :text ":" :class "timerLabel")
+      
+      (eventbox
+        :onscroll "./scripts/python/timer.py --{} sec &"
+        :active {!timer.active}
+        
+        (box
+          :orientation "v"
+          :space-evenly false
+          :halign "end"
+          (button
+            :halign "center"
+            :class "buttonTimer ${timer.active ? 'actived' : '' }"
+            :onclick "./scripts/python/timer.py --up sec &"
+            :active {!timer.active}
+            (label :text "" :class "icon" :valign "center" :halign "center")
+          )
+          (label :text {timer.sec} :style "font-size: 35px; font-family: 'IBM Plex Sans Mono';")
+          (button
+            :halign "center"
+            :class "buttonTimer ${timer.active ? 'actived' : '' }"
+            :onclick "./scripts/python/timer.py --down sec &"
+            :active {!timer.active}
+            (label :text "" :class "icon" :valign "center" :halign "center")
+          )
+        )
       )
     )
-    (label :text ":")
     (box
-      :orientation "v"
       :space-evenly false
-      :halign "end"
+      :halign "center"
+      :spacing 10
       (button
-        :halign "center"
-        (label :text "󰐕" :class "icon")
+        :class "buttonTimer"
+        (label
+          :text ""
+          ; :text "󱫥"
+          :class "icon"    
+        )
+      )
+      (circular-progress
+        :class "progressTimer ${timer.active ? 'active' : ''}"
+        :value {timer.total_time != 0 ? timer.current_time / timer.total_time * 100 : 0}
+        :thickness 3
+        :width 50
+        :height 50
+        :start-at 75
+        :valign "center"
         
-      )
-      (eventbox
-        :halign "center"
-        (label :text timer_hour)
+        (eventbox
+          :cursor "pointer"
+          (button
+            :class "buttonTimer buttonStart"
+            :active {!timer.active}
+            :onclick "./scripts/python/timer.py --start &"
+            
+            (label
+              :text {!timer.active ? "󰐊" : "󰏤"}
+              :class "icon"
+              :xalign 0.5
+              :yalign 0.5
+              :style "font-size: 27.5px;"
+            )
+          )
+        )
       )
       (button
-        :halign "center"
-        (label :text "󰍴" :class "icon")
+        :class "buttonTimer"
+        (label
+          ; :text "󱫫"
+          :text "󰓛"
+          :class "icon"    
+          ; :style "font-size: 20px;"
+        )
       )
     )
   )

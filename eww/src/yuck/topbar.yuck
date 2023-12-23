@@ -17,7 +17,7 @@
     :anchor "bottom center"
   )
   :reserve (struts :distance "40px" :side "bottom")
-
+  
   :monitor 0
   ; :stacking "overlay"
   :stacking "bottom"
@@ -40,38 +40,31 @@
         :spacing 5
         (supermenu_button)
         (workspaces)
-          ; (apps_topbar)
-        
-        ; (box :class "pfpImage Small module")
-        (label :text windows :visible false)
         ; (label :text tray :visible false)
       )
       (box
         :class "center_module_box"
         :space-evenly false
         :halign "center"
-        ; (label
-          ;   :text "A"
-        ; )
+        (label :text "A" :visible false)
       )
       (box
         :class "right_module_box"
         :space-evenly false
         :halign "end"
         :spacing 5
+        ; (apps_topbar)
+        ; (weather_module)
+        
         (local_ip)
         (tray_button)
-        ; (weather_module)
-            
         (time_module)
         (quicksettings)
         (media_playerSmall)
         (notifButton)
       )
     )
-    
     (windowSwitcher)
-    
   )
 )
 

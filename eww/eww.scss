@@ -13,17 +13,17 @@ $base06: #ffffff;
 // Highlight Color
 $baseA0: #6791da;
 
-// // //Light Mode
-// // $base00: #ffffff;
-// // $base01: #f2f2f2;
-// // $base02: #d0d0d0;
-// // $base03: #8f9091;
-// // $Altbase03: #161616;
-// // $base04: #37474F;
-// // $base05: #90A4A3;
-// // $base06: #525252;
-// // // Highlight Color
-// // $baseA0: #ee5396;
+// //Light Mode
+// $base00: #ffffff;
+// $base01: #f2f2f2;
+// $base02: #d0d0d0;
+// $base03: #8f9091;
+// $Altbase03: #161616;
+// $base04: #37474f;
+// $base05: #90a4a3;
+// $base06: #525252;
+// // Highlight Color
+// $baseA0: #ee5396;
 
 $base07: #08bdba;
 $base08: #3ddbd9;
@@ -34,10 +34,6 @@ $base0C: #ff7eb6;
 $base0D: #43b365;
 $base0E: #be95ff;
 $base0F: #82cfff;
-
-
-
-
 
 $shadow00: 5px 5px 2px rgba(0, 0, 0, 0.4);
 $outer_border-radius: 10px;
@@ -59,12 +55,10 @@ $button_icon: 5px 16px 5px 10px;
   // min-height: 1rem;
   min-width: 1em;
   min-height: 1em;
-
 }
 
 .pfpImage {
-  margin: 0;
-  background-image: url("./img/pfp3.png");
+  background-image: url("./img/pfp2.png");
   background-size: 100%;
   background-position: center;
   border-radius: 50px;
@@ -81,10 +75,6 @@ $button_icon: 5px 16px 5px 10px;
     min-height: 40px;
   }
 }
-
-
-
-
 
 @import "./src/scss/general.scss";
 @import "./src/scss/topbar.scss";

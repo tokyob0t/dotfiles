@@ -16,7 +16,7 @@
   (eventbox
     :cursor "default"
     :onrightclick "
-    ./scripts/python/hypr_getCursorPos.py &&
+    ./scripts/python/hypr.py --getCursor &&
     ${EWW_CMD} update jgMenu_Visible='true' &
     ${EWW_CMD} update desktopEntrySelected=None &
     "

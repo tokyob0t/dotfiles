@@ -1,6 +1,63 @@
-.supermenuBox {
-    background-color: $baseA0;
+.supermenuWidget {
+  border-radius: 20px;
+  background-color: $base00;
+  border: 2px solid $base01;
+  padding: 15px 10px;
+  .todaycolorbox {
+    background: $base01;
     border-radius: 10px;
-    padding: 2.5px;
-    color: $base00;
+    padding: 10px 5px;
+
+    .todaycolortitle,
+    .todaycolorlabel {
+      font-family: "IBM Plex Sans Mono";
+    }
+
+    
+    .todaycolorcolorbox {
+      border-radius: 10px;
+      min-height: 150px;
+      min-width: 200px;
+
+      .todaycolorlabel {
+        color: $base00;
+      }
+    }
+  }
+}
+
+.supermenu_Eventbox {
+  background: $base01;
+  border-radius: 10px;
+  transition: 250ms;
+  &:hover {
+    background: $base02;
+  }
+  .supermenu_button {
+    padding: 7.5px;
+  }
+}
+
+.sysprogressBox {
+  background: $base01;
+  border-radius: 10px;
+  padding: 10px;
+  .sysprogress {
+    background: $base02;
+    & {
+      color: $Altbase03;
+    }
+    &.cpuProgress {
+      color: $base0C;
+    }
+    &.batProgress {
+      color: $base0D;
+    }
+    &.ramProgress {
+      color: $base0E;
+    }
+    &.diskProgress {
+      color: $base0F;
+    }
+  }
 }

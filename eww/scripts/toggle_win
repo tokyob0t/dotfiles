@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 var=$1
-STATE=$(eww windows | grep $var | awk '{print substr ($0, 0, 1)}')
+STATE=$(eww list-windows. | grep $var | awk '{print substr ($0, 0, 1)}')
 
 if [[ $STATE != '*' ]]; then
     eww open $var

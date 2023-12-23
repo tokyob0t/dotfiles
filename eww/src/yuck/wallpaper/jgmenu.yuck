@@ -7,6 +7,7 @@
     "
     :valign "start"
     :halign "start"
+
     (box
       :space-evenly false
       :visible jgMenu_Visible
@@ -57,8 +58,8 @@
       (optSubmenu
         :id 2
         :valign "center"
-        (optEntry :icon "" :name "Entire Screen" :onclick "./scripts/screenshot_wl --all" )
-        (optEntry :icon "" :name "Select Region" :onclick "./scripts/screenshot_wl --sel" )
+        (optEntry :icon "" :name "Entire Screen" :onclick "./scripts/screenshot --all" )
+        (optEntry :icon "" :name "Select Region" :onclick "./scripts/screenshot --sel" )
       )
     )
   )
@@ -71,8 +72,9 @@
 (defwidget optEntry [?icon ?image name ?onclick ?commandhover ?commandhoverlost ?class ?subMenu ?subMenuId]
   (eventbox
     :onclick "
-    ${EWW_CMD} update jgMenu_Selected=0 &
-    ${EWW_CMD} update jgMenu_Visible='false' &&
+    ${EWW_CMD} update jgMenu_Visible='false' &
+    ${EWW_CMD} update jgMenu_Selected=0 &&
+    sleep 0.25 &&
     ${onclick} &"
     
     :onhover {strlength(subMenuId) > 0 ? "${EWW_CMD} update jgMenu_Selected=${subMenuId}" : ""}
@@ -121,22 +123,19 @@
 
 (defwidget optSubmenu [id ?valign]
   (eventbox
-    :onhoverlost "${EWW_CMD} update jgMenu_Selected=0 &"
+    :onhoverlost "${EWW_CMD} update jgMenu_Selected='-1' &"
     :active {jgMenu_Selected == id}
     :visible {jgMenu_Selected == id}
     :valign valign
     
     (expander
       :expanded {jgMenu_Selected == id}
-      (revealer
-        :reveal {jgMenu_Selected == id}
-        (box
-          :orientation "v"
-          :space-evenly false
-          :class "jgMenu"
-          :valign valign
-          (children)
-        )
+      (box
+        :orientation "v"
+        :space-evenly false
+        :class "jgMenu"
+        :valign valign
+        (children)
       )
     )
   )

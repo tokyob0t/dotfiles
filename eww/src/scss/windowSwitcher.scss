@@ -27,9 +27,9 @@
         background-repeat: no-repeat;
         background-position: center;
       }
-    }
-    .workspaceWindowsBox.Floating {
-      background: $base01;
+      &.Floating {
+        opacity: 0.6;
+      }
     }
   }
 

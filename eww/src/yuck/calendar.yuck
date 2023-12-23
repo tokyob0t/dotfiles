@@ -6,11 +6,11 @@
 
 (defwindow weather
   :geometry (geometry
-    :x "0.25%"
+    :x "0%"
     :y "0.5%"
     :width "750px"
     :height "550px"
-    :anchor "bottom right"
+    :anchor "bottom center"
   )
   :monitor 0
   :windowtype "dock"
@@ -21,13 +21,14 @@
     (box
       :class "weatherMainBox"
       :space-evenly false
-      :spacing 10
+      :spacing 20
       (ToDo)
       (box
         :space-evenly false
         :orientation "v"
+        :spacing 10
         (dateCalendar)
-        (timer)        
+        (timer)
       )
     )
   )
@@ -59,7 +60,6 @@
         :date "Dec 17"
         :content "Homework"
       )
-      
     )
   )
 )

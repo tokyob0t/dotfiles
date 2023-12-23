@@ -5,8 +5,10 @@
     :space-evenly false
     :class "button_DashboardBox"
     :spacing 5
-    (button
-      :onclick onclick
+    (eventbox
+      :onclick "${onclick} &"
+      :class "button_DashboardEventbox"
+      :halign "center"
       (box
         :class "button_Dashboard"
         :space-evenly false
@@ -19,11 +21,11 @@
         (overlay
           :hexpand true
           
-          (label
-            :text btn_icon
-            :class "icon btn_icon"
-            :halign "center"
-            :xalign 0.5
+          (icon-widget
+            :icon btn_icon
+            :class "btn_icon"
+            :height 22
+            :width 22
           )
           (revealer
             :reveal {state}
@@ -31,7 +33,6 @@
             :halign "start"
             (box
               :space-evenly false
-              ; :hexpand true
               :valign "center"
               :class "button_DashboardIndicator ${state ? 'active' : 'inactive'}"
             )
@@ -60,7 +61,7 @@
       :space-evenly false
       :orientation "v"
       (revealer
-      :reveal {!state || strlength(btn_subname) == 0}
+      :reveal {!state || strlength(btn_subname) == 0 }
       :transition "slidedown"
       (label
         :text btn_name
@@ -69,7 +70,7 @@
       )
     )
     (revealer
-      :reveal {state && strlength(btn_subname) != 0}
+      :reveal {state && strlength(btn_subname) != 0 }
       :transition "slideup"
       
       (label
@@ -89,8 +90,8 @@
     :class "slider_Dashboard"
     :space-evenly false
     :spacing 10
-    (label
-      :text icon
+    (icon-widget
+      :icon icon
       :class "icon sliderIcon"
       :halign "start"
       :valign "center"

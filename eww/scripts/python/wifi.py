@@ -1,144 +1,196 @@
 #!/usr/bin/python
 
-from os import truncate
 import subprocess
-from subprocess import Popen, PIPE
-import nmcli
-import json
-from _common import update, stringEscape
-from sys import argv as args, exception
-from colorama import Fore
+from sys import argv as args
 
-wifiDict = {}
+import nmcli
+from _common import getIcon, updateEww
+
 
 def signalIcon(value):
-    if value >= 85:
-        sigIcon = "󰤨"
-    elif value >= 75:
-        sigIcon = "󰤥"
-    elif value >= 65:
-        sigIcon = "󰤢"
+    if value >= 75:
+        return getIcon("network-wireless-signal-excellent-symbolic")
     elif value >= 45:
-        sigIcon = "󰤟"
+        return getIcon("network-wireless-signal-ok-symbolic")
+    elif value >= 15:
+        return getIcon("network-wireless-signal-weak-symbolic")
+    elif value >= 0:
+        return getIcon("network-wireless-signal-none-symbolic")
     else:
-        sigIcon = "󰤯"
+        return getIcon("network-wireless-offline-symbolic")
 
-    return sigIcon
 
 def securityIcon(security, connected):
     if connected:
         return ""
-    elif security in ["WPA2", "WPA3"]:
+    elif "WPA" in security:
         return ""
     else:
         return ""
 
-def scan_networks():
-    wifiDict = {
-        "scanned": [{
-            "CLASS": "connected" if i.in_use else "locked" if i.security else "unlocked",
-            "CONNECTED": i.in_use,
-            "BSSID": i.bssid,
-            "SSID": i.ssid,
-            "SECURITY": i.security,
-            "ICON": {
-                "SIGNAL": signalIcon(i.signal),
-                "SECURITY": securityIcon(i.security.split(" "), i.in_use),
-            }
-        }
-            for i in nmcli.device.wifi()]
-    }
-    return wifiDict["scanned"]
 
-def get_info():
-    wifi = None
+def chanIcon(chan):
+    if 36 <= chan <= 165:
+        return "󰬾󰫴"
+    else:
+        return "󰬻󰬽"
+
+
+def scan_networks():
+    unique_networks = set()
+    network_list = []
 
     for i in nmcli.device.wifi():
-        if i.in_use:
-            wifi = {
-            "status": True,
-            "name": i.ssid,
-            "icon": signalIcon(i.signal)
-            } 
-    if not wifi:
-        return {
-            "status": False,
-            "name": "Wi-Fi",
-            "icon": "󰤮"
-            }
-    else:
-        return wifi
+        ssid = i.ssid.strip()
 
-def get_connected():
-    out = nmcli.device.show_all()
-
-    for i in out:
-
-        if  i["GENERAL.TYPE"] in ["loopback", "wifi-p2p"]:
+        if ssid in unique_networks or not ssid:
             continue
 
-        elif "(connected)" in i["GENERAL.STATE"]:
+        str = ""
 
-            i["IP4.ADDRESS[1]"].split("/")[0]
+        if i.in_use:
+            str = "connected"
+        elif i.security:
+            str = "locked"
+        else:
+            str = "unlocked"
 
-        # print(i["GENERAL.TYPE"])
-        # print(i["IP4.ADDRESS"])
+        dict = {
+            "CLASS": str,
+            "CONNECTED": i.in_use,
+            "BSSID": i.bssid,
+            "SSID": ssid,
+            "SECURITY": i.security,
+            "KNOWN": ssid in knownwifiList,
+            "ICON": {
+                "SIGNAL": signalIcon(i.signal),
+                "SECURITY": securityIcon(i.security, i.in_use),
+                "CHAN": chanIcon(i.chan),
+            },
+        }
 
-if __name__=="__main__":
+        network_list.append(dict)
+        unique_networks.add(ssid)
+    return network_list
 
-    nmcli.disable_use_sudo()
-    
-    if "--scan" in args:
-        print(json.dumps(scan_networks()))
 
-    elif "--info" in args:
-        get_info()
+def get_connected():
+    for i in nmcli.connection():
+        if i.conn_type == "loopback":
+            break
+        elif i.conn_type == "ethernet":
+            return {
+                "status": nmcli.radio.wifi(),
+                "name": "Wired",
+                "icon": getIcon("network-wired-symbolic"),
+            }
 
-    elif "--ip" in args:
-        try:
-            tun0 = nmcli.device.show("tun0")
-            ip_address = tun0["IP4.ADDRESS[1]"]
-            status = "Connected"
-        except:
-            out = nmcli.device.show_all()
-            for i in out:
-                if  i["GENERAL.TYPE"] in ["loopback", "wifi-p2p"] or "(connected)" not in i["GENERAL.STATE"]:
+    if nmcli.radio.wifi():
+        for j in nmcli.device.wifi():
+            if j.in_use:
+                return {"status": True, "name": j.ssid, "icon": signalIcon(j.signal)}
+
+    return {
+        "status": nmcli.radio.wifi(),
+        "name": "",
+        "icon": signalIcon(0 if nmcli.radio.wifi() else -1),
+    }
+
+
+def local_ip():
+    try:
+        tun0 = nmcli.device.show("tun0")
+        ip_address = tun0["IP4.ADDRESS[1]"]
+        status = "Connected"
+    except:
+        status = "Disconnected"
+        ip_address = "0.0.0.0"
+
+        for i in nmcli.device.show_all():
+            try:
+                if (
+                    i["GENERAL.TYPE"] in ["loopback", "wifi-p2p"]
+                    or "unavailable" in i["GENERAL.STATE"]
+                ):
                     continue
-                status = "Disconnected"
-                ip_address = i["IP4.ADDRESS[1]"].split("/")[0]
-                break
+                else:
+                    ip_address = i["IP4.ADDRESS[1]"].split("/")[0]
+                    return {"status": f"VPN Status: {status}", "IP": f"{ip_address}"}
+            except:
+                continue
 
-        print({"status": f"VPN Status: {status}", "IP": f"{ip_address}"})
+        ip_address = "0.0.0.0"
+        return {"status": f"VPN Status: {status}", "IP": f"{ip_address}"}
+
+
+def monitor(out=False):
+    proc = subprocess.Popen(["nmcli", "monitor"], stdout=subprocess.PIPE, text=True)
+    dict = {
+        "wifi": {
+            "status": False,
+            "name": "",
+            "icon": getIcon("network-wireless-offline-symbolic"),
+        },
+        "ip": {"status": "VPN Status: Disconnected", "IP": "0.0.0.0"},
+    }
+    updateEww("networkInfo", dict) if not out else None
+    while True:
+        line = proc.stdout.readline().replace("\n", "")
+        dict["ip"] = local_ip()
+        dict["wifi"] = get_connected()
+        updateEww("networkInfo", dict) if not out else None
+
+        if "p2p" in line:
+            continue
+        elif "disconnected" in line or "connected" in line:
+            dict["ip"] = local_ip()
+            dict["wifi"] = get_connected()
+            updateEww("networkInfo", dict) if not out else None
+
+        if out:
+            print(line)
+        else:
+            continue
+
+
+def connect(ssid, passw):
+    if ssid in knownwifiList:
+        try:
+            nmcli.connection.up(ssid)
+        except:
+            return
+    else:
+        try:
+            nmcli.device.wifi_connect(ssid=ssid, password=passw)
+        except:
+            if nmcli._exception.ConnectionActivateFailedException:
+                nmcli.connection.delete(name=ssid)
+
+
+if __name__ == "__main__":
+    nmcli.disable_use_sudo()
+
+    knownwifiList = [i.name for i in nmcli.connection() if i.conn_type == "wifi"]
+
+    if "--scan" in args:
+        updateEww("networkList", scan_networks())
+    elif "--ip" in args:
+        print(local_ip())
+
+    elif "--connect" in args:
+        connect(args[2], args[3])
 
     elif "--connected" in args:
-        get_connected()
+        updateEww("networkInfo", get_connected())
+
+    elif "--monitor" in args:
+        monitor()
+
+    elif "--toggle" in args:
+        if nmcli.radio.wifi():
+            nmcli.radio.wifi_off()
+        else:
+            nmcli.radio.wifi_on()
 
     elif "--test" in args:
-        proc = subprocess.Popen(["nmcli", "monitor"], stdout=subprocess.PIPE, text=True)
-
-        while True:
-            line = proc.stdout.readline().replace("\n", "")
-
-
-            if "p2p" in line:
-                continue
-            elif "disconnected" in line or "connected" in line:
-                print(get_info())
-                # print(Fore.RED + line, Fore.WHITE)
-            else:
-                # print(line)
-                pass
-                
-    elif "--monitor" in args:
-        proc = subprocess.Popen(["nmcli", "monitor"], stdout=subprocess.PIPE, text=True)
-
-        while True:
-            line = proc.stdout.readline().replace("\n", "")
-
-
-            if "p2p" in line:
-                continue
-            elif "disconnected" in line or "connected" in line:
-                update("wifiInfo", get_info())
-            else:
-                pass
+        print(connectionList)

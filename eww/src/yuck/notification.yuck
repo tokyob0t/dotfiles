@@ -62,9 +62,8 @@
           :text source
           :visible {strlength(source) > 0}
         )
-        
         (label
-          :text time
+          :text {substring(time, 0, 5)}
           :class "time"
           :halign "end"
           :hexpand true
@@ -74,9 +73,17 @@
           :class "closebutton"
           :onclick "./scripts/notifManage --close ${id} &"
           :halign "end"
-          (label
-            :text ""
-            :class "icon"
+          (circular-progress
+            :value {round((substring(time, 6, 7) + 5 - formattime(EWW_TIME, "%S")) * 100 / 5, 2) }
+            :thickness 2
+            :clockwise true
+            :start-at 75
+            :width 15
+            :height 15
+            :class "circprogress"
+            (icon-widget
+              :icon "󰅖"
+            )
           )
         )
       )
@@ -85,16 +92,24 @@
         :space-evenly false
         :spacing 10
         :class "body"
-        
-        (box
-          :visible {image != "NULL"}
-          :class "smallImage"
-          :style "background-image: url(\"${image}\");"
-          :height 55
-          :width 55
-          :valign "center"
-        )
-        
+        (literal
+            :visible {image != "NULL"}
+            :content {substring(image, strlength(image)-3, strlength(image)-1) == "svg" ? '
+            (image
+                :path image
+                :class "smallImage"
+                :image-height 55
+                :image-width 55
+                :valign "center"
+            )':'
+            (box
+                :class "smallImage"
+                :style "background-image: url(\'${image}\');"
+                :height 55
+                :width 55
+                :valign "center"
+            )'}
+        ) 
         (box
           :orientation "v"
           :space-evenly false
@@ -110,7 +125,8 @@
           )
           
           (label
-            :text content
+            ; :text content
+            :markup content
             :tooltip content
             :class "content"
             :halign "start"
@@ -144,7 +160,7 @@
       )
       
       (box
-        :visible {arraylength(actions) > 0}
+        :visible {arraylength(actions) > 0 && source != "Discord"}
         :spacing 10
         :style "margin: 10px 15px 0 15px;"
         (for i in {actions}
@@ -165,14 +181,14 @@
   (revealer
     :reveal {notifications.count > 0}
     :transition "slideleft"
-    
     (eventbox
       :cursor "pointer"
+      :onclick "./scripts/notification --clear"
       (box
         :class "notifButton module"
-        (label
-          :text "󱅫"
-          :class "icon"
+        (icon-widget
+          :icon "󱅫"
+          :style "margin-bottom: -2.5px"
         )
       )
     )

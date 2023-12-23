@@ -3,12 +3,26 @@
   (box
     :orientation "v"
     :space-evenly false
-    
-    (label
-      :text {formattime(EWW_TIME, "%k:%M")}
-      :class "bigClock"
+    (box
+      :space-evenly false
+      :halign "center"
+      :spacing 5
+      (label
+        :text {formattime(EWW_TIME, "%k")}
+        :class "bigClock"
+      )
+      (label
+        :text "󰇙"
+        :class "bigSeparator"
+      )
+      
+      (label
+        :text {formattime(EWW_TIME, "%M")}
+        :class "bigClock"
+      )
     )
-    (label :text {formattime(EWW_TIME, "%B %d")})
+
+    (label :text {formattime(EWW_TIME, "%B %d")} :class "bottomClockText")    
     
     (box
       :space-evenly false
@@ -16,7 +30,7 @@
       :orientation "v"
       :spacing 5
       :class "calendarBox"
-      
+      :style "margin-top: 10px;"
       (for i in {calendar}
         (box
           :space-evenly false
@@ -25,7 +39,12 @@
           (for j in {i}
             (button
               :hexpand true
-              :class "calendarButton"
+              :class "calendarButton ${
+              j.today == 1 ? 'today' :
+              j.today == -1 ? 'othermonth' : 'thismonth'
+              
+              }"
+              
               (label
                 :hexpand true
                 :text {j.day}
