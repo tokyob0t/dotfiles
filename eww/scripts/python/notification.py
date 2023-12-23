@@ -75,7 +75,7 @@ class NotificationDaemon(dbus.service.Object):
         elif app_name.lower() == "color picker":
             glyph = getIcon("colorgrab")
         else:
-            glyph = getIcon(app_name) or getIcon("preferences-desktop-notification-bell")
+            glyph = getIcon(app_name) or getIcon("user-available-symbolic")
             
         details = {
             "id": id,
@@ -84,7 +84,7 @@ class NotificationDaemon(dbus.service.Object):
             "image": icon or "NULL",
             "summary": stringEscape(summary) or "NULL",
             "body": stringEscape(body) or "NULL",
-            "time": datetime.datetime.now().strftime("%H:%M"),
+            "time": datetime.datetime.now().strftime("%H:%M:%S"),
             "actions": pairs,
         }
 
@@ -202,7 +202,7 @@ class NotificationDaemon(dbus.service.Object):
         self.update_eww()
         
         popup_id = notification["id"]
-        self.active_popups[popup_id] = GLib.timeout_add_seconds(5, self.DismissPopup, popup_id)
+        self.active_popups[popup_id] = GLib.timeout_add_seconds(6, self.DismissPopup, popup_id)
 
 
     def load(self):

@@ -10,9 +10,15 @@ screenshot_wl() {
         grim -g "$(slurp -d)" "$file_path"
     elif [ "$mode" = "--all" ]; then
         grim "$file_path"
+    elif [ "$mode" = "--window" ]; then
+        grim -g "$(echo "$(hyprctl clients -j)" \
+                    | jq -r ".[] | select(.workspace.id == "$(hyprctl activewindow -j \
+                    | jq -r '.workspace.id')\)"" \
+                    | jq -r ".at,.size" | jq -s "add" | jq '_nwise(4)' \
+                    | jq -r '"\(.[0]),\(.[1]) \(.[2])x\(.[3])"' \
+                    | slurp -r)" "$file_path"
     fi
     [ "$WAYLAND_DISPLAY" ] && wl-copy < "$file_path"
-    
 }
 screenshot_x11() {
     mode="$1"
@@ -27,25 +33,26 @@ screenshot_x11() {
 }
 
 # Check the command line arguments
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <mode>"
-    echo "Available modes: --sel (select region), --all (capture entire screen)"
-    exit 1
-fi
-
 if [ "$WAYLAND_DISPLAY" ]; then
-    screenshot_wl "$1"
-    elif [ "$DISPLAY" ]; then
-    screenshot_x11 "$1"
-else
-    echo "Unable to determine display server type. Make sure you are running a supported display server."
-    exit 1
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: $0 <mode>"
+        echo "Available modes: --sel (select region), --all (capture entire screen), --window (select window)"
+        exit 1
+    else
+        screenshot_wl "$1"
+    fi
+elif [ "$DISPLAY" ]; then
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: $0 <mode>"
+        echo "Available modes: --sel (select region), --all (capture entire screen)"
+        exit 1
+    else
+        screenshot_x11 "$1"
+    fi
 fi
 
 if [ -s "$file_path" ]; then
-
     notify-send -i "$file_path" -a "Screenshot" "Captured successfully" "The screenshot was saved and copied to the clipboard."
-
 else
     [ -e "$file_path" ] && rm "$file_path"
 fi

@@ -160,13 +160,13 @@ if __name__ == "__main__":
 
     elif "--enter" in args:
         math = shellOut("eww get math")
-        cmd = shellOut("eww get apps_query")
+        cmd = shellOut("eww get app_query")
 
         if math["success"]:
-            shellRun(math["desktop"], shell=True)
+            shellRun(math["desktop"])
 
-        elif cmd.startswith("/"):
-            shellRun(shellOut("eww get cmd | jq -r .desktop"), shell=True)
+        elif cmd[0]:
+            shellRun(shellOut("eww get cmd | jq .desktop"))
 
         else:
             entries = get_cached_entries()

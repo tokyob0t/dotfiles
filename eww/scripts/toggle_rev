@@ -3,7 +3,7 @@
 var=$1
 window=$2
 
-stateWindow=$(eww windows | grep $window | awk '{print substr ($0, 0, 1)}')
+stateWindow=$(eww list-windows | grep $window | awk '{print substr ($0, 0, 1)}')
 
 if [[ $stateWindow != '*' ]]; then
     eww open $window
@@ -11,7 +11,7 @@ if [[ $stateWindow != '*' ]]; then
 
 elif [[ $stateWindow == '*' ]]; then
     eww update $var=false
-    sleep 0.5
+    sleep 0.25
     eww close $window
 fi
 

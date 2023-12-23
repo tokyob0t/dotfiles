@@ -1,3 +1,22 @@
-#!/usr/bin/bash
+#!/bin/bash
 
-echo $(eww get NightLight | jq -r .value)
+state() {
+  if [[ -z $(pgrep wlsunset) ]]; then
+    echo false
+  else
+    echo true
+  fi
+}
+
+
+if [[ $1 == '--toggle' ]]; then
+  if $(state); then
+    eww update NightLight=false
+    pkill wlsunset
+  else
+    eww update NightLight=true
+    wlsunset -t 3400 &
+  fi
+elif [[ $1 == '--get' ]]; then
+    state
+fi

@@ -3,12 +3,13 @@
   (eventbox
     :onhover "${EWW_CMD} update media_playerHover=true"
     :onhoverlost "${EWW_CMD} update media_playerHover=false"
+    :valign "center"
+    :height 40
     (revealer
       :reveal {  playerctl.status == "Playing" || playerctl.status == "Paused" }
       :transition "slideleft"
       :class "media_revealer"
       (overlay
-        
         (box
           :class "media_player module"
           :space-evenly false
@@ -20,39 +21,36 @@
             :text {
             playerctl.source == "spotify" ? "" :
             playerctl.source == "firefox" ? "󰈹" : "󰋋"
-            }
+            } 
           )
           (box
             :space-evenly false
             :spacing 10
             (revealer
-              :reveal media_playerHover
+              ; :reveal media_playerHover
+              :reveal true
               :transition "slideleft"
               (box
                 :space-evenly false
                 :spacing 10
                 (button
-                  :onclick "playerctl previous"
-                  (label
-                    :text "󰒮"
-                    :class "icon"
+                  :onclick "playerctl previous &"
+                  (icon-widget
+                    :icon {iconDict.media.prev}
                   )
                 )
                 (button
                   :onclick "playerctl play-pause &"
-                  (label
-                    :text {playerctl.status == "Playing" ? "󰏤" : "󰐊"}
-                    :class "icon"
+                  (icon-widget
+                    :icon {playerctl.status == "Playing" ? iconDict["media"]["pause"] : iconDict.media.start}
                   )
                 )
               )
             )
-            
             (button
-              :onclick "playerctl next"
-              (label
-                :text "󰒭"
-                :class "icon"
+              :onclick "playerctl next &"
+              (icon-widget
+                :icon {iconDict["media"]["next"]}
               )
             )
           )
@@ -83,6 +81,7 @@
           :space-evenly false
           :valign "center"
           :class "media_playerAlbumArt"
+          :visible {strlength(playerctl.artUrl) > 0}
           :width 75
           :height 75
           :style "
@@ -118,37 +117,33 @@
               :spacing 10
               :halign "center"
               :valign "end"
-              
               (button
                 :onclick "playerctl previous &"
-                (label
-                  :text "󰒮"
-                  :class "icon"
+                (icon-widget
+                  :icon {iconDict.media.prev}
                 )
               )
               (button
-                :onclick "playerctl play-pause"
-                (label
-                  :text {playerctl.status == "Playing" ? "󰏤" : "󰐊"}
-                  :class "icon"
+                :onclick "playerctl play-pause &"
+                (icon-widget
+                  :icon {playerctl.status == "Playing" ? iconDict.media.pause : iconDict.media.start}
                 )
               )
               (button
                 :onclick "playerctl next &"
-                (label
-                  :text "󰒭"
-                  :class "icon"
+                (icon-widget
+                  :icon {iconDict.media.next}
                 )
               )
             )
             
             (scale
-                :min 0
-                :max 100
-                :value {round(playerctlCTime / playerctl.length * 100000000, 0)}
-                :class "scale"
-                :hexpand true
-                :height 10
+              :min 0
+              :max 100
+              :value {round(playerctlCTime / playerctl.length * 100000000, 0)}
+              :class "scale"
+              :hexpand true
+              :height 10
             )
           )
           (label

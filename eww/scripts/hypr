@@ -2,8 +2,6 @@
 
 param="$1"
 
-current=$(eww get workspaces)
-
 if [[ $param == "--down" ]]; then
     hyprctl dispatch workspace +1
 
@@ -14,6 +12,8 @@ elif [[ $param == "--set" ]]; then
     hyprctl dispatch workspace $2
 
 elif [[ $param == "--setnode" ]]; then
-    eww close windowSwitcher
     hyprctl dispatch focuswindow pid:"$2"
+
+elif [[ $param == "--close" ]]; then
+    hyprctl dispatch closewindow pid:"$2"
 fi

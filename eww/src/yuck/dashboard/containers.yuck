@@ -12,12 +12,12 @@
       
       (button_Dashboard
         :id 1
-        :state {wifiInfo.status == "connected" || wifiInfo.name == "Wired"}
-        :btn_name "Wi-fi"
-        :btn_icon {wifiInfo.icon}
-        :btn_subname {wifiInfo.name}
-        :submenu {wifiInfo.status}
-        :onclick "./scripts/wifi --toggle"
+        :state {networkInfo.wifi.status || networkInfo.wifi.name == "Wired"}
+        :btn_name "Wi-Fi"
+        :btn_icon {networkInfo.wifi.icon}
+        :btn_subname {networkInfo.wifi.name}
+        :submenu {networkInfo.wifi.status}
+        :onclick "./scripts/python/wifi.py --toggle"
       )
       (button_Dashboard
         :state {btInfo.status == "connected"}
@@ -42,6 +42,7 @@
         :btn_name "Night Light"
         :btn_icon {NightLight ? "󱩌" : "󱩍" }
         :submenu false
+        :onclick "./scripts/nightlight --toggle"
       )
 
       (button_Dashboard
@@ -49,7 +50,7 @@
         :btn_name "Don't Bother Me"
         :btn_icon ""
         :submenu false
-        :onclick "./scripts/notifManage --toggle &"
+        :onclick "./scripts/notifManage --toggle"
       )
     )
   )

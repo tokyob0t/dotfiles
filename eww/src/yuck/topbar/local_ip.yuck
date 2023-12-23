@@ -3,8 +3,8 @@
     :style "padding: 5px 10px;"
     
     (label
-      :text {ipInfo.IP}
-      :tooltip {ipInfo.status}
+      :text {networkInfo.ip.IP}
+      :tooltip {networkInfo.ip.status}
     )
   )
 )

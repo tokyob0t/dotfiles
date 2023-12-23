@@ -18,47 +18,40 @@
     :anchor "bottom right"
   )
   
-  
-  
   (eventbox
-    :onhoverlost "${EWW_CMD} update dashboard_SubMenu='-1' & ./scripts/toggle_rev dashboard_Revealer dashboardWindow &"
+    :onhoverlost "${EWW_CMD} update dashboard_SubMenu='-1' & ${EWW_CMD} close dashboardWindow &"
     :halign "end"
     :valign "end"
-    (revealer
-      :reveal true
-      ; :reveal dashboard_Revealer
-      :transition "slideleft"
-      :duration 250
-      
+    
+    
+    (box
+      :space-evenly false
+      :orientation "v"
+      :valign "end"
+      ; (notifHistory)
+      (media_playerBig)
       (box
         :space-evenly false
-        :orientation "v"
-        :valign "end"
-        ; (notifHistory)
-          (media_playerBig)
-        (box
-          :space-evenly false
-          :class "dashboard"
-          (revealer
-            :reveal {dashboard_SubMenu == "-1"}
-            :transition "slideleft"
-            :duration 250
-            
-            (box
-              :orientation "v"
-              :space-evenly false
-              :spacing 10
-              (aboutme)
-              (box :space-evenly false :height 10)
-              (buttonsContainer)
-              (slidersContainer)
-            )
+        :class "dashboard"
+        (revealer
+          :reveal {dashboard_SubMenu == "-1"}
+          :transition "slideleft"
+          :duration 250
+          
+          (box
+            :orientation "v"
+            :space-evenly false
+            :spacing 10
+            (aboutme)
+            (box :space-evenly false :height 10)
+            (buttonsContainer)
+            (slidersContainer)
           )
-          (submenu_Dashboard
-            :id 1
-            :title "Wi-fi Menu"
-            (wifi_entries)
-          )
+        )
+        (submenu_Dashboard
+          :id 1
+          :title "Wi-Fi"
+          (wifi_entries)
         )
       )
     )

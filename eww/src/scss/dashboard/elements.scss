@@ -1,10 +1,15 @@
 .button_DashboardBox {
-
-  .button_Dashboard {
+  .button_DashboardEventbox {
     background: $base01;
     border-radius: 15px;
+    transition: 250ms;
+  }
+  .button_DashboardEventbox:active {
+    background: $base02;
+  }
+
+  .button_Dashboard {
     padding: 5px 10px;
-    transition: 500ms;
     
     .button_DashboardIndicator {
       border-radius: 15px;

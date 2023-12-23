@@ -2,25 +2,26 @@
 
 ## Details  
 
-###### (Updated Nov 09)  
+### Work In Progress
 
-###### Hyprland is also supported, but you need to change some values, e.g. the workspace module and some deflisten variables  
+###### (Updated Nov 09)  
 
 - **OS:** Arch btw
 - **Window Manager:** [Hyprland](https://github.com/hyprwm/Hyprland)
 - **Terminal:** [Wezterm](https://github.com/wez/wezterm)
 - **All:** [eww](https://github.com/elkowar/eww)
-- **Editor:** VSCodium  
+- **Editor:** [Neovim](https://github.com/nyoom-engineering/nyoom.nvim)
 - **Scripts:** Some made by me, some not  
 
 ###### ~~Dependency list~~  (TODO)
 
 ## Preview
 
-![desktop1](./img/wall1.png)  
-![desktop2](./img/wall2.png)  
-![desktop3](./img/wall3.png)  
-![desktop4](./img/wall4.png)  
+![desktop1](./img/desktop1.png)  
+![desktop2](./img/desktop2.png)  
+![desktop3](./img/desktop3.png)  
+![desktop4](./img/desktop4.png)  
+![desktop5](./img/desktop5.png)
 
 #### Credits
 

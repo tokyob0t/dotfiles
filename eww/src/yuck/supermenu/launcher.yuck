@@ -21,139 +21,138 @@
       :orientation "v"
       :class "launcherBox"
       :spacing 20
-      (box
-        :space-evenly false
-        :class "launcherInputBox"
-        
-        (label
-          :text "󰜬"
-          :class "icon"
-        )
-        
-        (input
-          :class "launcherInput"
-          :onchange "./scripts/python/apps.py --query '{}' &"
-          ; :onchange "${EWW_CMD} update apps_query='{}'"
+      (apps_filterer)
+      (apps_container)
+    )
+  )
+)
 
-          :onaccept "${
-          arraylength(apps.math) > 0 ? apps.math[0].desktop :
-          arraylength(apps.cmd) > 0 ? apps.cmd[0].desktop :
-          arraylength(apps.preferred) > 0 ? apps.preferred[0].desktop :
-          arraylength(apps.apps) > 0 ? apps.apps[0].desktop : ''
-          } > /dev/null 2>&1 & ${EWW_CMD} close launcher"
-          
-          :hexpand true
+(defwidget apps_filterer []
+  (box
+    :space-evenly false
+    :class "launcherInputBox"
+    :hexpand true
+    (label
+      :text "󰜬"
+      :class "icon"
+    )
+    
+    (input
+      :class "launcherInput"
+      :hexpand true
+      :onchange "
+        ${EWW_CMD} update apps_query='{}' &
+        ./scripts/python/apps.py --update &
+        "
+      :onaccept "
+        ./scripts/python/apps.py --enter {} > /dev/null 2>&1 &
+        ${EWW_CMD} close launcher &
+        ${EWW_CMD} update apps_query=''
+        "
+    )
+  )
+)
+
+(defwidget apps_container []
+  (scroll
+    :vscroll true
+    :vexpand true
+    :hexpand true
+    :class "scroll"
+    (box
+      :space-evenly false
+      :orientation "v"
+      :spacing 0
+      :class "launcherAppContainer"
+      :style "margin-right: 15px;"
+        (app_entry
+            :icon {cmd.icon}
+            :name {cmd.name}
+            :desc {cmd.comment}
+            :desktop {cmd.desktop}
+            :find {substring(apps_query, 0, 1) == "/"}
         )
-      )
-      
-      (scroll
-        :vscroll true
-        :vexpand true
-        :class "scroll"
-        (box
-          :space-evenly false
-          :orientation "v"
-          :spacing 0
-          :class "launcherAppContainer"
-          :style "margin-right: 15px;"
-          (box
-            :visible {arraylength(apps.cmd) > 0}
-            :space-evenly false
-            (for i in {apps.cmd}
-              (app_entry
-                :icon {i.icon}
-                :name {i.name}
-                :desc {i.comment}
-                :desktop {i.desktop}
-              )
-            )
-          )
-          (box
-            :visible {arraylength(apps.math) > 0}
-            :spacing 5
-            
-            (for i in {apps.math}
-              (app_entry
-                :icon {i.icon}
-                :name {i.name}
-                :desc {i.comment}
-                :desktop {i.desktop}
-              )
-            )
-          )
-          (box
-            :visible {arraylength(apps.preferred) > 0}
-            :spacing 5
-            
-            (label :text "Preferred Apps")
-            (for app in {apps.preferred}
-              (app_entry
-                :icon {app.icon}
-                :name {app.name}
-                :desc {app.comment}
-                :desktop {app.desktop}
-              )
-            )
-          )
-          
-          (for app in {apps.apps}
-            (app_entry
-              :icon {app.icon}
-              :name {app.name}
-              :desc {app.comment}
-              :desktop {app.desktop}
-            )
-          )
+        (app_entry
+            :icon {math.icon}
+            :name {math.name}
+            :desc {math.comment}
+            :desktop {math.desktop}
+            :find {math.success}
         )
+        (for category in {apps.apps}
+            (box
+              :space-evenly false
+              :orientation "v"
+              (revealer
+                :transition "slidedown"
+                :duration 250
+                :reveal {matches(category.keywords, apps_query) && arraylength(category.apps) != 0}
+                (label
+                  :text {category.category}
+                  :style "font-size: 20px; margin-left: 20px;"
+                  :halign "start"
+                )
+              )
+
+              (for app in {category.apps}
+                (app_entry
+                  :icon {app.icon}
+                  :name {app.name}
+                  :desc {app.comment}
+                  :desktop {app.desktop}
+                  :find {matches(app.find, apps_query) || strlength(apps_query) == 0 }
+                )
+              )
+            )
       )
     )
   )
 )
 
-(defwidget app_entry [?icon name desc desktop]
+(defwidget app_entry [?icon name desc desktop ?find]
   (revealer
-    :reveal true
-    ; :reveal {
-    ;   matches(apps_query, desc) ||
-    ;   matches(apps_query, "app") ||
-    ;   strlength(apps_query) == 0
-    ;   }
-
-      :transition "slidedown"
-
+    :transition "slidedown"
+    ; :reveal true
+    :duration 250
+    :reveal {find}
     (eventbox
       :class "appEntryEventBox"
-      :onclick "${desktop} > /dev/null 2>&1 & ${EWW_CMD} close launcher"
       :cursor "pointer"
+      :onclick "
+      ${desktop} > /dev/null 2>&1 &
+      ${EWW_CMD} close launcher &
+      ${EWW_CMD} close supermenuWindow &
+      ${EWW_CMD} update apps_query=''"
       (box
         :space-evenly false
         :class "appEntryBox"
         :spacing 10
         (image
+          :class "appIcon"
           :path icon
-          :image-width 55
-          :image-height 55
+          :image-width 25
+          :image-height 25
+          :valign "center"
         )
         (box
           :orientation "v"
           :space-evenly false
           
           (label
-            :markup name
+            :text name
             :class "appName"
             :valign "center"
             :halign "start"
             :xalign 0
           )
           (label
-            :markup desc
+            :text desc
             :class "appDesc"
             :valign "center"
             :halign "start"
             :xalign 0
             :wrap true
-            :limit-width 25
-            :visible {name != desc && "null" != desc }
+            :visible {name != desc && desc != "null" }
           )
         )
       )

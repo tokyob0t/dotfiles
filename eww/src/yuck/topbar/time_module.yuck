@@ -1,6 +1,6 @@
 (defwidget time_module []
   (eventbox
-    :onclick "eww open weather --toggle"
+    :onclick "${EWW_CMD} open weather --toggle &"
     :cursor "pointer"
     (box
       :class "time_module module"

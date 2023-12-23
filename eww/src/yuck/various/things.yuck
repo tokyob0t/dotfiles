@@ -1,0 +1,38 @@
+(defwidget icon-widget [?class icon ?width ?height ?valign ?halign ?style ?imgClass]
+  (box
+    :space-evenly false
+    :valign {strlength(valign) > 0 ? valign : "center"}
+    :halign {strlength(halign) > 0 ? halign : "center"}
+    :style style
+    :class class
+    :orientation "v"
+    (image
+      :visible {strlength(icon) > 10}
+      :path icon
+      :class imgClass
+      :image-width {strlength(width) > 0 ? width : 18}
+      :image-height {strlength(height) > 0 ? height : 18}
+    )
+    (label
+      :text icon
+      :visible {strlength(icon) < 10}
+      :class "icon"
+    )
+    ; (literal
+    ;   :content {strlength(icon) > 10 ? "
+    ;   (image
+    ;     :path icon
+    ;     :class imgClass
+    ;     :image-width {strlength(width) > 0 ? width : 18}
+    ;     :image-height {strlength(height) > 0 ? height : 18}
+    ;   )
+    ;   ":"
+    ;   (label
+    ;     :text icon
+    ;     :visible {strlength(icon) < 10}
+    ;     :class 'icon'
+    ;   )"
+    ;   }
+    ; )
+  )
+)

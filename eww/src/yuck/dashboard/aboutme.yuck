@@ -30,12 +30,7 @@
         (label
           :text "${user}${host}"
           :class "username"
-          :style  "font-family: 'IBM Plex Sans Mono'; color: #525252;"
-
-        )
-        (label
-          :text 
-          :class ""
+          :style  "font-family: 'IBM Plex Sans Mono'; color: #525252;"          
         )
       )
     )
@@ -44,7 +39,10 @@
       :class "logoutButton"
       :onclick "hyprctl dispatch exit"
       :valign "center"
-      (label :text "󰍃" :class "icon")
+      (icon-widget
+        :icon {iconDict.system.logout}
+        :style "padding: 5px 10px;"
+      )
     )
   )
 )

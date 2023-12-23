@@ -5,8 +5,9 @@
     
     (eventbox
       :class "quicksettingsEventbox"
-      :onclick "./scripts/toggle_rev dashboard_Revealer dashboardWindow &"
+      :onclick "${EWW_CMD} open dashboardWindow --toggle"
       :cursor "pointer"
+
       (box
         :space-evenly false
         :spacing 10
@@ -15,21 +16,19 @@
         (eventbox
           :class "Eventbox"
           :onrightclick "${EWW_CMD} open wifi_menu --toggle"
-          (label
-            :class "icon wifiIcon"
-            :tooltip {wifiInfo.name}
-            :text {wifiInfo.icon}
+          :tooltip {networkInfo.wifi.name}
+          (icon-widget
+            :icon {networkInfo.wifi.icon}
           )
         )
         
         (eventbox
           :class "Eventbox"
           :onscroll "./scripts/volume --{}"
-          
-          (label
+          :tooltip {volume.value}
+          (icon-widget
+            :icon {volume.icon}
             :class "icon volumeIcon"
-            :tooltip {volume.value}
-            :text {volume.icon}
           )
         )
         (eventbox
@@ -37,20 +36,18 @@
           :onscroll "./scripts/microphone --{}"
           :visible {microphone.icon == ""}
           :active {microphone.icon == ""}
-          (label
-            :class "icon micIcon"
-            :text {microphone.icon}
-            :tooltip {microphone.value}
+          :tooltip {microphone.value}
+          (icon-widget
+            :icon {microphone.icon}
+            :class "micIcon"
           )
         )
         (eventbox
           :class "Eventbox"
           :onscroll "./scripts/brightness --{}"
-          (label
-            :class "icon ${battery.class}"
-            :text {battery.icon}
-            :tooltip "${battery.state} ${battery.percentage}%"
-
+          :tooltip "${battery.state} ${battery.percentage}%"
+          (icon-widget
+            :icon {battery.icon}
           )
         )
       )
