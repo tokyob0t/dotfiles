@@ -1,0 +1,116 @@
+.quicksettings-revealer {
+    padding: 10px;
+    min-width: 450px;
+
+    &.active {
+        margin-top: 0;
+        margin-bottom: 10px;
+        transition:
+            margin-top 350ms $my-bezier-in,
+            margin-bottom 350ms $my-bezier-in;
+    }
+
+    &.inactive {
+        margin-top: 950px;
+        margin-bottom: -950px;
+        transition:
+            margin-top 500ms $my-bezier-out,
+            margin-bottom 500ms $my-bezier-out;
+    }
+
+    .default-css {
+        border-radius: 10px;
+        box-shadow: $my-shadow;
+        background: $base00;
+    }
+
+    .media-widget {
+
+        .player {
+            @extend .default-css;
+            padding: 20px;
+            min-width: 0;
+            min-height: 125px;
+
+            .icon {
+                color: mix($base01, $base00, 50%);
+
+                &.media-status {
+                    color: $base01;
+                }
+            }
+
+            .media-cover {
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                border-radius: 10px;
+                min-width: 65px;
+                min-height: 65px;
+            }
+
+            label {
+                font-weight: 600;
+
+                &.media-source {
+                    font-size: 14px;
+                }
+
+                &.media-title {
+                    font-size: 16px;
+                }
+
+                &.media-artist {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+
+    .quicksettings-box {
+        min-height: 500px;
+        @extend .default-css;
+
+        .topsection {
+            padding: 20px 50px 20px 40px;
+
+            scale {
+                trough {
+                    background-color: darken($base00, 20%);
+                    border-radius: 15px;
+
+                    slider {
+                        background-color: $base02;
+                        border: 5px solid $base03;
+                        box-shadow: 0 0 2.5px lighten($base01, 50%);
+                        margin: -7px;
+                        min-height: 10px;
+                        min-width: 10px;
+                        border-radius: 20px;
+                        outline: 3px solid $base01;
+                    }
+
+                    highlight {
+                        opacity: 0.25;
+                        background: $base02;
+                        border-radius: 20px;
+                        border: unset;
+                    }
+                }
+            }
+        }
+
+        .bottomsection {
+            background-color: darken($base00, 10%);
+
+            border-radius: 0 0 10px 10px;
+            min-height: 35px;
+            border-top: 1px solid darken($base00, 20%);
+            padding: 5px 15px;
+
+            .batterylabel {
+                font-size: 13px;
+            }
+        }
+    }
+}

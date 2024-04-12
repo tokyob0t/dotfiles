@@ -1,0 +1,51 @@
+//Dark Mode
+$base00: #161616;
+$base01: #232323;
+$base02: #393939;
+$base03: #525252;
+$base04: #dde1e6;
+$base05: #f2f4f8;
+$base06: #ffffff;
+$base07: #08bdba;
+$base08: #3ddbd9;
+$base09: #78a9ff;
+$base0A: #ee5396;
+$base0B: #33b1ff;
+$base0C: #ff7eb6;
+$base0D: #43b365;
+$base0E: #be95ff;
+$base0F: #82cfff;
+
+
+$border-radius: 15px;
+
+
+* {
+    all: unset;
+}
+
+
+
+.wallpaper {
+
+    background: $base00;
+
+    .children {
+        background: $base01;
+        //background-image: url("/home/tokyob0t/Pictures/Wallpapers/rabbit.jpg");
+        background-size: cover;
+        background-position: center;
+        border-radius: $border-radius;
+    }
+}
+
+.nf-icon {
+    font-family: "Symbols Nerd Font";
+    font-size: 20px;
+    min-width: 1em;
+    min-height: 1em;
+}
+
+@import "./scss/launcher.scss";
+@import "./scss/topbar.scss";
+@import "./scss/notification.scss";

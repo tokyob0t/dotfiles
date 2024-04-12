@@ -1,0 +1,96 @@
+//$base00: mix(rgba(255, 255, 255, 0.9), transparent, 95%);
+$base00: rgba(255, 255, 255, 1);
+$base01: #111111;
+$base02: #0078d4;
+$base03: #f2f2f2;
+$wallpaper: url("/home/tokyob0t/.config/potato/Hyprland/scss/images/win11wallpaper.png");
+
+$SCALE: 5;
+
+$HEIGHT: 1080;
+$WIDTH: 1920;
+
+
+
+$my-bezier-in: cubic-bezier(0.19, 1, 0.22, 1);
+$my-bezier-out: cubic-bezier(0.20, 0.98, 0.23, 1.4);
+$my-bezier-mid: cubic-bezier(0.35, .85, .45, 1);
+$my-shadow: 0 0 2.5px 2.5px mix($base01, transparent, 17.5%);
+$my-shadow-two: 0 0 2.5px $base01;
+
+//$my-bezier-mid: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+
+
+.test {
+    transition: linear,
+        cubic-bezier(0.47, 0, 0.745, 0.715),
+        cubic-bezier(0.95, 0.05, 0.795, 0.035);
+
+}
+
+* {
+    all: unset;
+}
+
+scale {
+    padding: unset;
+    border: unset;
+    padding: 5px 0;
+
+    trough {
+        background: unset;
+        border: unset;
+
+        slider {
+            background: unset;
+            border: 3px solid transparent;
+            box-shadow: unset;
+            margin: -6px;
+            min-height: 10px;
+            min-width: 10px;
+        }
+
+        highlight {
+            opacity: 0.25;
+            background: unset;
+            border-radius: 20px;
+            border: unset;
+        }
+    }
+}
+
+label {
+    color: $base01;
+    font-family: "Segoe UI Variable";
+}
+
+.icon {
+    color: $base01;
+}
+
+.NFIcon,
+.nf-icon {
+    font-family: "Symbols Nerd Font";
+    font-size: 20px;
+    min-width: 1em;
+    min-height: 1em;
+}
+
+.black {
+    color: black;
+}
+
+.white {
+    color: white;
+}
+
+@import "./scss/bottombar.scss";
+@import "./scss/wallpaper.scss";
+@import "./scss/startmenu.scss";
+@import "./scss/notifications.scss";
+@import "./scss/quicksettings.scss";
+@import "./scss/newspanel.scss";
+@import "./scss/osd.scss";
+@import "./scss/overview.scss";
+@import "./scss/shutdown.scss";

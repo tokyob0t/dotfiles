@@ -1,0 +1,174 @@
+.newspanel-revealer {
+    padding: 5px;
+
+    &.inactive {
+        margin-left: -1000px;
+        margin-right: 1000px;
+        opacity: 0;
+        transition:
+            opacity 500ms $my-bezier-out,
+            margin 500ms $my-bezier-out;
+    }
+
+    &.active {
+        margin-right: 0px;
+        margin-left: 0px;
+        opacity: 1;
+
+        transition:
+            opacity 550ms $my-bezier-in,
+            margin 550ms $my-bezier-in;
+    }
+
+    .newspanel-widget {
+        border-radius: 15px;
+        padding: 10px 10px 25px 10px;
+        min-width: 350px;
+        min-height: 100px;
+
+        .newspanel-widget-titlebar {
+            padding-left: 5px;
+
+            .newspanel-widget-title {
+                font-weight: 500;
+            }
+
+            .newspanel-widget-button {
+                border-radius: 20px;
+                padding: 3px;
+                transition: 250ms;
+
+                &:hover {
+                    background: mix($base00, transparent, 50%);
+                }
+            }
+
+        }
+
+
+
+    }
+
+
+
+
+    .newspanel-box {
+        //min-width: 650px;
+        padding: 20px;
+        background: mix($base00, transparent, 40%);
+        border-radius: 10px;
+
+        .time {
+            margin: 20px 0 40px 0;
+            font-size: 30px;
+        }
+    }
+
+    // Custom elements
+    .weather-widget {
+        background: darken(mix($base00, $base02, 80%), 10%);
+        min-height: 150px;
+        min-width: 350px;
+    }
+
+    .system-widget {
+        background: lighten($base01, 5%);
+        min-height: 500px;
+
+        .system-widget-title {
+            font-weight: 600;
+            font-size: 22px;
+        }
+
+        .architecture {
+            font-weight: 600;
+            font-size: 15px;
+            color: darken($base00, 70%);
+        }
+
+        .component {
+
+            &.left,
+            &.right {
+                font-size: 15px;
+            }
+
+            &.left {
+                font-weight: 500;
+            }
+
+            &.right {
+                font-weight: 600;
+                color: darken($base00, 50%);
+                //color: #4AABD9;
+            }
+        }
+
+    }
+
+
+    .waifu-widget {
+        background: mix($base00, pink, 50%)
+    }
+
+    .terminal-widget {
+        background: darken($base00, 20%);
+    }
+
+
+    .contributionswidget {
+        background: $base00;
+        border-radius: 10px;
+        padding: 2.5px;
+
+        .contribheader {
+            margin-left: 13px;
+            font-size: 17px;
+        }
+
+        .ContributionsBox {
+            border-radius: 10px;
+            padding: 12.5px;
+            background: darken(mix($base00, $base03, 80%), 5%);
+
+            .contribParentBox {
+                .contribBox {
+                    border-radius: 2.5px;
+
+                    &.zero {
+                        background: mix($base02, darken($base00, 20%), 0%);
+                    }
+
+                    &.one {
+                        background: mix($base02, darken($base00, 20%), 25%);
+                    }
+
+                    &.two {
+                        background: mix($base02, darken($base00, 20%), 50%);
+                    }
+
+                    &.three {
+                        background: mix($base02, darken($base00, 20%), 75%);
+                    }
+
+                    &.four {
+                        background: mix($base02, darken($base00, 20%), 100%);
+                    }
+                }
+            }
+        }
+    }
+
+    .ghstatscard {
+        border-radius: 10px;
+        padding: 12.5px;
+        background: mix(darken(mix($base00, $base03, 80%), 5%), $base02, 95%);
+
+        .ghstatselements {
+            .name {
+                font-size: 17px;
+                font-weight: bold;
+            }
+        }
+    }
+}
