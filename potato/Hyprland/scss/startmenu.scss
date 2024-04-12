@@ -1,0 +1,149 @@
+.startmenu-revealer {
+
+    margin-top: 850px;
+    margin-bottom: -850px;
+    transition: margin 500ms $my-bezier-out;
+    padding: 5px;
+
+    &.active {
+        margin-top: 0;
+        margin-bottom: 10px;
+        transition: margin 325ms $my-bezier-in;
+    }
+
+    >.startmenu-box {
+
+        background: darken($base00, 2.5%);
+        box-shadow: $my-shadow;
+        border-radius: 10px;
+        min-height: 850px;
+        min-width: 700px;
+        transition: 500ms;
+
+        &.active {
+            min-width: 800px;
+            transition: 350ms;
+        }
+
+        .top-section {
+            padding: 40px;
+
+            .startmenu-entry {
+                background: $base00;
+                border-radius: 20px;
+                padding: 7.5px;
+                color: $base01;
+                border: 1px solid darken($base00, 20%);
+                transition: 250ms;
+
+                .icon {
+                    font-size: 20px;
+                    color: lighten($base01, 55%);
+                }
+
+                selection {
+                    background-color: lighten($color: $base02, $amount: 40%);
+                }
+            }
+        }
+
+        .mid-section {
+
+            .label-button-container {
+                padding: 0 20px;
+
+                >label {
+                    font-weight: 600;
+                    font-size: 14px;
+                }
+
+                .apps-button {
+                    background-color: $base00;
+                    border: 1px solid darken($base00, 20%);
+                    padding: 3px 7px;
+                    border-radius: 4px;
+
+                    label {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .left {
+
+                .apps-pinned {
+                    min-width: 90px;
+                    min-height: 90px;
+                    transition: 250ms;
+                    border-radius: 5px;
+
+                    &:hover {
+                        background: lighten($base03, 100%);
+                    }
+
+                    label {
+                        font-size: 13px;
+                        font-weight: 400;
+                        min-width: 70px;
+                    }
+                }
+            }
+
+            .right {
+
+                .app-category-label,
+                .app-category {
+                    border-radius: 5px;
+                    padding: 5px 10px;
+
+
+                    &:hover {
+                        background: lighten($base03, 100%);
+                    }
+                }
+
+                .app-category-label {
+                    @extend .app-category;
+                    padding-left: 22.5px;
+                }
+
+                .app-category {
+                    transition: 250ms;
+                }
+            }
+
+
+
+            .revealer {
+
+                &.left,
+                &.right {
+
+                    opacity: 0;
+                    transition:
+                        margin 500ms $my-bezier-mid,
+                        opacity 250ms;
+
+                    &.active {
+                        opacity: 1;
+                    }
+                }
+
+            }
+        }
+
+        .end-section {
+            transition: 250ms;
+
+            >box {
+                transition: 250ms;
+                border-radius: 0 0 10px 10px;
+                min-height: 50px;
+                border-top: 1px solid darken($base00, 20%);
+                padding: 0 50px;
+                background-color: mix(mix(mix($base00, $base02, 95%), $base03, 60%), transparent, 90%);
+            }
+
+        }
+    }
+}
