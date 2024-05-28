@@ -1,0 +1,58 @@
+.dock {
+    background: $base00;
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid $base01;
+
+    .separator {
+        background: $base01;
+        border-radius: 20px;
+        transition: 250ms;
+        min-width: 2.5px;
+        min-height: 20px;
+    }
+
+
+    .dock-app {
+        border-radius: 10px;
+        min-width: 50px;
+        min-height: 50px;
+        transition: 250ms;
+        margin-bottom: -5px;
+        padding-top: 5px;
+
+        &:hover {
+            background: darken($base01, 5%);
+        }
+
+        &.active {
+            background: $base01;
+        }
+
+        &:active {
+            background: lighten($base01, 10%);
+        }
+
+        .dock-app-indicator {
+            &.active {
+                background: $base08;
+                min-width: 10px;
+            }
+
+            &.inactive {
+                background: $base02;
+                min-width: 1px;
+            }
+
+            border-radius:20px;
+            transition:250ms;
+            min-height: 5px;
+        }
+    }
+
+    .dock-app-launcher {
+        @extend .dock-app;
+        margin: unset;
+        padding-top: unset;
+    }
+}

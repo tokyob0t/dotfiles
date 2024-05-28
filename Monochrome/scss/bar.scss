@@ -1,0 +1,62 @@
+.bar {
+    background: $base00;
+    border-radius: 0 15px 15px 0;
+    padding: 15px 0;
+    min-width: 40px;
+    border: 1px solid $base01;
+
+    .clock {
+        font-size: 18px;
+        font-family: "JetBrains Mono Nerd Font";
+    }
+
+    .pfp {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 3em;
+        background-image: url("/home/tokyob0t/.config/potato/Magenta/resources/pfp.png");
+    }
+
+    .module {
+        background: $base01;
+        border-radius: 20px;
+        padding: 10px 0;
+        min-width: 2.5em;
+    }
+
+    .center-container,
+    .center-top-container,
+    .center-bottom-container {
+        padding: 20px 0;
+    }
+
+    .center-container {
+        background: $base01;
+        border-radius: 25px 0 0 25px;
+
+        .center-module {
+            @extend .module;
+        }
+
+    }
+
+    .center-top-container,
+    .center-bottom-container {
+        background: $base00;
+        border-radius: unset;
+        min-height: 3em;
+        min-width: 2em;
+    }
+
+    .center-top-container {
+        box-shadow: 0 35px 0 0 $base01;
+        border-radius: 0 0 35px 0;
+    }
+
+    .center-bottom-container {
+        box-shadow: 0 -35px 0 0 $base01;
+        border-radius: 0 35px 0 0;
+    }
+
+}

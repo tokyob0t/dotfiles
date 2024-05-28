@@ -1,0 +1,53 @@
+.notification-box {
+    border: 1px solid $base01;
+    background: $base00;
+    border-radius: 20px;
+
+    &.critical {
+
+        border: 1px solid mix($base01, red, 70%);
+        background: mix($base00, red, 70%);
+
+        .icon-container {
+            background: mix($base01, red, 70%)
+        }
+
+        .text-container .action-button {
+            background: mix($base01, red, 70%)
+        }
+    }
+
+    .icon-container {
+        background: $base01;
+        border-radius: 20px 0 0 20px;
+
+        .icon {
+            color: $base04;
+        }
+    }
+
+    .text-container {
+        padding: 15px 20px;
+
+        .action-button {
+            background: $base01;
+            border-radius: 8px;
+            padding: 5px;
+            transition: 250ms;
+
+            &:hover {
+                background: lighten($base01, 10%);
+            }
+
+            &:active {
+                background: lighten($base01, 20%);
+
+            }
+
+            label {
+                font-weight: 500;
+            }
+        }
+    }
+
+}
