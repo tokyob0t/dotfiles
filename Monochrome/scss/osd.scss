@@ -1,0 +1,64 @@
+.osd-box {
+
+    .icon {
+        color: $base00;
+        margin-bottom: 30px;
+
+        &.transparent {
+            color: transparent;
+        }
+    }
+
+    .osd-scale {
+
+        &.smol {
+            transition: 250ms;
+
+            &.pulse-high trough {
+                min-height: 230px;
+            }
+
+            &.pulse-less trough {
+                min-height: 130px;
+            }
+
+            trough {
+                min-width: 10px;
+                min-height: 180px;
+
+                progress {
+                    min-width: 10px;
+                }
+            }
+        }
+
+        &.pulse-high trough {
+            min-height: 250px;
+        }
+
+        &.pulse-less trough {
+            min-height: 150px;
+        }
+
+        padding: 5px;
+        border-radius: 30px;
+        background: $base00;
+        border: 1px solid $base01;
+
+        trough {
+            border-radius: 15px;
+            transition: 250ms;
+            border-radius: 30px;
+            min-width: 30px;
+            min-height: 200px;
+
+            progress {
+                opacity: 0.25;
+                background: $base08;
+                border-radius: 30px;
+                border: unset;
+                min-width: 30px;
+            }
+        }
+    }
+}
