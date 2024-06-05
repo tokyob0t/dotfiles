@@ -8,10 +8,10 @@ esac
 
 
 export HISTFILE="$HOME/.bash_history"
-export HISTSIZE=10000
+export HISTSIZE=100000
 export NVD_BACKEND="direct"
 export XDG_CACHE_HOME="$HOME/.cache"
-#export XDG_CURRENT_DESKTOP="gnome"
+export XDG_CURRENT_DESKTOP="Hyprland"
 export PROMPT_COMMAND="history -a"
 export PATH="$HOME/.local/bin:$PATH"
 export MANPAGER="sh -c 'sed -r \"s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g\" | bat --language man --plain'"
@@ -217,11 +217,9 @@ _update_prompt() {
         #Windows
         #PS1='C:${PWD//\//\\\\}> '
     else
-        PS1='\[\e]133;k;start_kitty\a\]\[\e]133;A\a\]\[\e]133;k;end_kitty\a\]\n\[\e]133;k;start_secondary_kitty\a\]\[\e]133;A;k=s\a\]\[\e]133;k;end_secondary_kitty\a\]\[\e[1;44;30m\]  \[\e[0m\]\[\e]133;k;start_suffix_kitty\a\]\[\e[5 q\]\[\e]2;\w\a\]\[\e]133;k;end_suffix_kitty\a\] '
+        PS1='\[\e]133;k;start_kitty\a\]\[\e]133;A\a\]\[\e]133;k;end_kitty\a\]\n\[\e]133;k;start_secondary_kitty\a\]\[\e]133;A;k=s\a\]\[\e]133;k;end_secondary_kitty\a\]\[\e[1;41;30m\]  \[\e[0m\]\[\e]133;k;start_suffix_kitty\a\]\[\e[5 q\]\[\e]2;\w\a\]\[\e]133;k;end_suffix_kitty\a\] '
     fi
 }
 
 
-
-
-
+source /home/tokyob0t/.bash_completions/gengir.sh
