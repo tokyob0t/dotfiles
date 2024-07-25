@@ -1,0 +1,245 @@
+---@class NM.Client : GObject.Object
+---@field new function
+---@field new_async function
+---@field new_finish function
+---@field wait_shutdown_finish function
+---@field activate_connection_async function
+---@field activate_connection_finish function
+---@field add_and_activate_connection2 function
+---@field add_and_activate_connection2_finish function
+---@field add_and_activate_connection_async function
+---@field add_and_activate_connection_finish function
+---@field add_connection2 function
+---@field add_connection2_finish function
+---@field add_connection_async function
+---@field add_connection_finish function
+---@field check_connectivity function
+---@field check_connectivity_async function
+---@field check_connectivity_finish function
+---@field checkpoint_adjust_rollback_timeout function
+---@field checkpoint_adjust_rollback_timeout_finish function
+---@field checkpoint_create function
+---@field checkpoint_create_finish function
+---@field checkpoint_destroy function
+---@field checkpoint_destroy_finish function
+---@field checkpoint_rollback function
+---@field checkpoint_rollback_finish function
+---@field connectivity_check_get_available function
+---@field connectivity_check_get_enabled function
+---@field connectivity_check_get_uri function
+---@field connectivity_check_set_enabled function
+---@field dbus_call function
+---@field dbus_call_finish function
+---@field dbus_set_property function
+---@field dbus_set_property_finish function
+---@field deactivate_connection function
+---@field deactivate_connection_async function
+---@field deactivate_connection_finish function
+---@field get_activating_connection function
+---@field get_active_connections function
+---@field get_all_devices function
+---@field get_capabilities function
+---@field get_checkpoints function
+---@field get_connection_by_id function
+---@field get_connection_by_path function
+---@field get_connection_by_uuid function
+---@field get_connections function
+---@field get_connectivity function
+---@field get_context_busy_watcher function
+---@field get_dbus_connection function
+---@field get_dbus_name_owner function
+---@field get_device_by_iface function
+---@field get_device_by_path function
+---@field get_devices function
+---@field get_dns_configuration function
+---@field get_dns_mode function
+---@field get_dns_rc_manager function
+---@field get_instance_flags function
+---@field get_logging function
+---@field get_main_context function
+---@field get_metered function
+---@field get_nm_running function
+---@field get_object_by_path function
+---@field get_permission_result function
+---@field get_permissions_state function
+---@field get_primary_connection function
+---@field get_radio_flags function
+---@field get_startup function
+---@field get_state function
+---@field get_version function
+---@field get_version_info function
+---@field load_connections function
+---@field load_connections_async function
+---@field load_connections_finish function
+---@field networking_get_enabled function
+---@field networking_set_enabled function
+---@field reload function
+---@field reload_connections function
+---@field reload_connections_async function
+---@field reload_connections_finish function
+---@field reload_finish function
+---@field save_hostname function
+---@field save_hostname_async function
+---@field save_hostname_finish function
+---@field set_logging function
+---@field wait_shutdown function
+---@field wimax_get_enabled function
+---@field wimax_hardware_get_enabled function
+---@field wimax_set_enabled function
+---@field wireless_get_enabled function
+---@field wireless_hardware_get_enabled function
+---@field wireless_set_enabled function
+---@field wwan_get_enabled function
+---@field wwan_hardware_get_enabled function
+---@field wwan_set_enabled function
+---@field activating_connection NM.ActiveConnection @r
+---@field active_connections GLib.PtrArray @r
+---@field all_devices GLib.PtrArray @r
+---@field can_modify boolean @r
+---@field capabilities GLib.Array @r
+---@field checkpoints GLib.PtrArray @r
+---@field connections GLib.PtrArray @r
+---@field connectivity NM.ConnectivityState @r
+---@field connectivity_check_available boolean @r
+---@field connectivity_check_enabled boolean @r/w
+---@field connectivity_check_uri string @r
+---@field dbus_connection Gio.DBusConnection @r/w/co
+---@field dbus_name_owner string @r
+---@field devices GLib.PtrArray @r
+---@field dns_configuration GLib.PtrArray @r
+---@field dns_mode string @r
+---@field dns_rc_manager string @r
+---@field hostname string @r
+---@field instance_flags number @r/w/c
+---@field metered number @r
+---@field networking_enabled boolean @r/w
+---@field nm_running boolean @r
+---@field permissions_state NM.Ternary @r
+---@field primary_connection NM.ActiveConnection @r
+---@field radio_flags number @r
+---@field startup boolean @r
+---@field state NM.State @r
+---@field version string @r
+---@field version_info GLib.Array @r
+---@field wimax_enabled boolean @r/w deprecated
+---@field wimax_hardware_enabled boolean @r deprecated
+---@field wireless_enabled boolean @r/w
+---@field wireless_hardware_enabled boolean @r
+---@field wwan_enabled boolean @r/w
+---@field wwan_hardware_enabled boolean @r
+
+---@class NM.Device : GObject.Object
+---@field disambiguate_names function
+---@field connection_compatible function
+---@field connection_valid function
+---@field delete function
+---@field delete_async function
+---@field delete_finish function
+---@field disconnect function
+---@field disconnect_async function
+---@field disconnect_finish function
+---@field filter_connections function
+---@field get_active_connection function
+---@field get_active_access_point function
+---@field get_applied_connection function
+---@field get_applied_connection_async function
+---@field get_applied_connection_finish function
+---@field get_autoconnect function
+---@field get_available_connections function
+---@field get_capabilities function
+---@field get_connectivity function
+---@field get_description function
+---@field get_device_type function
+---@field get_dhcp4_config function
+---@field get_dhcp6_config function
+---@field get_driver function
+---@field get_driver_version function
+---@field get_firmware_missing function
+---@field get_firmware_version function
+---@field get_hw_address function
+---@field get_iface function
+---@field get_interface_flags function
+---@field get_ip4_config function
+---@field get_ip6_config function
+---@field get_ip_iface function
+---@field get_lldp_neighbors function
+---@field get_managed function
+---@field get_metered function
+---@field get_mtu function
+---@field get_nm_plugin_missing function
+---@field get_path function
+---@field get_physical_port_id function
+---@field get_ports function
+---@field get_product function
+---@field get_setting_type function
+---@field get_state function
+---@field get_state_reason function
+---@field get_type_description function
+---@field get_udi function
+---@field get_vendor function
+---@field is_real function
+---@field is_software function
+---@field reapply function
+---@field reapply_async function
+---@field reapply_finish function
+---@field set_autoconnect function
+---@field set_managed function
+---@field active_connection NM.ActiveConnection @r
+---@field autoconnect boolean @r/w
+---@field available_connections GLib.PtrArray @r
+---@field capabilities NM.DeviceCapabilities @r
+---@field device_type NM.DeviceType @r
+---@field dhcp4_config NM.DhcpConfig @r
+---@field dhcp6_config NM.DhcpConfig @r
+---@field driver string @r
+---@field driver_version string @r
+---@field firmware_missing boolean @r
+---@field firmware_version string @r
+---@field hw_address string @r
+---@field interface string @r
+---@field interface_flags number @r
+---@field ip4_config NM.IPConfig @r
+---@field ip4_connectivity NM.ConnectivityState @r
+---@field ip6_config NM.IPConfig @r
+---@field ip6_connectivity NM.ConnectivityState @r
+---@field ip_interface string @r
+---@field lldp_neighbors GLib.PtrArray @r
+---@field managed boolean @r
+---@field metered number @r
+---@field mtu number @r
+---@field nm_plugin_missing boolean @r
+---@field physical_port_id string @r
+---@field ports GLib.PtrArray @r
+---@field product string @r
+---@field real boolean @r
+---@field state NM.DeviceState @r
+---@field state_reason number @r
+---@field udi string @r
+---@field vendor string @r
+
+---@class NM.AccessPoint: GObject.Object
+---@field bandwidth number @int r
+---@field bssid string @str r
+---@field flags NM.80211ApFlags @r
+---@field frequency number @int r
+---@field hw_address string @str r deprecated
+---@field last_seen number @int r
+---@field max_bitrate number @int r
+---@field mode NM.80211Mode @r
+---@field rsn_flags NM.80211ApSecurityFlags @r
+---@field ssid GLib.Bytes @r
+---@field strength number @r
+---@field wpa_flags NM.80211ApSecurityFlags @r
+---@field connection_valid function
+---@field filter_connections function
+---@field get_bandwidth function
+---@field get_bssid function
+---@field get_flags function
+---@field get_frequency function
+---@field get_last_seen function
+---@field get_max_bitrate function
+---@field get_mode function
+---@field get_rsn_flags function
+---@field get_ssid function
+---@field get_strength function
+---@field get_wpa_flags function

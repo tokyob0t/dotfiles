@@ -1,0 +1,66 @@
+---@class UPowerGlib.Client : GObject.Object
+---@field new function
+---@field new_async function
+---@field new_finish function
+---@field new_full function
+---@field get_critical_action function
+---@field get_daemon_version function
+---@field get_devices function
+---@field get_devices2 function
+---@field get_devices_async function
+---@field get_devices_finish function
+---@field get_display_device function
+---@field get_lid_is_closed function
+---@field get_lid_is_present function
+---@field get_on_battery function
+---@field daemon_version string
+---@field lid_is_closed boolean
+---@field lid_is_present boolean
+---@field on_battery boolean
+
+---@class UPowerGlib.Device : GObject.Object
+---@field battery_level number @int r/w
+---@field capacity number @float r/w
+---@field charge_cycles number @int r/w
+---@field energy number @float r/w
+---@field energy_empty number @float r/w
+---@field energy_full number @float r/w
+---@field energy_full_design number @float r/w
+---@field energy_rate number @float r/w
+---@field has_history boolean @bool r/w
+---@field has_statistics boolean @bool r/w
+---@field icon_name string @str r/w
+---@field is_present boolean @bool r/w
+---@field is_rechargeable boolean @bool r/w
+---@field kind number @int r/w
+---@field luminosity number @float r/w
+---@field model string @str r/w
+---@field native_path string @str r/w
+---@field online boolean @bool r/w
+---@field percentage number @float r/w
+---@field power_supply boolean @bool r/w
+---@field serial string @str r/w
+---@field state number @int r/w
+---@field technology number @int r/w
+---@field temperature number @float r/w
+---@field time_to_empty number @int r/w
+---@field time_to_full number @int r/w
+---@field update_time number @int r/w
+---@field vendor string @str r/w
+---@field voltage number @float r/w
+---@field warning_level number @int r/w
+---@field kind_from_string function
+---@field kind_to_string function
+---@field level_from_string function
+---@field level_to_string function
+---@field new function
+---@field state_from_string function
+---@field state_to_string fun(level: number): "charging" | "discharging" | "fully-charged"
+---@field technology_from_string function
+---@field technology_to_string function
+---@field get_history_sync function
+---@field get_object_path function
+---@field get_statistics_sync function
+---@field refresh_sync function
+---@field set_object_path_sync function
+---@field to_text function

@@ -1,28 +1,16 @@
-require("conceal").setup({
+local conceal = require("conceal")
+
+conceal.setup({
 	["lua"] = {
 		enabled = true,
 		keywords = {
-			["local"] = {
-				enabled = false, -- to disable concealing for "local"
-			},
-			["return"] = {
-				conceal = "R", -- to set the concealing to "R"
-			},
-			["for"] = {
-				highlight = "keyword", -- to set the Highlight group to "@keyword"
-			},
-		},
-	},
-
-	["python"] = {
-		enabled = true,
-		keywords = {
-			["lambda"] = {
-				enabled = true,
-				conceal = "λ ->",
-			},
+			["return"] = { highlight = "keyword", conceal = "->" },
+			["local"] = { highlight = "keyword", conceal = "~" },
+			["if"] = { highlight = "keyword", conceal = "?" },
+			["not"] = { highlight = "keyword", conceal = "!" },
+			["else"] = { highlight = "keyword", conceal = ":" },
 		},
 	},
 })
 
-require("conceal").generate_conceals()
+conceal.generate_conceals()

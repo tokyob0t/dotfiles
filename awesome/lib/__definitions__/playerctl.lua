@@ -1,0 +1,46 @@
+---@class Playerctl.PlayerManager
+---@field new function
+---@field manage_player function
+---@field move_player_to_top function
+---@field set_sort_func function
+---@field player_names string[]
+---@field players Playerctl.Player[]
+
+---@class Playerctl.Player
+---@field new function
+---@field new_for_source function
+---@field new_from_name function
+---@field get_album function
+---@field get_artist function
+---@field get_position function
+---@field get_title function
+---@field next function
+---@field on function
+---@field open function
+---@field pause function
+---@field play function
+---@field play_pause function
+---@field previous function
+---@field print_metadata_prop function
+---@field seek function
+---@field set_loop_status function
+---@field set_position function
+---@field set_shuffle function
+---@field set_volume function
+---@field stop function
+---@field can_control boolean @bool r
+---@field can_go_next boolean @bool r
+---@field can_go_previous boolean @bool r
+---@field can_pause boolean @bool r
+---@field can_play boolean @bool r
+---@field can_seek boolean @bool r
+---@field loop_status Playerctl.LoopStatus @r
+---@field metadata GLib.Variant @r
+---@field playback_status Playerctl.PlaybackStatus @r
+---@field player_instance string @str r/w/co
+---@field player_name string @str r/w/co
+---@field position number @int r
+---@field shuffle boolean @bool r
+---@field source Playerctl.Source @r/w/co
+---@field status string @str d/r
+---@field volume number @float r/w

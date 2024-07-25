@@ -1,0 +1,5 @@
+require(... .. ".bar")
+require(... .. ".wallpaper")
+require(... .. ".notifications")
+require(... .. ".titlebars")
+require(... .. ".launcher")

@@ -14,6 +14,7 @@ require("plugin.conform")
 require("plugin.gitsigns")
 require("plugin.telescope")
 --require("plugin.neorg")
+
 require("plugin.presence")
 require("plugin.nvim-navic")
 require("plugin.nvim-ufo")
@@ -25,6 +26,10 @@ vim.cmd([[packadd packer.nvim]])
 require("packer").startup(function(use)
 	-- Packer itself
 	use({ "wbthomason/packer.nvim" })
+
+	-- Theme
+	use({ "nyoom-engineering/oxocarbon.nvim" })
+
 	-- Utils/Useless
 	use({ "andweeb/presence.nvim" })
 	use({ "NvChad/nvim-colorizer.lua" })
@@ -37,8 +42,7 @@ require("packer").startup(function(use)
 			require("nvim-autopairs").setup()
 		end,
 	})
-	-- Theme
-	use({ "nyoom-engineering/oxocarbon.nvim" })
+	--use({ "Jxstxs/conceal.nvim", requires = "nvim-treesitter/nvim-treesitter" })
 
 	-- UI stuff
 
@@ -56,15 +60,8 @@ require("packer").startup(function(use)
 			"rcarriga/nvim-notify",
 		},
 	})
-	-- Markdown stuff
-	-- https://github.com/yaocccc/nvim-hl-mdcodeblock.lua
-	use({
-		"ellisonleao/glow.nvim",
-		config = function()
-			require("glow").setup()
-		end,
-	})
 	-- Autocompletion/Formatting
+	-- Markdown stuff
 	use({ "sbdchd/neoformat" })
 	use({ "stevearc/conform.nvim" })
 	use({ "nvim-tree/nvim-tree.lua", requires = { "nvim-tree/nvim-web-devicons" } })

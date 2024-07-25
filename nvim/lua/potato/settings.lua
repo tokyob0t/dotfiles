@@ -61,13 +61,19 @@ set("ignorecase")
 set("smartcase")
 set("gdefault")
 set("nowrap")
-set("number")
+set("nonumber")
 set("list")
 set("ignorecase")
 set("smartcase")
 set("gdefault")
+set("undofile")
+set("nowritebackup")
+set("noswapfile")
+
 cmd("highlight CursorLineNr guibg=#232323")
 cmd("highlight MDCodeBlock guibg=#111111")
+cmd("set mouse=")
+cmd("set conceallevel=1")
 
 api.nvim_command([[
             autocmd BufEnter * if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1 | set showtabline=2 | else | set showtabline=0 | endif
@@ -126,3 +132,7 @@ for type, icon in pairs(DiagnosticSigns) do
 	--vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 	func.sign_define(hl, { text = icon, texthl = hl, numhl = nil })
 end
+
+vim.filetype.add({
+	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+})

@@ -22,12 +22,15 @@ require("nvim-treesitter.configs").setup({
 })
 
 local lang_mapping = {
-	python = "pyright",
-	lua = "stylua",
+	python = "ruff",
+	--python = "pyright",
+	--lua = "stylua",
+	lua = "luacheck",
 	--lua = "lua-language-server",
-	bash = "beautysh",
+	bash = "bash-language-server",
 	markdown = "marksman",
 	perl = "perlnavigator",
+	java = "java-language-server",
 }
 
 for key, value in pairs(lang_mapping) do

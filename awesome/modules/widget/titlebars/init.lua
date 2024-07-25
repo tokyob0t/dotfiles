@@ -1,0 +1,113 @@
+local client = client
+local bful = require("beautiful")
+local awful = require("awful")
+local wibox = require("wibox")
+local utils = require("utils.init")
+local user = require("user")
+local dpi = utils.dpi
+
+local function new_button(args)
+	local button = wibox.widget({
+		forced_width = dpi(50),
+		widget = wibox.container.background,
+		shape = utils.rrect(utils.dpi(15)),
+		bg = bful.bg_normal,
+		buttons = {
+			awful.button({}, 1, args.callback),
+		},
+	})
+
+	args.c:connect_signal("focus", function()
+		button.bg = bful.bg_normal
+	end)
+
+	args.c:connect_signal("unfocus", function()
+		button.bg = bful.bg_focus
+	end)
+
+	return button
+end
+
+client.connect_signal("request::titlebars", function(c)
+	local titlebar = awful.titlebar(c, { size = dpi(40), position = "top" })
+
+	local left_side, right_side, minimizebutton, closebutton, maximizebutton
+	-- Titlebar
+
+	-- Left
+	left_side = {
+		{
+			--awful.titlebar.widget.iconwidget(c),
+			{
+				id = "icon",
+				widget = wibox.widget.imagebox,
+				halign = "center",
+				valign = "center",
+				image = utils.lookup_icon({
+					icon_name = {
+						utils.string.replaceWithTable(c.class, user.ReplaceClientClassnames),
+						c.class,
+						c.icon_name,
+					},
+					size = 32,
+				}) or c.icon or utils.lookup_icon({ icon_name = "application-x-executable", size = 32 }),
+			},
+			margins = dpi(2.5),
+			widget = wibox.container.margin,
+		},
+		layout = wibox.layout.fixed.horizontal,
+	}
+
+	-- Right
+	minimizebutton = new_button({
+		c = c,
+		callback = function()
+			c.minimized = not c.minimized
+		end,
+	})
+
+	maximizebutton = new_button({
+		c = c,
+		callback = function()
+			c.maximized = not c.maximized
+		end,
+	})
+
+	closebutton = new_button({
+		c = c,
+		callback = function()
+			c:kill()
+		end,
+	})
+
+	right_side = {
+		{
+			minimizebutton,
+			maximizebutton,
+			closebutton,
+			layout = wibox.layout.fixed.horizontal,
+			spacing = dpi(5),
+		},
+		top = dpi(5),
+		bottom = dpi(5),
+		widget = wibox.container.margin,
+	}
+
+	titlebar.widget = {
+		{
+			left_side,
+			nil,
+			right_side,
+			layout = wibox.layout.align.horizontal,
+		},
+		right = dpi(10),
+		left = dpi(10),
+		top = dpi(5),
+		bottom = dpi(5),
+		widget = wibox.container.margin,
+	}
+
+	if utils.table.contains(user.ExcludedTitlebars.byClassName, c.class) then
+		awful.titlebar.hide(c)
+	end
+end)
