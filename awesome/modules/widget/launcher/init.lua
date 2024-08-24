@@ -1,26 +1,29 @@
 local user = require("user")
----@type theme
-local bful = require("beautiful")
+local fzy = require("lib.fzy")
+local utils = require("utils.init")
 local awful = require("awful")
 local wibox = require("wibox")
-local rubato = require("lib.rubato")
-local utils = require("utils.init")
-local dpi = utils.dpi
-local applications = require("utils.applications")
 
+local cter = wibox.container
+local widget = wibox.widget
+
+---@type theme
+local bful = require("beautiful")
+
+local rubato = require("lib.rubato")
+local applications = require("services.applications")
+
+---@type App[]
 local all_apps = utils.table.filter(
 	applications.get_all(),
 	---@param app App
 	function(app)
-		if #user.ExcludedLauncherApps >= 1 then
-			for _, value in ipairs(user.ExcludedLauncherApps) do
-				if app:match(value) then
-					return false
-				end
+		for _, value in ipairs(user.ExcludedLauncherApps) do
+			if app:match(value) then
+				return false
 			end
-		else
-			return true
 		end
+		return true
 	end
 )
 
@@ -37,7 +40,7 @@ local smol_icon = function(name)
 		}),
 		forced_height = dpi(16),
 		forced_width = dpi(16),
-		widget = wibox.widget.imagebox,
+		widget = widget.imagebox,
 		valign = "center",
 	}
 end
@@ -46,13 +49,9 @@ end
 local app_item = function(app)
 	local a_name, a_comment
 
-	if utils.string.has_capital(app.name) then
-		a_name = utils.string.markdown_to_markup(app.name) or app.name
-	else
-		a_name = utils.string.capitalize(utils.string.markdown_to_markup(app.name) or app.name)
-	end
-
-	a_comment = utils.string.markdown_to_markup(app.comment) or app.comment
+	a_name = app.name
+	a_name = ternary(utils.string.has_capital(app.name), app.name, utils.string.capitalize(app.name))
+	a_comment = app.comment
 
 	a_name = string.gsub(a_name, "\n", "")
 	a_comment = string.gsub(a_comment, "\n", "")
@@ -78,43 +77,72 @@ local app_item = function(app)
 						icon_name = { app.icon_name, "application-x-executable" },
 						size = 32,
 					}),
-					widget = wibox.widget.imagebox,
+					widget = widget.imagebox,
 					forced_width = dpi(32),
 					forced_height = dpi(32),
 				},
-				utils.t(string.len(app.comment) > 2, {
-					{ widget = wibox.widget.textbox, markup = a_name },
-					{ widget = wibox.widget.textbox, markup = a_comment },
+				ternary(string.len(app.comment) > 2 and app.comment ~= "Play this game on Steam", {
+					{ widget = widget.textbox, markup = a_name },
+					{ widget = widget.textbox, markup = a_comment },
 					layout = wibox.layout.fixed.vertical,
 				}, {
-					{ widget = wibox.widget.textbox, markup = a_name, valign = "center" },
+					{ widget = widget.textbox, markup = a_name, valign = "center" },
 					layout = wibox.layout.flex.vertical,
 				}),
 				layout = wibox.layout.fixed.horizontal,
 				spacing = dpi(10),
 			},
-			widget = wibox.container.margin,
+			widget = cter.margin,
 			margins = dpi(10),
 		},
-		widget = wibox.container.background,
+		shape = utils.rrect(dpi(10)),
+		widget = cter.background,
 		app = app,
 	}
 end
 
-local function gen_app_list(query)
-	query = query or ""
-
+local function gen_app_list(q)
+	--- score, keywords, comment, app-name
+	local s, k, c, n, my_app_widget
 	local filtered_apps = {}
+	q = string.lower(q or "")
 
 	for _, value in ipairs(all_apps) do
-		if value:match(query) and #filtered_apps < 7 then
-			table.insert(filtered_apps, app_item(value))
+		k = string.gsub(string.lower(value.keywords), "[^%w%s]", " ")
+		c = string.gsub(string.lower(value.comment), "[^%w%s]", " ")
+
+		if q ~= "" then
+			if value:match(q) then
+				s = fzy.score(q, k) + ternary(c ~= "play this game on steam", 0, -1)
+			elseif fzy.has_match(q, k) then
+				s = fzy.score(q, k) - 3
+			else
+				s = 0
+			end
+		else
+			s = 1
+		end
+
+		if #filtered_apps < 8 and s > 0 then
+			my_app_widget = app_item(value)
+			my_app_widget.score = s
+			table.insert(filtered_apps, my_app_widget)
 		end
 	end
-	filtered_apps.widget = wibox.container.place
-	filtered_apps.layout = wibox.layout.flex.vertical
-	filtered_apps.valign = "top"
 
+	if q ~= "" then
+		table.sort(filtered_apps, function(a, b)
+			return a.score > b.score
+		end)
+		if #filtered_apps >= 1 then
+			filtered_apps[1].bg = bful.bg_focus
+		end
+	end
+
+	filtered_apps.widget = cter.place
+	filtered_apps.layout = wibox.layout.flex.vertical
+
+	collectgarbage("collect")
 	return filtered_apps
 end
 
@@ -127,7 +155,37 @@ return function(s)
 	l_height, l_width = dpi(500), dpi(400)
 	startpos = (s.geometry.height - l_height) / 2 + dpi(100)
 	endpos = (s.geometry.height - l_height) / 2 - dpi(50)
-	prompt = wibox.widget({ id = "prompt", widget = wibox.widget.textbox })
+	prompt = widget({ id = "prompt", widget = widget.textbox })
+
+	local app_prompt_thing = {
+		{
+			{
+				smol_icon("system-search-symbolic"),
+				{
+					prompt,
+					widget = cter.margin,
+					left = dpi(10),
+					right = dpi(10),
+				},
+				smol_icon("entry-clear-symbolic"),
+				forced_height = dpi(30),
+				spacing = dpi(10),
+				layout = wibox.layout.align.horizontal,
+			},
+			left = dpi(10),
+			right = dpi(10),
+			widget = cter.margin,
+		},
+		bg = bful.bg_focus,
+		shape = utils.rrect(dpi(10)),
+		widget = cter.background,
+	}
+
+	local app_list_thing = {
+		gen_app_list(),
+		id = "scroll",
+		layout = wibox.layout.fixed.vertical,
+	}
 
 	local app_launcher = wibox({
 		screen = s,
@@ -140,45 +198,19 @@ return function(s)
 		widget = {
 			{
 				{
-					{
-						{
-							{
-								smol_icon("system-search-symbolic"),
-								{
-									prompt,
-									widget = wibox.container.margin,
-									left = dpi(10),
-									right = dpi(10),
-								},
-								smol_icon("entry-clear-symbolic"),
-								forced_height = dpi(30),
-								spacing = dpi(10),
-								layout = wibox.layout.align.horizontal,
-							},
-							left = dpi(10),
-							right = dpi(10),
-							widget = wibox.container.margin,
-						},
-						bg = bful.bg_focus,
-						shape = utils.rrect(dpi(10)),
-						widget = wibox.container.background,
-					},
-					{
-						gen_app_list(),
-						id = "scroll",
-						layout = wibox.layout.fixed.vertical,
-					},
+					app_prompt_thing,
+					app_list_thing,
 					layout = wibox.layout.fixed.vertical,
 					spacing = dpi(10),
 				},
 				margins = dpi(10),
-				widget = wibox.container.margin,
+				widget = cter.margin,
 			},
-			widget = wibox.container.background,
+			widget = cter.background,
 		},
 	})
 
-	app_launcher.anim = {
+	local anim = {
 		position = rubato.timed({
 			pos = startpos,
 			duration = d_in,
@@ -202,21 +234,21 @@ return function(s)
 
 		if visible then
 			self.drawin.visible = true
-			app_launcher.anim.opacity.duration = d_in
-			app_launcher.anim.position.duration = d_in
+			anim.opacity.duration = d_in
+			anim.position.duration = d_in
 
-			app_launcher.anim.opacity.target = 1
-			app_launcher.anim.position.target = endpos
+			anim.opacity.target = 1
+			anim.position.target = endpos
 		else
-			utils.wait((d_in + d_out) / 2, function()
+			wait((d_in + d_out) / 2, function()
 				self.drawin.visible = false
 			end)
 
-			app_launcher.anim.opacity.duration = d_out
-			app_launcher.anim.position.duration = d_out
+			anim.opacity.duration = d_out
+			anim.position.duration = d_out
 
-			app_launcher.anim.opacity.target = 0
-			app_launcher.anim.position.target = startpos
+			anim.opacity.target = 0
+			anim.position.target = startpos
 		end
 	end
 
@@ -246,7 +278,7 @@ return function(s)
 							end
 						)
 						if app_item_widget then
-							app_item_widget.app:launch()
+							return app_item_widget.app:launch()
 						end
 					end
 				end,

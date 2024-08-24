@@ -1,14 +1,15 @@
-local markdown = require("lib.markdown")
 local rnotification = require("ruled.notification")
 local naughty = require("naughty")
 local awful = require("awful")
 local wibox = require("wibox")
+local gears = require("gears")
+local widget = wibox.widget
+local cter = wibox.container
 
 ---@type theme
 local bful = require("beautiful")
 
 local utils = require("utils.init")
-local dpi = utils.dpi
 local user = require("user")
 
 local apply_markup = function(text)
@@ -65,45 +66,45 @@ naughty.connect_signal("request::display", function(n)
 	n:set_message(n.message)
 
 	local icon_big = {
-		widget = wibox.widget.imagebox,
+		widget = widget.imagebox,
 		image = n.icon,
 		halign = "center",
 		valign = "center",
 		forced_height = dpi(200),
 		forced_width = dpi(200),
 		clip_shape = utils.rrect(dpi(10)),
-		visible = utils.t(n.icon ~= nil, true, false)
-			and utils.t(utils.table.contains(user.ScreenshotApps, n.app_name), true, false),
+		visible = ternary(n.icon ~= nil, true, false)
+			and ternary(utils.table.contains(user.ScreenshotApps, n.app_name), true, false),
 	}
 
 	local icon_smol = {
-		widget = wibox.widget.imagebox,
+		widget = widget.imagebox,
 		image = n.icon,
 		valign = "center",
 		halign = "center",
 		forced_height = dpi(50),
 		forced_width = dpi(50),
 		clip_shape = utils.rrect(dpi(10)),
-		visible = utils.t(n.icon ~= nil, true, false)
-			and utils.t(not utils.table.contains(user.ScreenshotApps, n.app_name), true, false),
+		visible = ternary(n.icon ~= nil, true, false)
+			and ternary(not utils.table.contains(user.ScreenshotApps, n.app_name), true, false),
 	}
 
 	local head = {
 		utils.table.override(
 			{
 				image = nil,
-				widget = wibox.widget.imagebox,
+				widget = widget.imagebox,
 				forced_height = nil,
 				forced_width = nil,
 				valign = "center",
 			},
-			utils.t(
+			ternary(
 				n.app_name == "notify-send" or utils.table.contains(user.ScreenshotApps, n.app_name),
 				{ image = bful.awesome_icon, forced_height = dpi(16), forced_width = dpi(16) },
 				{
 					image = utils.lookup_icon({
 						icon_name = {
-							utils.string.replaceWithTable(n.app_name, user.ReplaceClientClassnames),
+							utils.string.replace_with_table(n.app_name, user.ReplaceClientClassnames),
 							n.app_name,
 						},
 						size = 32,
@@ -118,16 +119,16 @@ naughty.connect_signal("request::display", function(n)
 			)
 		),
 		{
-			widget = wibox.widget.textbox,
+			widget = widget.textbox,
 			font = "Segoe UI Variable " .. dpi(10.5),
 			markup = "  " .. string.format(
 				"<span font_weight='500'>%s</span>",
-				utils.string.title(utils.string.replaceWithTable(n.app_name, user.ReplaceClientClassnames))
+				utils.string.title(utils.string.replace_with_table(n.app_name, user.ReplaceClientClassnames))
 			),
 		},
 		{
 			{
-				widget = wibox.widget.imagebox,
+				widget = widget.imagebox,
 				image = utils.lookup_icon({
 					icon_name = "more-small-symbolic",
 					size = 16,
@@ -137,7 +138,7 @@ naughty.connect_signal("request::display", function(n)
 				forced_height = dpi(16),
 			},
 			{
-				widget = wibox.widget.imagebox,
+				widget = widget.imagebox,
 				image = utils.lookup_icon({
 					icon_name = "cross-small-symbolic",
 					size = 16,
@@ -161,13 +162,12 @@ naughty.connect_signal("request::display", function(n)
 				ellipsize = "end",
 			},
 			{
-				{
-					notification = n,
-					widget = naughty.widget.message,
-					ellipsize = "none",
-				},
-				widget = wibox.container.scroll.vertical,
+				notification = n,
+				widget = naughty.widget.message,
+				ellipsize = "middle",
+				wrap = "word",
 			},
+			fill_space = true,
 			layout = wibox.layout.fixed.vertical,
 		},
 		layout = wibox.layout.fixed.horizontal,
@@ -178,7 +178,7 @@ naughty.connect_signal("request::display", function(n)
 		notification = n,
 		widget = naughty.list.actions,
 		style = { underline_normal = false },
-		base_layout = wibox.widget({
+		base_layout = widget({
 			spacing = dpi(5),
 			layout = wibox.layout.flex.horizontal,
 		}),
@@ -187,13 +187,13 @@ naughty.connect_signal("request::display", function(n)
 				id = "text_role",
 				halign = "center",
 				valign = "center",
-				widget = wibox.widget.textbox,
-				font = "Segoe UI Variable " .. dpi(10),
-				forced_height = dpi(20),
+				widget = widget.textbox,
+				font = "Segoe UI Variable 700 " .. dpi(10),
 			},
 			bg = bful.bg_focus,
 			shape = utils.rrect(5),
-			widget = wibox.container.background,
+			widget = cter.background,
+			forced_height = dpi(25),
 		},
 	}
 
@@ -214,25 +214,20 @@ naughty.connect_signal("request::display", function(n)
 							spacing = dpi(5),
 							layout = wibox.layout.fixed.vertical,
 						},
-						left = dpi(10),
-						right = dpi(10),
-						widget = wibox.container.margin,
+						left = bful.notification_margin,
+						right = bful.notification_margin,
+						widget = cter.margin,
 					},
 					layout = wibox.layout.fixed.vertical,
 					spacing = dpi(10),
 				},
-				top = dpi(10),
-				bottom = dpi(10),
-				widget = wibox.container.margin,
+				top = bful.notification_margin,
+				bottom = bful.notification_margin,
+				widget = cter.margin,
 			},
 			id = "background_role",
-			widget = wibox.container.background,
+			widget = cter.background,
 			forced_width = bful.notification_width,
-			forced_height = utils.t(
-				not utils.table.contains(user.ScreenshotApps, n.app_name),
-				bful.notification_height,
-				nil
-			),
 		},
 	})
 end)

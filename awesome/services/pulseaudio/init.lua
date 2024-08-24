@@ -1,7 +1,8 @@
+---@type gears
 local gears = require("gears")
-local Stream = require("utils.pulseaudio.stream")
+
+local Stream = require("services.pulseaudio.stream")
 local utils = require("utils.init")
-local bash = utils.bash
 local json = require("lib.json")
 
 ---@alias data { id: number, name: string, description: string, muted: boolean, volume: number, icon_name: string }
@@ -122,12 +123,13 @@ end
 ---@param s_type "sink" | "source" | "sink-input" | "source-output"
 ---@return nil
 pulseaudio.common.new_from_id = function(id, s_type)
-	return bash.get_output(
+	return bash.get_output({
+		"sh",
+		"-c",
 		string.format([[pactl --format=json list %s | jq ".[] | select (.index == %d )"]], s_type .. "s", id),
-		function(stdout)
-			return pulseaudio.common.new_from_data(stdout, false, s_type)
-		end
-	)
+	}, function(stdout)
+		return pulseaudio.common.new_from_data(stdout, false, s_type)
+	end)
 end
 
 ---@param id number
@@ -137,24 +139,25 @@ pulseaudio.common.update_from_id = function(id, s_type)
 	local stream = pulseaudio[s_type .. "s"][id]
 
 	if stream then
-		bash.get_output(
+		bash.get_output({
+			"sh",
+			"-c",
 			string.format([[pactl --format=json list %s | jq ".[] | select (.index == %d )"]], s_type .. "s", id),
-			function(stdout)
-				local data = pulseaudio.common.get_data(stdout)
+		}, function(stdout)
+			local data = pulseaudio.common.get_data(stdout)
 
-				for key, value in pairs(data) do
-					if key == "mute" then
-						if stream._class["muted"] ~= value then
-							stream._class[key] = value
-							stream:emit_signal("property::muted", value)
-						end
-					elseif stream._class[key] ~= value then
+			for key, value in pairs(data) do
+				if key == "mute" then
+					if stream._class["muted"] ~= value then
 						stream._class[key] = value
-						stream:emit_signal("property::" .. key, value)
+						stream:emit_signal("property::muted", value)
 					end
+				elseif stream._class[key] ~= value then
+					stream._class[key] = value
+					stream:emit_signal("property::" .. key, value)
 				end
 			end
-		)
+		end)
 	end
 end
 
@@ -171,15 +174,21 @@ end
 --- Daemon
 ---
 
-local pactl_subscribe = [[pactl subscribe | grep --line-buffered -e "sink" -e "source" -e "server" ]]
+local pactl_subscribe = { "sh", "-c", [[pactl subscribe | grep --line-buffered -e "sink" -e "source" -e "server"]] }
 
-local get_active_sink =
-	[[pactl --format=json list sinks | jq ".[] | select(.name == \"$(pactl --format=json info @DEFAULT_SINK@ | jq -r .default_sink_name)\")"]]
+local get_active_sink = {
+	"sh",
+	"-c",
+	[[pactl --format=json list sinks | jq ".[] | select(.name == \"$(pactl --format=json info @DEFAULT_SINK@ | jq -r .default_sink_name)\")"]],
+}
 
-local get_active_source =
-	[[pactl --format=json list sources | jq ".[] | select(.name == \"$(pactl --format=json info @DEFAULT_SOURCE@ | jq -r .default_source_name)\")"]]
+local get_active_source = {
+	"sh",
+	"-c",
+	[[pactl --format=json list sources | jq ".[] | select(.name == \"$(pactl --format=json info @DEFAULT_SOURCE@ | jq -r .default_source_name)\")"]],
+}
 
-bash.run(string.format([[pkill -f '%s']], pactl_subscribe), function()
+bash.run([[pkill -f 'pactl subscribe']], function()
 	bash.get_output(get_active_sink, function(s)
 		return pulseaudio.common.new_from_data(s, true, "sink")
 	end)
@@ -242,11 +251,9 @@ bash.run(string.format([[pkill -f '%s']], pactl_subscribe), function()
 			end)
 		else
 			utils.notify("New signal dumbas " .. signal)
-			goto continue
 		end
 
 		pulseaudio:emit_signal(signal)
-		::continue::
 	end)
 end)
 

@@ -1,5 +1,3 @@
-local utils = require("utils.init")
-local bash = utils.bash
 local gears = require("gears")
 
 ---@class Stream: gears.object
@@ -48,6 +46,7 @@ Stream.set_volume = function(self, volume)
 	if self.volume == volume then
 		return
 	end
+
 	self._class.volume = volume
 	bash.run(string.format("pactl set-%s-volume %d %d%%", self.stream_type, self.id, self._class.volume))
 	return self:emit_signal("property::volume", self._class.volume)
@@ -57,7 +56,7 @@ end
 ---@param muted boolean | 0 | 1
 ---@return nil
 Stream.set_muted = function(self, muted)
-	local state = utils.t(type(muted) == "boolean", utils.t(muted == true, 1, 0), utils.t(muted == 1, 1, 0))
+	local state = ternary(type(muted) == "boolean", ternary(muted == true, 1, 0), ternary(muted == 1, 1, 0))
 
 	if state == 0 then
 		self._class.muted = false

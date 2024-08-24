@@ -1,0 +1,21 @@
+---@class tag: gears.object
+---@field name string @tag name.
+---@field selected boolean @True if the tag is selected to be viewed.
+---@field activated boolean @True if the tag is active and can be used.
+---@field index integer @The tag index.
+---@field screen screen @The tag screen.
+---@field master_width_factor number @The tag master width factor.
+---@field layout any @The tag client layout.
+---@field layouts table|nil @The (proposed) list of available layouts for this tag.
+---@field volatile boolean @Define if the tag must be deleted when the last client is untagged.
+---@field gap integer @The gap (spacing, also called useless_gap) between clients.
+---@field gap_single_client boolean @Enable gaps for a single client.
+---@field master_fill_policy string @Set size fill policy for the master client(s).
+---@field master_count integer @Set the number of master windows.
+---@field icon any|nil @Set the tag icon.
+---@field column_count integer @Set the number of columns.
+---@field clients fun(self:tag, clients_table:table|nil):table @Get or set the clients attached to this tag.
+---@field swap fun(self:tag, tag2:tag) @Swap 2 tags.
+---@field clear fun(self:tag, args:table|nil) @Remove all tagged clients.
+---@field delete fun(self:tag, fallback_tag:tag, force:boolean):boolean @Delete a tag.
+---@field view_only fun(self:tag) @View only a tag.

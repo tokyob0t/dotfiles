@@ -1,13 +1,13 @@
-local networkmanager = require("utils.networkmanager")
+local network = require("services.networkmanager")
 local wibox = require("wibox")
 local bful = require("beautiful")
 local utils = require("utils.init")
-local dpi = utils.dpi
+local widget = wibox.widget
 
-local network_icon = wibox.widget({
+local network_icon = widget({
 	id = "icon_role",
 	image = utils.lookup_icon({ icon_name = "network-wireless-offline-symbolic", recolor = bful.fg_normal, size = 16 }),
-	widget = wibox.widget.imagebox,
+	widget = widget.imagebox,
 	forced_height = dpi(16),
 	forced_width = dpi(16),
 	valign = "center",
@@ -57,18 +57,22 @@ end
 ---@param new ap
 local function connect_all(new)
 	new:connect_signal("property::strength", update_widget)
-
 	new:emit_signal("property::strength", new.strength)
+	return utils.notify({
+		icon_name = "network-wireless-acquiring-symbolic",
+		title = "Network Activated",
+		message = "Connected to " .. new.ssid,
+	})
 end
 
-if networkmanager:get_device_by_iface("wlo1") then
-	wlo1 = utils.gobject_to_gearsobject(networkmanager:get_device_by_iface("wlo1"))
+if network:get_device_by_iface("wlo1") then
+	wlo1 = utils.gearsify(network:get_device_by_iface("wlo1"))
 
 	wlo1:connect_signal("property::active-access-point", function(_, new_ap)
 		if new_ap then
 			disconnect_all(ap)
 
-			ap = utils.gobject_to_gearsobject(new_ap)
+			ap = utils.gearsify(new_ap)
 			ap.ssid = ap:get_ssid():get_data()
 
 			connect_all(ap)

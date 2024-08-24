@@ -1,21 +1,14 @@
 local lgi = require("lgi")
 local GLib = lgi.require("GLib", "2.0")
 local Gio = lgi.require("Gio", "2.0")
-
 local awful = require("awful")
 
-local _BASH = {}
+---@class bash
+bash = {}
 
----@param cmd string
----@return string
-local parse_cmd = function(cmd)
-	return string.format([[sh -c '%s']], cmd)
-end
-
----@param cmd string
+---@param cmd string | string[]
 ---@param callback? function
-_BASH.run = function(cmd, callback)
-	cmd = parse_cmd(cmd)
+bash.run = function(cmd, callback)
 	awful.spawn.easy_async_with_shell(cmd, function(stdout, stderr, reason, exit_code)
 		if callback then
 			if exit_code == 0 then
@@ -27,12 +20,10 @@ _BASH.run = function(cmd, callback)
 	end)
 end
 
----@param cmd string
+---@param cmd string | string[]
 ---@param callback? function
 ---@return nil
-_BASH.get_output = function(cmd, callback)
-	cmd = parse_cmd(cmd)
-
+bash.get_output = function(cmd, callback)
 	awful.spawn.easy_async(cmd, function(stdout, stderr, _, exit_code)
 		if callback then
 			if exit_code == 0 then
@@ -44,20 +35,24 @@ _BASH.get_output = function(cmd, callback)
 	end)
 end
 
----@param cmd string
----@param stdout_callback? function
----@param stderr_callback? function
-_BASH.popen = function(cmd, stdout_callback, stderr_callback)
-	cmd = parse_cmd(cmd)
+---@param cmd string | string[]
+---@param stdout_callback function?
+---@param stderr_callback function?
+---@param callback function?
+bash.popen = function(cmd, stdout_callback, stderr_callback, callback)
+	stdout_callback = stdout_callback or function() end
+	stderr_callback = stderr_callback or function() end
+	callback = callback or function() end
 	awful.spawn.with_line_callback(cmd, {
 		stdout = stdout_callback,
 		stderr = stderr_callback,
+		exit = callback,
 	})
 end
 
 ---@param path string
 ---@return boolean
-_BASH.file_exists = function(path)
+bash.file_exists = function(path)
 	if path then
 		return GLib.file_test(path, GLib.FileTest.EXISTS)
 	else
@@ -67,7 +62,7 @@ end
 
 ---@param path string
 ---@return boolean
-_BASH.dir_exists = function(path)
+bash.dir_exists = function(path)
 	if path then
 		return GLib.file_test(path, GLib.FileTest.IS_DIR)
 	else
@@ -77,9 +72,9 @@ end
 
 ---@param file_or_path string | Gio.File
 ---@return string?
-_BASH.cat = function(file_or_path)
+bash.read_file = function(file_or_path)
 	if type(file_or_path) == "string" then
-		return _BASH.cat(Gio.File.new_for_path(file_or_path))
+		return bash.read_file(Gio.File.new_for_path(file_or_path))
 	elseif type(file_or_path) == "userdata" then
 		local _, content, _ = file_or_path:load_contents()
 		return content
@@ -88,9 +83,9 @@ end
 
 ---@param file_or_path string | Gio.File
 ---@return nil
-_BASH.cat_async = function(file_or_path, callback)
+bash.read_file_async = function(file_or_path, callback)
 	if type(file_or_path) == "string" then
-		return _BASH.cat_async(Gio.File.new_for_path(file_or_path), callback)
+		return bash.read_file_async(Gio.File.new_for_path(file_or_path), callback)
 	elseif type(file_or_path) == "userdata" then
 		file_or_path:load_contents_async(nil, function(_, task)
 			local _, content, _ = file_or_path:load_contents_finish(task)
@@ -101,6 +96,4 @@ end
 
 ---@param args any
 ---@return Gio.FileMonitor
-_BASH.monitor_file = function(args) end
-
-return _BASH
+bash.monitor_file = function(args) end

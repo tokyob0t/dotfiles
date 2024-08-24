@@ -1,0 +1,26 @@
+---@class screen: gears.object
+---@field instances table @Get the number of instances. Read only
+---@field screen function @Iterate over screens. Read only
+---@field count number @Get the number of screens. Read only
+---@field geometry {x:number, y:number, width:number, height:number} @The screen coordinates. Read only
+---@field index number @The internal screen number. Read only
+---@field workarea table @The screen workarea. Read only
+---@field tiling_area table @The area where clients can be tiled. Read only
+---@field content any @Take a screenshot of the physical screen. Read only
+---@field padding table|number @The screen padding.
+---@field outputs table @A list of outputs for this screen with their size in mm. Read only
+---@field clients table @The list of visible clients for the screen.
+---@field hidden_clients table @Get the list of clients assigned to the screen but not currently visible.
+---@field all_clients table @All clients assigned to the screen.
+---@field tiled_clients table @Tiled clients for the screen.
+---@field tags  tag[] @A list of all tags on the screen. Read only
+---@field selected_tags tag[] @A list of all selected tags on the screen. Read only
+---@field selected_tag tag|nil @The first selected tag. Read only
+---@field dpi number @The number of pixels per inch of the screen.
+---@field minimum_dpi number @The lowest density DPI from all of the (physical) outputs. Read only
+---@field maximum_dpi number @The highest density DPI from all of the (physical) outputs. Read only
+---@field preferred_dpi number @The preferred DPI from all of the (physical) outputs. Read only
+---@field mm_maximum_size number @The maximum diagonal size in millimeters.
+---@field mm_minimum_size number @The minimum diagonal size in millimeters.
+---@field inch_maximum_size number @The maximum diagonal size in inches.
+---@field inch_minimum_size number @The minimum diagonal size in inches.

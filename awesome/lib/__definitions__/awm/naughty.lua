@@ -1,0 +1,44 @@
+---@class naughty
+---@field notification naughty.notification
+
+---@class naughty.notification : gears.object
+---@field title string @Title of the notification.
+---@field timeout number @Time in seconds after which popup expires.
+---@field urgency string @The notification urgency level.
+---@field category string|nil @The notification category.
+---@field resident boolean @True if the notification should be kept when an action is pressed.
+---@field hover_timeout number|nil @Delay in seconds after which hovered popup disappears.
+---@field screen screen @Target screen for the notification.
+---@field position string|nil @Corner of the workarea displaying the popups.
+---@field ontop boolean @Boolean forcing popups to display on top.
+---@field height number|nil @Popup height.
+---@field width number|nil @Popup width.
+---@field font font|nil @Notification font.
+---@field icon image|nil @"All in one" way to access the default image or icon.
+---@field icon_size integer|nil @Desired icon size in px.
+---@field app_icon string|nil @The icon provided in the app_icon field of the DBus notification.
+---@field image image|nil @The notification image.
+---@field images table|nil @The notification (animated) images.
+---@field fg color|nil @Foreground color.
+---@field bg color|nil @Background color.
+---@field border_width number|nil @Border width.
+---@field border_color string|nil @Border color.
+---@field shape gears.shape|nil @Widget shape.
+---@field opacity number|nil @Widget opacity.
+---@field margin number|table|nil @Widget margin.
+---@field preset table|nil @Table with any of the above parameters.
+---@field callback function|nil @Function that will be called with all arguments.
+---@field actions table @A table containing strings that represents actions to buttons.
+---@field ignore boolean @Ignore this notification, do not display.
+---@field suspended boolean @Tell if the notification is currently suspended (read only).
+---@field is_expired boolean @If the notification is expired.
+---@field auto_reset_timeout boolean @If the timeout needs to be reset when a property changes.
+---@field clients table @A list of clients associated with this notification.
+---@field max_width number|nil @The maximum popup width.
+---@field app_name string|nil @The application name specified by the notification.
+---@field widget_template template|nil @The widget template used to represent the notification.
+---@field destroy fun(self:naughty.notification, reason:string, keep_visible:boolean) -> boolean @Destroy notification by notification object.
+---@field reset_timeout fun(self:naughty.notification, new_timeout:number) @Set new notification timeout.
+---@field append_actions fun(self:naughty.notification, new_actions:table) @Add more actions to the notification.
+---@field grant fun(self:naughty.notification, permission:any, context:any) @Grant a permission for a notification.
+---@field deny fun(self:naughty.notification, permission:any, context:any) @Deny a permission for a notification.

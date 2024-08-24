@@ -1,10 +1,7 @@
 local utils = require("utils.init")
-local wibox = require("wibox")
-local gears = require("gears")
-local GObject = gears.object
 
 ---@class network_manager: GearsObject_GObject, NM.Client
-local network_manager = utils.gobject_to_gearsobject(utils.NM.Client.new())
+local network_manager = utils.gearsify(utils.NM.Client.new())
 
 network_manager._class.on_active_connection_added = function(_, ...)
 	return network_manager:emit_signal("active-connection-added", ...)

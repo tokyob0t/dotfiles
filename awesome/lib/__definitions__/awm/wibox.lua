@@ -1,0 +1,199 @@
+---@class wibox: gears.object, wibox.args
+---@field container wibox.container
+---@field layout wibox.layout
+---@field window string @The X window id.
+---@field buttons table @Get or set mouse buttons bindings to a wibox.
+---@field geometry fun(self: wibox, geo: table): table @Get or set wibox geometry.
+---@field struts fun(self: wibox, struts: table) @Get or set wibox struts.
+---@field setup fun(self: wibox, args: table) @Set a declarative widget hierarchy description.
+---@field find_widgets fun(self: wibox, x: integer, y: integer): table @Find a widget by a point.
+---@field to_widget fun(self: wibox): wibox.widget @Create a widget that reflects the current state of this wibox.
+---@field save_to_svg fun(self: wibox, path: string, context: table) @Save a screenshot of the wibox to path.
+---@field draw fun(self: wibox) @Redraw a wibox.
+---@field wibox fun(args: wibox.args): wibox @Create a new wibox instance.
+
+---@class wibox.args
+---@field border_width integer @Border width.
+---@field border_color string @Border color.
+---@field ontop boolean|nil @On top of other windows.
+---@field cursor string|nil @The mouse cursor.
+---@field visible boolean @Visibility.
+---@field opacity number|nil @The opacity, between 0 and 1.
+---@field type string @The window type (desktop, normal, dock, ...).
+---@field x integer @The x coordinates.
+---@field y integer @The y coordinates.
+---@field width integer @The width.
+---@field height integer @The height.
+---@field screen screen @The wibox screen.
+---@field widget wibox.widget @The widget that the wibox displays.
+---@field shape_bounding gears.surface @The wibox’s bounding shape as a (native) cairo surface.
+---@field shape_clip gears.surface  @The wibox’s clip shape as a (native) cairo surface.
+---@field shape_input gears.surface  @The wibox’s input shape as a (native) cairo surface.
+---@field bg color @The background.
+---@field bgimage gears.surface|nil @The background image of the drawable.
+---@field fg color @The foreground (text) color.
+---@field shape gears.shape @The shape.
+---@field input_passthrough boolean|nil @If the inputs are forward to the element below.
+
+---@class wibox.widget.base: gears.object
+---@field children table @Get or set the children elements.
+---@field all_children table @Get all direct and indirect children widgets.
+---@field forced_height number|nil @Force a widget height.
+---@field forced_width number|nil @Force a widget width.
+---@field opacity number @The widget opacity (transparency).
+---@field visible boolean @The widget visibility.
+---@field buttons table @The widget buttons.
+---@field add_button fun(self:wibox.widget.base, button:any) @Add a new awful.button to this widget.
+---@field emit_signal_recursive fun(self:wibox.widget.base, signal_name:string, ...) @Emit a signal and ensure all parent widgets in the hierarchies also forward the signal.
+---@field index fun(self:wibox.widget.base, widget:any, recursive:boolean, ...):number, any, table @Get the index of a widget.
+---@field set_widget_common fun(self:wibox.widget.base, widget:any) @Common implementation of the :set_widget() method exposed by many other widgets.
+---@field make_widget_declarative fun(args:table):any @Create a widget from a declarative description.
+---@field make_widget_from_value fun(wdg:any, ...):any @Create a widget from an undetermined value.
+---@field make_widget fun(proxy:any, widget_name:string, args:table):any @Create an empty widget skeleton.
+---@field empty_widget fun():any @Generate an empty widget which takes no space and displays nothing.
+---@field rect_to_device_geometry fun(cr:any, x:number, y:number, width:number, height:number):(number, number, number, number) @Figure out the geometry in the device coordinate space.
+---@field fit_widget fun(parent:any, context:any, widget:any, width:number, height:number):(number, number) @Fit a widget for the given available width and height.
+---@field layout_widget fun(parent:any, context:any, widget:any, width:number, height:number):table @Lay out a widget for the given available width and height.
+---@field handle_button fun():any @Handle a button event on a widget.
+---@field place_widget_via_matrix fun(widget:any, mat:any, width:number, height:number):table @Create widget placement information.
+---@field place_widget_at fun(widget:any, x:number, y:number, width:number, height:number):table @Create widget placement information.
+---@field check_widget fun():any @Do some sanity checking on a widget.
+---@field get_children_by_id fun(self:wibox.widget, id:string): wibox[]
+
+---@class wibox.widget: wibox.widget.base
+---@field draw_to_cairo_context fun(wdg, cr, width, height, context)
+---@field draw_to_svg_file fun(wdg, path, width, height, context)
+---@field draw_to_image_surface fun(wdg, width, height, format, context)
+---@field calendar wibox.widget.calendar
+---@field checkbox wibox.widget.checkbox
+---@field graph wibox.widget.graph
+---@field imagebox wibox.widget.imagebox
+---@field piechart wibox.widget.piechart
+---@field progressbar wibox.widget.progressbar
+---@field separator wibox.widget.separator
+---@field slider wibox.widget.slider
+---@field systray wibox.widget.systray
+---@field textbox wibox.widget.textbox
+---@field textclock wibox.widget.textclock
+
+---@class wibox.container
+---@field arcchart wibox.container.arcchart
+---@field background wibox.container.background
+---@field border wibox.container.background
+---@field constraint wibox.container.constraint
+---@field margin wibox.container.margin
+---@field mirror wibox.container.mirror
+---@field place wibox.container.place
+---@field radialprogressbar wibox.container.radialprogressbar
+---@field rotate wibox.container.rotate
+---@field scroll wibox.container.scroll
+---@field tile wibox.container.tile
+
+---@class wibox.container.arcchart: wibox.widget.base
+---@field widget wibox.widget|nil @The widget to wrap in a radial progressbar.
+---@field paddings table|number @The padding between the outline and the progressbar.
+---@field border_color color|nil @The border background color.
+---@field colors table @The arcchart values foreground colors.
+---@field border_width number|nil @The border width.
+---@field min_value number @The minimum value.
+---@field max_value number @The maximum value.
+---@field bg color|nil @The radial background.
+---@field value number @The value.
+---@field values table @The values.
+---@field rounded_edge boolean|nil @If the chart has rounded edges.
+---@field thickness number|nil @The arc thickness.
+---@field start_angle number @The (radiant) angle where the first value start.
+---@field reset fun(self:wibox.container.arcchart) @Reset this layout.
+
+---@class wibox.container.background: wibox.widget.base
+---@field widget wibox.widget|nil @The widget displayed in the background widget.
+---@field stretch_horizontally boolean @Stretch the background gradient horizontally.
+---@field stretch_vertically boolean @Stretch the background gradient vertically.
+---@field bg color @The background color/pattern/gradient to use.
+---@field fg color @The foreground (text) color/pattern/gradient to use.
+---@field shape gears.shape|function @The background shape.
+---@field border_width number @Add a border of a specific width.
+---@field border_color color @Set the color for the border.
+---@field border_strategy string @How the border width affects the contained widget.
+---@field set_shape fun(self:wibox.container.background, shape:gears.shape|function) @Set the background shape.
+
+---@class wibox.container.border: wibox.widget.base
+---@field widget wibox.widget|nil @The widget to display inside of the border.
+---@field border_image string|image|nil @A single border image for the border.
+---@field slice boolean @Slice the border_image to fit the content.
+---@field border_image_stylesheet string @Set a stylesheet for the slice surface.
+---@field image_scaling_quality string @How the border_image(s) are scaled.
+---@field border_images table|image|nil @Use images for each of the side/corner/filling sections.
+---@field borders table|number @The size of the border on each side.
+---@field sides_fit_policy string @How the sliced image is resized for the border sides.
+---@field filling_fit_policy string @How the sliced image is resized for the border filling.
+---@field corners_fit_policy string @How the sliced image is resized for the border corners.
+---@field honor_borders boolean @Stretch the child widget over the entire area.
+---@field ontop boolean @Draw the child widget below or on top of the border.
+---@field fill boolean @Use the center portion of the border_image as a background.
+---@field paddings number|table @Add some space between the border and the inner widget.
+---@field border_widgets table|nil @Use individual widgets as a border.
+---@field border_merging table|nil @Merge the corners widgets into the side widgets.
+---@field expand_corners boolean @When border_widgets is used, allow the border to grow due to corner widgets.
+---@field reset fun(self:wibox.container.border) @Reset this layout.
+
+---@class wibox.container.constraint: wibox.widget.base
+---@field widget wibox.widget|nil @The widget to be constrained.
+---@field strategy string @Set the strategy to use for the constraining.
+---@field width number|nil @Set the maximum width to val.
+---@field height number|nil @Set the maximum height to val.
+---@field reset fun(self:wibox.container.constraint) @Reset this layout.
+
+---@class wibox.container.margin: wibox.widget.base
+---@field widget wibox.widget|nil @The widget to be wrapped with the margins.
+---@field margins number|table @Set all the margins to val.
+---@field color color|nil @Set the margins color to create a border.
+---@field draw_empty boolean @Draw the margin even if the content size is 0x0.
+---@field left number @Set the left margin that this layout adds to its widget.
+---@field right number @Set the right margin that this layout adds to its widget.
+---@field top number @Set the top margin that this layout adds to its widget.
+---@field bottom number @Set the bottom margin that this layout adds to its widget.
+---@field reset fun(self:wibox.container.margin) @Reset this layout.
+
+---@class wibox.container.mirror: wibox.widget.base
+---@field widget wibox.widget|nil @The widget to be reflected.
+---@field reflection table @Get the reflection of this mirror layout.
+---@field reset fun(self:wibox.container.mirror) @Reset this layout.
+
+---@class wibox.container.place: wibox.widget.base
+---@field widget wibox.widget|nil @The widget to be placed.
+---@field valign string @The vertical alignment.
+---@field halign string @The horizontal alignment.
+---@field fill_vertical boolean @Fill the vertical space.
+---@field fill_horizontal boolean @Fill the horizontal space.
+---@field content_fill_vertical boolean @Stretch the contained widget so it takes all the vertical space.
+---@field content_fill_horizontal boolean @Stretch the contained widget so it takes all the horizontal space.
+---@field reset fun(self:wibox.container.place) @Reset this layout.
+
+---@class wibox.container.radialprogressbar: wibox.widget.base
+---@field widget wibox.widget|nil @The widget to wrap in a radial progressbar.
+---@field paddings table|number|nil @The padding between the outline and the progressbar.
+---@field value number @The progressbar value.
+---@field border_color color|nil @The border background color.
+---@field color color|nil @The border foreground color.
+---@field border_width number|nil @The border width.
+---@field min_value number @The minimum value.
+---@field max_value number @The maximum value.
+---@field reset fun(self:wibox.container.radialprogressbar) @Reset this container.
+
+---@class wibox.layout
+---@field align wibox.layout.align
+---@field fixed wibox.layout.fixed
+---@field flex wibox.layout.flex
+---@field grid wibox.layout.grid
+---@field manual wibox.layout.manual
+---@field ratio wibox.layout.ratio
+---@field stack wibox.layout.stack
+
+---@class wibox.layout.align: wibox.widget.base
+---@class wibox.layout.fixed: wibox.widget.base
+---@class wibox.layout.flex: wibox.layout.fixed
+---@class wibox.layout.grid: wibox.widget.base
+---@class wibox.layout.manual: wibox.widget.base
+---@class wibox.layout.ratio: wibox.layout.flex
+---@class wibox.layout.stack: wibox.layout.fixed

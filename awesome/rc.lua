@@ -4,6 +4,9 @@ pcall(require, "luarocks.loader")
 
 local naughty = require("naughty")
 
+---@type awesome
+awesome = awesome
+
 naughty.connect_signal("request::display_error", function(message)
 	naughty.notification({
 		urgency = "critical",

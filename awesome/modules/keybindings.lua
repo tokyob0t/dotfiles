@@ -1,13 +1,10 @@
-local client = client
-
 local awful = require("awful")
 local user = require("user")
 
 local hotkeys_popup = require("awful.hotkeys_popup")
-local pulseaudio = require("utils.pulseaudio")
+local pulseaudio = require("services.pulseaudio")
 
 local utils = require("utils.init")
-local bash = utils.bash
 local Bind = utils.Bind
 
 ---@param direction string
@@ -41,9 +38,9 @@ end
 client.connect_signal("request::default_mousebindings", function()
 	awful.mouse.append_client_mousebindings({
 		awful.button({ user.ModKey }, 1, function(c)
-			if not c.floating then
+			if not c.floating and not (awful.layout.get(mouse.screen) == utils.GetLayout("floating")) then
 				c.floating = true
-            end
+			end
 			c:activate({ context = "mouse_click", action = "mouse_move" })
 		end),
 		awful.button({ user.ModKey }, 3, function(c)
@@ -76,7 +73,7 @@ awful.keyboard.append_global_keybindings({
 		key = "XF86AudioRaiseVolume",
 		on_press = function()
 			local v = pulseaudio.speaker.volume + 5
-			if v <= 100 then
+			if v <= 150 then
 				pulseaudio.speaker.volume = v
 			end
 		end,

@@ -4,13 +4,14 @@ local awful = require("awful")
 local wibox = require("wibox")
 local utils = require("utils.init")
 local user = require("user")
-local dpi = utils.dpi
+local widget = wibox.widget
+local cter = wibox.container
 
-local function new_button(args)
-	local button = wibox.widget({
+local new_button = function(args)
+	local button = widget({
 		forced_width = dpi(50),
-		widget = wibox.container.background,
-		shape = utils.rrect(utils.dpi(15)),
+		widget = cter.background,
+		shape = utils.rrect(dpi(15)),
 		bg = bful.bg_normal,
 		buttons = {
 			awful.button({}, 1, args.callback),
@@ -29,23 +30,25 @@ local function new_button(args)
 end
 
 client.connect_signal("request::titlebars", function(c)
-	local titlebar = awful.titlebar(c, { size = dpi(40), position = "top" })
-
+	if utils.table.contains(user.ExcludedTitlebars.byClassName, c.class) then
+		return
+	end
 	local left_side, right_side, minimizebutton, closebutton, maximizebutton
-	-- Titlebar
+
+	local titlebar = awful.titlebar(c, { size = dpi(40), position = "top" })
 
 	-- Left
 	left_side = {
+		--awful.titlebar.widget.iconwidget(c),
 		{
-			--awful.titlebar.widget.iconwidget(c),
 			{
 				id = "icon",
-				widget = wibox.widget.imagebox,
+				widget = widget.imagebox,
 				halign = "center",
 				valign = "center",
 				image = utils.lookup_icon({
 					icon_name = {
-						utils.string.replaceWithTable(c.class, user.ReplaceClientClassnames),
+						utils.string.replace_with_table(c.class, user.ReplaceClientClassnames),
 						c.class,
 						c.icon_name,
 					},
@@ -53,7 +56,7 @@ client.connect_signal("request::titlebars", function(c)
 				}) or c.icon or utils.lookup_icon({ icon_name = "application-x-executable", size = 32 }),
 			},
 			margins = dpi(2.5),
-			widget = wibox.container.margin,
+			widget = cter.margin,
 		},
 		layout = wibox.layout.fixed.horizontal,
 	}
@@ -90,7 +93,7 @@ client.connect_signal("request::titlebars", function(c)
 		},
 		top = dpi(5),
 		bottom = dpi(5),
-		widget = wibox.container.margin,
+		widget = cter.margin,
 	}
 
 	titlebar.widget = {
@@ -104,10 +107,11 @@ client.connect_signal("request::titlebars", function(c)
 		left = dpi(10),
 		top = dpi(5),
 		bottom = dpi(5),
-		widget = wibox.container.margin,
+		widget = cter.margin,
+		buttons = {
+			awful.button({}, 1, function()
+				c:activate({ context = "titlebar", action = "mouse_move" })
+			end),
+		},
 	}
-
-	if utils.table.contains(user.ExcludedTitlebars.byClassName, c.class) then
-		awful.titlebar.hide(c)
-	end
 end)

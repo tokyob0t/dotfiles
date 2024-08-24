@@ -23,18 +23,15 @@ local App = {
 	categories = "",
 	desktop = "",
 	icon_name = "",
+	keywords = "",
 }
 
----@param app Gio.AppInfo
+---@param app Gio.DesktopAppInfo | Gio.AppInfo
 App.new = function(app)
 	local self = gears.object({
-		class = setmetatable({}, {
-			__index = App,
-			__newindex = function(_, key)
-				error("Attempt to modify read-only attribute: " .. key, 1)
-			end,
-		}),
+		class = App,
 		enable_properties = true,
+		enable_auto_signals = true,
 	})
 
 	if not app then
@@ -43,11 +40,18 @@ App.new = function(app)
 
 	-- Inicializar propiedades
 	self.app = app
-	self.desktop = app:get_id()
-	self.name = app:get_name()
-	self.comment = app:get_description() or ""
-	self.categories = app:get_categories() or ""
-	self.icon_name = app:get_string("Icon") or "application-x-executable"
+	self.desktop = self.app:get_id() or ""
+	self.name = self.app:get_name() or ""
+	self.comment = self.app:get_description() or ""
+	self.categories = table.concat(utils.string.split(self.app:get_categories() or "", ";"), " ") or ""
+	self.icon_name = self.app:get_string("Icon") or "application-x-executable"
+	self.keywords = table.concat({
+		table.concat(self.app:get_keywords(), " ") or "",
+		self.name,
+		self.comment,
+		self.categories,
+		self.icon_name,
+	}, " ")
 
 	return self
 end
@@ -56,23 +60,15 @@ App.launch = function(self)
 	return self.app:launch()
 end
 
----@param terms string
-App.match = function(self, terms)
-	terms = string.lower(terms)
-	for _, value in ipairs({ self.name, self.comment, self.categories, self.icon_name }) do
-		value = string.lower(value)
-		if string.find(value, terms) then
-			return true
-		end
+---@param t string
+---@return boolean
+App.match = function(self, t)
+	if t == "" then
+		return false
 	end
-	return false
-end
 
-setmetatable(App, {
-	__call = function(cls, ...)
-		return cls.new(...)
-	end,
-})
+	return string.find(string.lower(self.keywords), string.lower(t)) ~= nil
+end
 
 ---@class Applications
 local Applications = {}
@@ -102,5 +98,11 @@ Applications.query = function(input)
 	end
 	return apps
 end
+
+setmetatable(App, {
+	__call = function(cls, ...)
+		return cls.new(...)
+	end,
+})
 
 return Applications

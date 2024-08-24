@@ -1,4 +1,4 @@
----@class Playerctl.PlayerManager
+---@class Playerctl.PlayerManager: GObject.Object
 ---@field new function
 ---@field manage_player function
 ---@field move_player_to_top function
@@ -6,7 +6,7 @@
 ---@field player_names string[]
 ---@field players Playerctl.Player[]
 
----@class Playerctl.Player
+---@class Playerctl.Player: GObject.Object
 ---@field new function
 ---@field new_for_source function
 ---@field new_from_name function

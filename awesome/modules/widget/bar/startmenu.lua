@@ -1,19 +1,20 @@
 local bful = require("beautiful")
-local wibox = require("wibox")
 local awful = require("awful")
 local utils = require("utils.init")
-local dpi = utils.dpi
+local wibox = require("wibox")
+local widget = wibox.widget
+local cter = wibox.container
 
-local function start_button(s)
-	return wibox.widget({
+return function(s)
+	return {
 		{
 			image = bful.awesome_icon,
-			widget = wibox.widget.imagebox,
+			widget = widget.imagebox,
 			valign = "center",
 			forced_height = dpi(32),
 			forced_width = dpi(32),
 			resize = true,
-			clip_shape = utils.rrect(dpi(5)),
+			--clip_shape = utils.rrect(6),
 			buttons = {
 				awful.button({}, 4, function()
 					awful.tag.viewprev(s)
@@ -24,8 +25,6 @@ local function start_button(s)
 			},
 		},
 		margins = dpi(5),
-		widget = wibox.container.margin,
-	})
+		widget = cter.margin,
+	}
 end
-
-return start_button

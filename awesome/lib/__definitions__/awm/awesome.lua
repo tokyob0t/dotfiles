@@ -1,0 +1,25 @@
+---@class awesome: gears.object
+---@field version string @The AwesomeWM version.
+---@field release string @The AwesomeWM release name.
+---@field api_level string @The AwesomeWM API level.
+---@field conffile string @The configuration file which has been loaded.
+---@field startup boolean @True if we are still in startup, false otherwise.
+---@field startup_errors string @Error message for errors that occurred during startup.
+---@field composite_manager_running boolean @True if a composite manager is running.
+---@field unix_signal table @Table mapping between signal numbers and signal identifiers.
+---@field hostname string @The hostname of the computer on which we are running.
+---@field themes_path string @The path where themes were installed to.
+---@field icon_path string @The path where icons were installed to.
+---@field register_xproperty fun(self:awesome, name:string, type:string) @Register a new xproperty.
+---@field quit fun(self:awesome, code:number) @Quit awesome.
+---@field exec fun(self:awesome, cmd:string) @Execute another application, probably a window manager, to replace awesome.
+---@field restart fun(self:awesome) @Restart awesome.
+---@field kill fun(self:awesome, pid:number, sig:number):boolean @Send a signal to a process.
+---@field sync fun(self:awesome) @Synchronize with the X11 server.
+---@field pixbuf_to_surface fun(self:awesome, pixbuf:any, path:string):gears.surface @Translate a GdkPixbuf to a cairo image surface.
+---@field load_image fun(self:awesome, name:string):(gears.surface, nil|string) @Load an image from a given path.
+---@field set_preferred_icon_size fun(self:awesome, size:number) @Set the preferred size for client icons.
+---@field spawn fun(self:awesome, cmd:string, use_sn?:boolean, stdin?:integer, stdout?:integer, stderr?:integer, exit_callback?:function, cmd?:string):(integer|string, string, integer, integer, integer) @Spawn a program.
+---@field xkb_set_layout_group fun(self:awesome, num:number) @Switch keyboard layout.
+---@field xkb_get_layout_group fun(self:awesome):number @Get current layout number.
+---@field xkb_get_group_names fun(self:awesome):string @Get layout short names.

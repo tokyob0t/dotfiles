@@ -1,14 +1,14 @@
-local tag = tag
-local client = client
 local utils = require("utils.init")
 local user = require("user")
 local wibox = require("wibox")
 local bful = require("beautiful")
-local dpi = utils.dpi
+local widget = wibox.widget
+local cter = wibox.container
 
+---@param s screen
 local function active_class(s)
-	local mytextbox = wibox.widget({
-		widget = wibox.widget.textbox,
+	local mytextbox = widget({
+		widget = widget.textbox,
 	})
 	mytextbox.markup = utils.string.colorize("Desktop", bful.fg_minimize)
 
@@ -16,13 +16,13 @@ local function active_class(s)
 		if utils.table.any(client.get(s), function(cc)
 			return cc.active
 		end) then
-			local className
+			local classname
 
 			if c.class then
 				mytextbox.visible = true
-				className = utils.string.replaceWithTable(c.class, user.ReplaceClientClassnames)
-				className = utils.t(utils.string.has_capital(className), className, utils.string.capitalize(className))
-				mytextbox.markup = utils.string.colorize(className, bful.fg_minimize)
+				classname = utils.string.replace_with_table(c.class, user.ReplaceClientClassnames)
+				classname = ternary(utils.string.has_capital(classname), classname, utils.string.capitalize(classname))
+				mytextbox.markup = utils.string.colorize(classname, bful.fg_minimize)
 			else
 				mytextbox.visible = false
 			end
@@ -35,14 +35,14 @@ local function active_class(s)
 end
 
 local function active_name(s)
-	local mytextbox = wibox.widget({
-		widget = wibox.widget.textbox,
+	local mytextbox = widget({
+		widget = widget.textbox,
 		font = "Segoe UI Variable 800 10",
 		ellipsize = "end",
 		forzed_width = dpi(20),
 	})
 	local tagSelected = 1
-	local allowChange = false
+	local allowChange = true
 	mytextbox.markup = "on Tag " .. tagSelected
 
 	tag.connect_signal("property::selected", function(t)
@@ -83,7 +83,7 @@ local function active_client(s)
 			active_name(s),
 			layout = wibox.layout.fixed.vertical,
 		},
-		widget = wibox.container.place,
+		widget = cter.place,
 		valign = "center",
 	}
 end

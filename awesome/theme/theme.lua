@@ -5,13 +5,42 @@
 local user = require("user")
 local utils = require("utils.init")
 local gears = require("gears")
+local color = require("lib.color")
 local colorscheme = user.Colors
 local theme_assets = require("beautiful.theme_assets")
-local dpi = utils.dpi
-
 local themes_path = gears.filesystem.get_configuration_dir() .. "theme/"
----@class theme
+
+local get_color = function(col)
+	local my_color = {}
+	my_color.r, my_color.g, my_color.b = color.utils.hex_to_rgba(col)
+	my_color = color.color(my_color)
+	return my_color
+end
+
+---@param col1 string
+---@param col2 string
+---@param t number
+---@return string
+local mix = function(col1, col2, t)
+	local col1_to_col2 = color.transition(get_color(col1), get_color(col2), 0)
+
+	return color.utils.rgba_to_hex(col1_to_col2(t))
+end
+
+---@param col string
+---@param a number
+---@return string
+local transparentize = function(col, a)
+	local _col = get_color(col)
+	_col.a = a
+	return color.utils.rgba_to_hex(_col)
+end
+
+---@class theme: beautiful
 local theme = {}
+theme.mix = mix
+theme.transparentize = transparentize
+
 theme.colorscheme = colorscheme
 theme.wallpaper = user.Wallpaper
 theme.font = "Segoe UI Variable 10"
@@ -39,22 +68,18 @@ theme.border_color_marked = colorscheme.base0A
 
 theme.tasklist_bg_normal = colorscheme.base00
 theme.tasklist_bg_focus = colorscheme.base01
-theme.tasklist_bg_urgent = colorscheme.base00
 theme.tasklist_bg_minimize = colorscheme.base00
+theme.tasklist_bg_urgent = mix(colorscheme.base00, colorscheme.base0A, 0.3)
 
-theme.tasklist_fg_normal = colorscheme.base04
-theme.tasklist_fg_focus = colorscheme.base05
-theme.tasklist_fg_urgent = colorscheme.base0A
-
-theme.tasklist_bg_normal_indicator = colorscheme.base01
-theme.tasklist_bg_minimize_indicator = colorscheme.base02
-theme.tasklist_bg_focus_indicator = colorscheme.base09
-theme.tasklist_bg_urgent_indicator = colorscheme.base0A
+theme.tasklist_fg_normal = colorscheme.base02
+theme.tasklist_fg_focus = colorscheme.base09
+theme.tasklist_fg_minimize = colorscheme.base01
+theme.tasklist_fg_urgent = mix(colorscheme.base00, colorscheme.base0A, 0.5)
 
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
-theme.taglist_bg_normal = colorscheme.base01
+theme.taglist_bg_normal = colorscheme.base00
 theme.taglist_bg_focus = colorscheme.base09
-theme.taglist_bg_empty = colorscheme.base00
+theme.taglist_bg_empty = colorscheme.base01
 theme.taglist_bg_occupied = colorscheme.base02
 
 -- titlebar_[bg|fg]_[normal|focus]
@@ -81,9 +106,11 @@ theme.taglist_bg_occupied = colorscheme.base02
 theme.notification_bg = colorscheme.base00
 theme.notification_border_color = nil
 theme.notification_border_width = 0
-theme.notification_height = nil
 theme.notification_width = dpi(400)
----
+theme.notification_height = nil
+theme.notification_shape = utils.rrect(dpi(10))
+theme.notification_margin = dpi(10)
+
 ---
 --- CHART
 ---
@@ -91,6 +118,7 @@ theme.notification_width = dpi(400)
 theme.arcchart_rounded_edge = true
 theme.arcchart_bg = colorscheme.base01
 theme.arcchart_color = { colorscheme.base09 }
+
 ---
 --- TRAY
 ---

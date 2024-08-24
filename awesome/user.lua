@@ -1,7 +1,5 @@
 local _USER = {}
 local colorscheme = require("colorschemes")
-local bful = require("beautiful")
-local dpi = bful.xresources.apply_dpi
 local gears = require("gears")
 
 -- Awesome
@@ -11,8 +9,9 @@ _USER.AwmIconSize = 512
 _USER.IconTheme = "MoreWaita"
 _USER.Wallpaper = "/home/tokyob0t/Pictures/Wallpapers/anime_girl_car.png"
 _USER.IconFolder = "/home/tokyob0t/.config/awesome/theme/icons"
+_USER.Colors = colorscheme.oxocarbon
 
-_USER.FloatingOnTop = true
+_USER.FloatingOnTop = false
 _USER.CursorFollowFocus = true
 _USER.FocusFollowCursor = true
 _USER.RaiseOnFocus = false
@@ -20,13 +19,13 @@ _USER.FocusOnSwitchTag = true
 
 _USER.Gaps = dpi(5)
 _USER.GapsWhenSingle = false
-_USER.BorderWidth = dpi(2)
+_USER.BorderWidth = dpi(2.5)
+_USER.ClientRoundness = 0 -- Zero cuz picom
 
-_USER.Tags = { "1", "2", "3", "4", "5" }
-
-_USER.Colors = colorscheme.oxocarbon
+_USER.Tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 
 _USER.Layouts = {
+	"floating",
 	"dwindle",
 	"tile",
 	"tile_left",
@@ -39,11 +38,13 @@ _USER.Layouts = {
 	"fullscreen",
 	"magnifier",
 	"corner",
-	"floating",
 }
 
 _USER.ExcludedLauncherApps = {
-	--"AppControl",
+	"AppControl",
+	"Steam Linux Runtime 3.0",
+	"Proton Experimental",
+	"Proton BattleEye Runtime",
 }
 
 _USER.ExcludedTitlebars = {
@@ -53,17 +54,24 @@ _USER.ExcludedTitlebars = {
 		"blackbox",
 		"resources",
 		"org.gnome.Nautilus",
+		"com.github.johnfactotum.Foliate",
 		"icon-library",
 		"gnome-control-center",
 		"gtk4-icon-browser",
 		"gnome-calculator",
 		"gnome-font-viewer",
+		"gnome-text-editor",
 		"cartridges",
 		"dissent",
 		"bottles",
 		"Lutris",
 		"cambalache",
-		--"zenity",
+		"overskride",
+		"zenity",
+		"Gnome-disks",
+		"secrets",
+		"gradience",
+		"kooha",
 	},
 	byRole = {},
 	byType = {},
@@ -79,7 +87,7 @@ _USER.ForceTitlebars = {
 
 _USER.ForceFloating = {
 	byTitle = { "copyq", "pinentry" },
-	byName = { "Event Tester" },
+	byName = { "Event Tester", "Media viewer" },
 	byClassName = {
 		"Arandr",
 		"Blueman-manager",
@@ -90,6 +98,7 @@ _USER.ForceFloating = {
 		"Wpa_gui",
 		"veromix",
 		"xtightvncviewer",
+		"cs2",
 	},
 	byRole = {
 		"AlarmWindow",
@@ -130,22 +139,30 @@ _USER.ReplaceClientClassnames = {
 	["org.wezfurlong.wezterm"] = "org.wezfurlong.Wezterm",
 	["Microsoft-edge-dev"] = "Microsoft Edge",
 	-- Gtk/Gnome apps
+	secrets = "org.gnome.World.Secrets",
 	resources = "net.nokyan.Resources.Devel",
 	blackbox = "com.raggesilver.BlackBox",
 	cartridges = "page.kramo.Cartridges",
 	bottles = "com.usebottles.Bottles",
 	Lutris = "net.lutris.Lutris",
 	cambalache = "ar.xjuan.Cambalache",
+	overskride = "io.github.kaii_lb.Overskride",
+	gradience = "com.github.GradienceTeam.Gradience",
+	kooha = "io.github.seadve.Kooha",
 	["gtk4-icon-browser"] = "org.gtk.IconBrowser",
 	["icon-library"] = "org.gnome.design.IconLibrary",
 	["gnome-control-center"] = "org.gnome.Settings",
 	["gnome-calculator"] = "org.gnome.Calculator",
 	["gnome-font-viewer"] = "org.gnome.FontViewer",
+	["Gnome-disks"] = "org.gnome.DiskUtility",
+	["gnome-text-editor"] = "org.gnome.TextEditor",
 	-- Other
 	["Terraria.bin.x86_64"] = "Terraria",
 	["notify-send"] = "Awesome",
 	["Nwg-look"] = "Nwg Look",
 	Altus = "WhatsApp",
+	TelegramDesktop = "org.telegram.Desktop",
+	KotatogramDesktop = "io.github.Kotatogram",
 }
 
 _USER.ReplaceClientNames = {
@@ -155,6 +172,11 @@ _USER.ReplaceClientNames = {
 	["Nwg-look"] = "GTK+ Settings",
 	Altus = "WhatsApp Messenger",
 	cambalache = "Cambalache",
+	overskride = "Overskride",
+	["Gnome-disks"] = "Gnome Disks",
+	["gnome-text-editor"] = "Text Editor",
+	["com.github.johnfactotum.Foliate"] = "Read books",
+	TelegramDesktop = "Telegram Desktop",
 }
 
 _USER.ScreenshotApps = {

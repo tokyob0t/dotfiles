@@ -1,2 +1,0 @@
----@class pam
----@field auth_current_user fun(password: string): boolean

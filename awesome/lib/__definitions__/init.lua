@@ -1,4 +1,1 @@
----@class GearsObject_GObject: gears.object, GObject.Object
----@field _class table
----@field set_class function
----@field get_class function
+---@meta

@@ -1,17 +1,17 @@
-local pulseaudio = require("utils.pulseaudio")
+local pulseaudio = require("services.pulseaudio")
 local wibox = require("wibox")
 local bful = require("beautiful")
 local utils = require("utils.init")
-local dpi = utils.dpi
+local widget = wibox.widget
 
-local volume_icon = wibox.widget({
+local volume_icon = widget({
 	id = "icon_role",
 	image = utils.lookup_icon({
 		icon_name = "microphone-sensitivity-high-symbolic",
 		recolor = bful.fg_normal,
 		size = 16,
 	}),
-	widget = wibox.widget.imagebox,
+	widget = widget.imagebox,
 	forced_height = dpi(16),
 	forced_width = dpi(16),
 	valign = "center",

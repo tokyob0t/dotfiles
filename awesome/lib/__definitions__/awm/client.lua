@@ -1,0 +1,88 @@
+---@class client: gears.object
+---@field window number @The X window id. Read only
+---@field name string @The client title.
+---@field skip_taskbar boolean @True if the client does not want to be in taskbar.
+---@field type string @The window type. Read only
+---@field class string @The client class. Read only
+---@field instance string @The client instance. Read only
+---@field pid number @The client PID, if available. Read only
+---@field role string @The window role, if available. Read only
+---@field machine string @The machine the client is running on. Read only
+---@field icon_name string @The client name when iconified. Read only
+---@field icon any @The client icon as a surface.
+---@field icon_sizes table @The available sizes of client icons. Read only
+---@field screen any @client screen.
+---@field hidden boolean @Define if the client must be hidden (Never mapped, invisible in taskbar).
+---@field minimized boolean @Define if the client must be iconified (Only visible in taskbar).
+---@field size_hints_honor boolean @Honor size hints, e.g.
+---@field border_width number|nil @The client border width.
+---@field border_color any|nil @The client border color.
+---@field urgent boolean @Set to true when the client ask for attention.
+---@field content any @A cairo surface for the client window content. Read only
+---@field opacity number @The client opacity.
+---@field ontop boolean @The client is on top of every other windows.
+---@field above boolean @The client is above normal windows.
+---@field below boolean @The client is below normal windows.
+---@field fullscreen boolean @The client is fullscreen or not.
+---@field maximized boolean @The client is maximized (horizontally and vertically) or not.
+---@field maximized_horizontal boolean @The client is maximized horizontally or not.
+---@field maximized_vertical boolean @The client is maximized vertically or not.
+---@field transient_for client|nil @The client the window is transient for. Read only
+---@field group_window number @Window identification unique to a group of windows. Read only
+---@field leader_window number @Identification unique to windows spawned by the same command. Read only
+---@field size_hints table|nil @A table with size hints of the client. Read only
+---@field motif_wm_hints table @The motif WM hints of the client. Read only
+---@field sticky boolean @Set the client sticky (Available on all tags).
+---@field modal boolean @Indicate if the client is modal.
+---@field focusable boolean @True if the client can receive the input focus.
+---@field shape_bounding any @The client's bounding shape as set by awesome as a (native) cairo surface.
+---@field shape_clip any @The client's clip shape as set by awesome as a (native) cairo surface.
+---@field shape_input any @The client's input shape as set by awesome as a (native) cairo surface.
+---@field client_shape_bounding any @The client's bounding shape as set by the program as a (native) cairo surface. Read only
+---@field client_shape_clip any @The client's clip shape as set by the program as a (native) cairo surface. Read only
+---@field startup_id string @The FreeDesktop StartId.
+---@field valid boolean @If the client that this object refers to is still managed by awesome. Read only
+---@field first_tag any|nil @The first tag of the client. Read only
+---@field buttons table @Get or set mouse buttons bindings for a client.
+---@field keys table @Get or set keys bindings for a client.
+---@field marked boolean @If a client is marked or not.
+---@field is_fixed boolean @Return if a client has a fixed size or not. Read only
+---@field immobilized_horizontal boolean @Is the client immobilized horizontally? Read only
+---@field immobilized_vertical boolean @Is the client immobilized vertically? Read only
+---@field floating boolean @The client floating state.
+---@field x number @The x coordinates.
+---@field y number @The y coordinates.
+---@field width number @The width of the client.
+---@field height number @The height of the client.
+---@field dockable boolean @If the client is dockable.
+---@field requests_no_titlebar boolean @If the client requests not to be decorated with a titlebar.
+---@field shape gears.shape|function @Set the client shape.
+---@field active boolean @Return true if the client is active (has focus). Read only
+---@field struts fun(self:client): table @Return client struts (reserved space at the edge of the screen).
+---@field isvisible fun(self:client): boolean @Check if a client is visible on its screen.
+---@field kill fun(self:client) @Kill a client.
+---@field swap fun(self:client, c:client) @Swap a client with another one in global client list.
+---@field tags fun(self:client, tags_table:table): table @Access or set the client tags.
+---@field raise fun(self:client) @Raise a client on top of others which are on the same layer.
+---@field lower fun(self:client) @Lower a client on bottom of others which are on the same layer.
+---@field unmanage fun(self:client) @Stop managing a client.
+---@field geometry fun(self:client, geo:table): table @Return or set client geometry.
+---@field apply_size_hints fun(self:client, width:number, height:number): (integer, integer) @Apply size hints to a size.
+---@field get_icon fun(self:client, index:number): gears.surface @Get the client's n-th icon.
+---@field jump_to fun(self:client, merge:boolean) @Jump to the given client.
+---@field append_keybinding fun(self:client, key:any) @Append a keybinding.
+---@field remove_keybinding fun(self:client, key:any) @Remove a keybinding.
+---@field append_mousebinding fun(self:client, button:any) @Append a mousebinding.
+---@field remove_mousebinding fun(self:client, button:any) @Remove a mousebinding.
+---@field to_primary_section fun(self:client) @Move the client to the most significant layout position.
+---@field to_secondary_section fun(self:client) @Move the client to the least significant layout position.
+---@field relative_move fun(self:client, x:number, y:number, w:number, h:number) @Move/resize a client relative to current coordinates.
+---@field move_to_tag fun(self:client, target:any) @Move a client to a tag.
+---@field toggle_tag fun(self:client, target:any) @Toggle a tag on a client.
+---@field move_to_screen fun(self:client, s:any) @Move a client to a screen.
+---@field to_selected_tags fun(self:client) @Find suitable tags for newly created clients.
+---@field get_transient_for_matching fun(self:client, matcher:any): client|nil @Get a matching transient_for client (if any).
+---@field is_transient_for fun(self:client, c2:client): client|nil @Is a client transient for another one?
+---@field activate fun(self:client, args:table) @Activate (focus) a client.
+---@field grant fun(self:client, permission:any, context:any) @Grant a permission for a client.
+---@field deny fun(self:client, permission:any, context:any) @Deny a permission for a client.

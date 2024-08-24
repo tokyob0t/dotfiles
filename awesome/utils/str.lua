@@ -1,4 +1,5 @@
 local bful = require("beautiful")
+local my_table = require("utils.table")
 
 local _STR = {}
 
@@ -47,10 +48,13 @@ _STR.replace = function(str, old, new)
 end
 
 ---@param str string
----@param myTable table
-_STR.replaceWithTable = function(str, myTable)
-	for old, new in pairs(myTable) do
-		str = _STR.replace(str, old, new)
+---@param t table
+_STR.replace_with_table = function(str, t)
+	if my_table.len(t) >= 1 then
+		for old, new in pairs(t) do
+			str = _STR.replace(str, old, new)
+			--str = string.gsub(str, old, new)
+		end
 	end
 	return str
 end
@@ -111,7 +115,7 @@ end
 ---@param markdown string
 ---@return string
 _STR.markdown_to_markup = function(markdown)
-	markdown = _STR.replaceWithTable(require("lib.markdown")(markdown), {
+	markdown = _STR.replace_with_table(require("lib.markdown")(markdown), {
 		["<h1>"] = "<span size='xx-large'><b>",
 		["</h1>"] = "</b></span>",
 

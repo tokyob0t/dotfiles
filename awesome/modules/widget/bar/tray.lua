@@ -2,27 +2,28 @@ local wibox = require("wibox")
 local awful = require("awful")
 local utils = require("utils.init")
 local bful = require("beautiful")
-local dpi = utils.dpi
+local widget = wibox.widget
+local cter = wibox.container
 
-local systray = wibox.widget({
+local systray = widget({
 	{
 		{
 			base_size = dpi(16),
-			widget = wibox.widget.systray,
+			widget = widget.systray,
 		},
 		layout = wibox.layout.flex.horizontal,
 		valign = "center",
 	},
-	widget = wibox.container.place,
+	widget = cter.place,
 	visible = false,
 })
 
 local go_next_symbolic = utils.lookup_icon({ icon_name = "go-next-symbolic", recolor = bful.fg_normal })
 local go_previous_symbolic = utils.lookup_icon({ icon_name = "go-previous-symbolic", recolor = bful.fg_normal })
 
-local indicator = wibox.widget({
+local indicator = widget({
 	image = go_next_symbolic,
-	widget = wibox.widget.imagebox,
+	widget = widget.imagebox,
 	valign = "center",
 	forced_width = dpi(16),
 	forced_height = dpi(16),
@@ -40,12 +41,12 @@ indicator.buttons = {
 	end),
 }
 
-return wibox.widget({
+return widget({
 	{
 		systray,
 		indicator,
 		layout = wibox.layout.fixed.horizontal,
 	},
-	widget = wibox.container.place,
+	widget = cter.place,
 	valign = "center",
 })

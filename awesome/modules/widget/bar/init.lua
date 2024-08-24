@@ -2,8 +2,8 @@ local screen = screen
 local awful = require("awful")
 local user = require("user")
 local wibox = require("wibox")
-local utils = require("utils.init")
-local dpi = utils.dpi
+local widget = wibox.widget
+local cter = wibox.container
 
 local launcher = require("modules.widget.launcher")
 
@@ -67,7 +67,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 						s.battery_icon,
 						{
 							format = "%H:%M %p\n%d/%m/%Y",
-							widget = wibox.widget.textclock,
+							widget = widget.textclock,
 							halign = "right",
 							font = "Segoe UI Variable " .. dpi(9),
 						},
@@ -77,13 +77,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
 					},
 					halign = "right",
 					valign = "center",
-					widget = wibox.container.place,
+					widget = cter.place,
 				},
 				layout = wibox.layout.align.horizontal,
 				expand = "outside",
 			},
 			margins = dpi(5),
-			widget = wibox.container.margin,
+			widget = cter.margin,
 		},
 	})
 end)

@@ -1,5 +1,0 @@
----@class gears.object
----@field emit_signal fun(self: gears.object, name: string, ...: any)
----@field connect_signal fun(self: gears.object, name: string, func: function)
----@field weak_connect_signal fun(self: gears.object, name: string, func: function)
----@field disconnect_signal fun(self: gears.object, name: string, func: function)

@@ -1,0 +1,52 @@
+---@class gears
+---@field object gears.object
+---@field debug gears.debug
+---@field filesystem gears.filesystem
+---@field geometry gears.geometry
+---@field math gears.math
+---@field protected_call gears.protected_call
+---@field sort gears.sort
+---@field string gears.string
+---@field table gears.table
+---@field wallpaper gears.wallpaper
+---@field color gears.color
+---@field shape gears.shape
+---@field matcher gears.matcher
+---@field surface gears.surface
+---@field cache gears.cache
+---@field matrix gears.matrix
+
+---@class gears.object
+---@field emit_signal fun(self: gears.object, name: string, ...: any) @Emit a notification signal.
+---@field connect_signal fun(self: gears.object, name: string, func: function) @Connect to a signal.
+---@field weak_connect_signal fun(self: gears.object, name: string, func: function) @Connect to a signal weakly. This allows the callback function to be garbage collected and automatically disconnects the signal when that happens. Warning: Only use this function if you really, really, really know what you are doing.
+---@field disconnect_signal fun(self: gears.object, name: string, func: function) @Disconnect a signal from a source.
+
+---@class gears.timer: gears.object
+---@field started boolean @The timer is started.
+---@field timeout number @The timer timeout value.
+---@field start fun(self:gears.timer) @Start the timer.
+---@field stop fun(self:gears.timer) @Stop the timer.
+---@field again fun(self:gears.timer) @Restart the timer.
+---@field start_new fun(timeout:number, callback:fun()): gears.timer @Create a simple timer for calling the callback function continuously.
+---@field weak_start_new fun(timeout:number, callback:fun()): gears.timer @Create a simple timer for calling the callback function continuously.
+---@field run_delayed_calls_now fun() @Run all pending delayed calls now.
+---@field delayed_call fun(callback:fun(), ...:any) @Call the given function at the end of the current GLib event loop iteration.
+
+--ToDo
+
+---@class gears.debug
+---@class gears.filesystem
+---@class gears.geometry
+---@class gears.math
+---@class gears.protected_call
+---@class gears.sort
+---@class gears.string
+---@class gears.table
+---@class gears.wallpaper
+---@class gears.color
+---@class gears.shape
+---@class gears.matcher
+---@class gears.surface
+---@class gears.cache
+---@class gears.matrix

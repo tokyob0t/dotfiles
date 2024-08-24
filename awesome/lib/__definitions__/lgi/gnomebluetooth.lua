@@ -1,0 +1,33 @@
+---@class GnomeBluetooth.Client
+---@field new fun(): GnomeBluetooth.Client @Creates a new instance of GnomeBluetooth.Client.
+---@field connect_service fun(self: GnomeBluetooth.Client, path: string, connect: boolean, cancellable: Gio.Cancellable|nil, callback: fun(client: GnomeBluetooth.Client, result: Gio.AsyncResult, user_data: any), user_data: any) @Connects to a service.
+---@field connect_service_finish fun(self: GnomeBluetooth.Client, res: Gio.AsyncResult): boolean @Finishes the connection to the service.
+---@field get_devices fun(self: GnomeBluetooth.Client): Gio.ListStore  @Gets the list of devices.
+---@field has_connected_input_devices fun(self: GnomeBluetooth.Client): boolean @Checks if there are connected input devices.
+---@field default_adapter string @The D-Bus path of the default adapter. (read-only)
+---@field default_adapter_address string @The address of the default adapter. (read-only)
+---@field default_adapter_name string @The human-readable name of the default adapter. (read-only)
+---@field default_adapter_powered boolean @Whether the default adapter is powered. (read/write)
+---@field default_adapter_setup-mode boolean @Whether the default adapter is visible to others and scanning. (read/write)
+---@field default_adapter_state GnomeBluetooth.AdapterState @State of the default adapter. (read-only)
+---@field num_adapters integer @The number of detected Bluetooth adapters. (read-only)
+
+---@class GnomeBluetooth.Device
+---@field dump fun(self: GnomeBluetooth.Device) @Dumps the device information.
+---@field get_object_path fun(self: GnomeBluetooth.Device): string @Gets the object path of the device.
+---@field to_string fun(self: GnomeBluetooth.Device): string @Returns a string representation of the device.
+---@field address string @The address of the device. (read/write)
+---@field alias string @The alias of the device. (read/write)
+---@field battery_level integer @The battery level of the device. (read/write)
+---@field battery_percentage number @The battery percentage of the device. (read/write)
+---@field battery_type GnomeBluetooth.BatteryType @The battery type of the device. (read/write)
+---@field connectable boolean @Whether the device is connectable. (read-only)
+---@field connected boolean @Whether the device is connected. (read/write)
+---@field icon string @The icon associated with the device. (read/write)
+---@field legacy_pairing boolean @Whether the device uses legacy pairing. (read/write)
+---@field name string @The name of the device. (read/write)
+---@field paired boolean @Whether the device is paired. (read/write)
+---@field proxy Gio.DBusProxy @The DBus proxy associated with the device. (read/write)
+---@field trusted boolean @Whether the device is trusted. (read/write)
+---@field type GnomeBluetooth.Type @The type of the device. (read/write)
+---@field uuids table @The UUIDs associated with the device. (read/write)
