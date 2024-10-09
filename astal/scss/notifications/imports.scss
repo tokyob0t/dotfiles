@@ -1,0 +1,58 @@
+window.notifications {
+  eventbox {
+    margin-top: to-rem(15px);
+  }
+
+  .notification-title {
+    background: $base00;
+    border-radius: to-rem(20px) to-rem(20px) 0 0;
+    padding: to-rem(5px) to-rem(15px);
+    .icon {
+      font-size: to-rem(22px);
+      &.symbolic {
+        font-size: to-rem(16px);
+      }
+    }
+  }
+  .notification-box {
+    border-radius: 0 0 to-rem(20px) to-rem(20px);
+    min-width: to-rem(400px);
+    padding: to-rem(20px);
+    background: mix($base00, $base01, 50%);
+
+    .icon {
+      font-size: to-rem(32px);
+    }
+
+    .summary {
+      font-size: to-rem(16px);
+      font-weight: 600;
+    }
+
+    .body {
+      font-size: to-rem(16px);
+    }
+
+    .image {
+      min-width: to-rem(50px);
+      min-height: to-rem(50px);
+      border-radius: to-rem(7.5px);
+      font-size: to-rem(50px);
+    }
+
+    .action-button {
+      border-radius: to-rem(5px);
+      transition: 250ms background;
+      background: $base01;
+      min-height: to-rem(26px);
+      font-size: to-rem(16px);
+      border: 1px solid transparent;
+      border-bottom-color: lighten($base01, 0.5);
+
+      &:hover {
+        background: $base02;
+        border-bottom-color: lighten($base02, 0.5);
+      }
+    }
+  }
+}

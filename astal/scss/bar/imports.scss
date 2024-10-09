@@ -1,0 +1,60 @@
+@import './workspace.scss';
+
+window.bar {
+  background-color: $base00;
+
+  .icon {
+    color: $base05;
+    font-size: to-rem(18px);
+  }
+
+  .bar-centerbox {
+    min-height: to-rem(45px);
+    padding-left: to-rem(20px);
+    padding-right: to-rem(20px);
+  }
+
+  .bar-box {
+    background-color: $base01;
+    min-width: to-rem(80px);
+    min-height: to-rem(35px);
+    border-radius: to-rem(20px);
+    &.clock-box {
+      padding: 0 to-rem(15px);
+    }
+    .indicator-cter {
+      padding: 0 to-rem(15px);
+    }
+  }
+
+  .bar-label {
+    font-weight: 600;
+    color: $base04;
+
+    &.title {
+      font-weight: 500;
+      font-size: to-rem(15px);
+      color: $base05;
+    }
+    &.subtitle {
+      font-size: to-rem(12px);
+      color: $base03;
+    }
+  }
+
+  .volume-slider {
+    min-width: to-rem(100px);
+    margin-left: to-rem(10px);
+
+    trough {
+      background-color: $base03;
+      border-radius: 10px;
+    }
+
+    highlight {
+      background-color: $base09;
+      min-height: to-rem(12px);
+      border-radius: to-rem(20px);
+    }
+  }
+}

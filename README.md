@@ -2,11 +2,10 @@
 
 ## Details
 
-###### (Updated May 28)
+###### (Updated Oct 08)
 
-- **OS:** Arch btw
 - **Window Manager:** [Hyprland](https://github.com/hyprwm/Hyprland)
-- **All:** [PotatoWidgets](https://github.com/T0kyoB0y/PotatoWidgets)
+- **Widgets:** [Astal](https://github.com/aylur/astal)
 
 ## Preview
 

@@ -1,0 +1,37 @@
+window.launcher {
+  background-color: $base00;
+  border-radius: to-rem(20px);
+  border: to-rem(1px) solid $base01;
+  padding: to-rem(10px) to-rem(20px);
+
+  entry {
+    min-height: to-rem(50px);
+    padding: 0 to-rem(20px);
+  }
+
+  .apps-cter {
+    padding: 0 to-rem(5px);
+    button {
+      padding: 0 to-rem(10px);
+      border-radius: to-rem(20px);
+      margin-top: to-rem(5px);
+      transition: 250ms background;
+      &:focus {
+        background: $base01;
+      }
+      .app-icon {
+        font-size: to-rem(32px);
+      }
+      .app-name {
+        font-size: to-rem(14px);
+        font-weight: 600;
+        color: $base04;
+      }
+      .app-desc {
+        font-size: to-rem(10px);
+        font-weight: 500;
+        color: $base03;
+      }
+    }
+  }
+}

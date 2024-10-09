@@ -1,0 +1,53 @@
+$wp-buttons-size: to-rem(35px);
+
+button.workspace-button {
+  all: unset;
+  padding: unset;
+  border: unset;
+  min-height: $wp-buttons-size;
+  min-width: $wp-buttons-size;
+  transition:
+    250ms background,
+    250ms border-radius;
+
+  &:not(.left):not(.right):not(.bg) {
+    border-radius: $wp-buttons-size;
+  }
+
+  &.left {
+    border-top-right-radius: $wp-buttons-size;
+    border-bottom-right-radius: $wp-buttons-size;
+  }
+
+  &.right {
+    border-top-left-radius: $wp-buttons-size;
+    border-bottom-left-radius: $wp-buttons-size;
+  }
+
+  &.bg {
+    background-color: $base02;
+  }
+
+  &.round {
+    border-radius: $wp-buttons-size;
+  }
+
+  .circle {
+    transition: 250ms color;
+    color: $base03;
+
+    &.active {
+      color: $base09;
+    }
+  }
+}
+
+.wp-indicator {
+  all: unset;
+  background-color: transparentize($base09, 0.8);
+  border-radius: $wp-buttons-size;
+  min-width: $wp-buttons-size;
+  min-height: $wp-buttons-size;
+  transition: 500ms margin cubic-bezier(0.18, 1, 0.23, 1);
+  padding: unset;
+}
