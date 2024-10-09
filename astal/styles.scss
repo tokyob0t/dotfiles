@@ -1,0 +1,17 @@
+* {
+  font-size: 16px;
+  &:not(menu):not(menuitem):not(separator):not(tooltip) {
+    all: unset;
+  }
+}
+
+@function to-rem($px) {
+  @return ($px / 16px) * 1rem;
+}
+
+@import './scss/colors.scss';
+@import './scss/bar/imports.scss';
+@import './scss/notifications/imports.scss';
+@import './scss/launcher/imports.scss';
+
+@import './scss/desktop/imports.scss';

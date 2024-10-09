@@ -1,0 +1,34 @@
+window.desktop {
+  background-color: $base00;
+
+  box {
+    margin-top: to-rem(46px); // bar-height + 1px
+    border-radius: to-rem(20px);
+    background-image: linear-gradient($base01, $base01);
+    padding: to-rem(20px);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: 250ms background-image;
+  }
+}
+
+menu.desktop-menu {
+  background-color: $base00;
+  min-width: to-rem(150px);
+  menuitem {
+    background-color: $base00;
+    label {
+      color: $base04;
+    }
+    icon {
+      color: $base03;
+    }
+    &:hover {
+      background-color: $base01;
+    }
+  }
+  separator {
+    border-radius: to-rem(5px);
+  }
+}

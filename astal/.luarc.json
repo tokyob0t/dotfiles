@@ -1,0 +1,28 @@
+{
+  "diagnostics": {
+    "disable": ["undefined-doc-name"],
+    "libraryFiles": "Opened",
+    "globals": [
+      "astal",
+      "GLib",
+      "Gtk",
+      "Gdk",
+      "switch",
+      "bind",
+      "ternary",
+      "lookup_icon",
+      "rem",
+      "Widget",
+      "Variable",
+      "Astal"
+    ]
+  },
+  "workspace": {
+    "library": ["/usr/share/lua/5.4/"],
+    "maxPreload": 2000,
+    "preloadFileSize": 1000
+  },
+  "runtime": {
+    "version": "Lua 5.4.7"
+  }
+}
