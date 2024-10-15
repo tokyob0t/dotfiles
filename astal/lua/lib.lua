@@ -36,6 +36,19 @@ M.find = function(tbl, fn)
 	end
 end
 
+---@generic T
+---@param tbl T[]
+---@param fn fun(T, i:integer): boolean
+---@return boolean
+M.any = function(tbl, fn)
+	for index, value in ipairs(tbl) do
+		if fn(value, index) then
+			return true
+		end
+	end
+	return false
+end
+
 ---@generic T, R
 ---@param tbl T[]
 ---@param fn fun(T, i:integer): R
@@ -59,6 +72,16 @@ M.filter = function(tbl, fn)
 		end
 	end
 	return copy
+end
+
+---@param fn function
+---@return integer
+M.idle = function(fn, ...)
+	local args = {}
+	return GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, function()
+		fn(table.unpack(args))
+		return GLib.SOURCE_REMOVE
+	end)
 end
 
 return M

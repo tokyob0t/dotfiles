@@ -1,7 +1,7 @@
-local Hyprland <const> = astal.require("AstalHyprland")
+local Hyprland = astal.require("AstalHyprland")
 
 return function()
-	local hypr <const> = Hyprland.get_default()
+	local hypr = Hyprland.get_default()
 
 	return Widget.GtkScrolledWindow({
 		hexpand = true,

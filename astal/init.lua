@@ -1,24 +1,24 @@
-#!/bin/lua5.4
-
 require("lua.globals")
 
-local App <const> = astal.App
+pcall(require, "luarocks.loader")
 
-local config_dir <const> = GLib.getenv("XDG_CONFIG_HOME") .. "/astal"
-local cache_dir <const> = GLib.getenv("XDG_CACHE_HOME") .. "/astal"
+local App = astal.App
 
-local scss <const> = config_dir .. "/styles.scss"
-local css <const> = cache_dir .. "/styles.css"
-local icons <const> = config_dir .. "/icons"
+local config_dir = GLib.getenv("XDG_CONFIG_HOME") .. "/astal"
+local cache_dir = GLib.getenv("XDG_CACHE_HOME") .. "/astal"
+
+local scss = config_dir .. "/styles.scss"
+local css = cache_dir .. "/styles.css"
+local icons = config_dir .. "/icons"
 
 astal.exec(string.format("sassc %s %s", scss, css))
 
-local Bar <const> = require("lua.widget.bar")
-local Launcher <const> = require("lua.widget.launcher")
-local Notifications <const> = require("lua.widget.notifications")
-local Desktop <const> = require("lua.widget.desktop")
+local Bar = require("lua.widget.bar.init")
+local Launcher = require("lua.widget.launcher.init")
+local Notifications = require("lua.widget.notifications.init")
+local Desktop = require("lua.widget.desktop.init")
 
-local Windows <const> = {
+local Windows = {
 	bars = {},
 	launchers = {},
 	notifications = {},
@@ -39,6 +39,7 @@ App:start({
 
 		App.on_monitor_added = function(_, gdkmonitor)
 			Windows.bars[gdkmonitor] = Bar(gdkmonitor)
+			Windows.desktop[gdkmonitor] = Desktop(gdkmonitor)
 		end
 
 		App.on_monitor_removed = function(_, gdkmonitor)
@@ -50,12 +51,6 @@ App:start({
 	end,
 	request_handler = function(request, response)
 		switch(request)
-			.case("launcher", function()
-				for _, value in pairs(Windows.launchers) do
-					value.visible = not value.visible
-				end
-				response("ok")
-			end)
 			.default(function()
 				response("non ok")
 			end)

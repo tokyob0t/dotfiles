@@ -1,8 +1,7 @@
-local App <const> = astal.App
-local Tray <const> = astal.require("AstalTray")
+local App = astal.App
+local Tray = astal.require("AstalTray")
 local tray = Tray.get_default()
 local map = require("lua.lib").map
-local idle = require("lua.lib").idle
 
 return function()
 	return Widget.Box({

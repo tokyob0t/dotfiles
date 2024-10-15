@@ -1,85 +1,44 @@
-local Apps <const> = astal.require("AstalApps")
-local map = require("lua.lib").map
+-- thx
+-- https://github.com/Aylur/dotfiles/blob/main/ags/widget/launcher/AppLauncher.ts
+local App = astal.App
 
-local apps = Apps.Apps({
-	include_entry = true,
-	include_executable = true,
-})
-
-local Entry
-local item = function(app)
-	return Widget.GtkRevealer({
-		setup = function(self)
-			local kwords = string.lower(table.concat({ app.name, app.description }, " "))
-
-			self:hook(Entry, "changed", function()
-				local text = string.lower(Entry.text or "")
-				if text then
-					self.reveal_child = string.find(kwords, text, 1, true)
-				end
-			end)
-		end,
-		reveal_child = true,
-		transition_type = "SLIDE_UP",
-		valign = "START",
-		Widget.Button({
-			class_name = "flat",
-			valign = "START",
-			on_key_press_event = function(_, event)
-				if event.keyval == Gdk.KEY_Return then
-					app:launch()
-					astal.exec_async("astal -i astal-lua launcher")
-				end
-			end,
-			Widget.Box({
-				valign = "START",
-				hexpand = true,
-				Widget.Icon({
-					icon = lookup_icon({ app.icon_name, "application-x-executable" }),
-					class_name = "app-icon",
-				}),
-				Widget.Box({
-					orientation = "VERTICAL",
-					Widget.Label({
-						label = app.name,
-						class_name = "app-name",
-						xalign = 0,
-						wrap = true,
-					}),
-					Widget.Label({
-						label = app.description,
-						class_name = "app-desc",
-						xalign = 0,
-						wrap = true,
-					}),
-				}),
-			}),
-		}),
-	})
-end
+local AppList = require("lua.widget.launcher.apps")
+local IconList = require("lua.widget.launcher.iconlibrary")
+local FileList = require("lua.widget.launcher.nautilus")
+local GamesList = require("lua.widget.launcher.cartridges")
+local CalcList = require("lua.widget.launcher.gnomecalculator")
 
 return function(gdkmonitor)
-	local windowname = string.format("launcher-%d", gdkmonitor.display:get_n_monitors())
+	-- local windowname = string.format("launcher-%d", gdkmonitor.display:get_n_monitors())
+	local windowname = "launcher"
 
-	Entry = Widget.Entry({
+	local app_list = AppList()
+	local icon_list = IconList()
+	local file_list = FileList()
+	local games_list = GamesList()
+	local calc_list = CalcList()
+
+	local entry = Widget.Entry({
 		class_name = "flat",
-		on_activate = function()
-			print("a")
+		halign = "CENTER",
+		placeholder_text = "Search...",
+		on_changed = function(self)
+			local text = string.lower(tostring(self.text) or "")
+			if string.sub(text, 1, 1) ~= ":" then
+				app_list.filter(text)
+				icon_list:filter(text)
+				file_list:filter(text)
+				games_list:filter(text)
+				calc_list:filter(text)
+			end
 		end,
-	})
-
-	local apps_cter = Widget.Box({
-		hexpand = true,
-		vexpand = true,
-		height_request = 500,
-		orientation = "VERTICAL",
-		class_name = "apps-cter",
-		bind(apps, "list"):as(function(list)
-			table.sort(list, function(a, b)
-				return a.name < b.name
-			end)
-			return map(list, item)
-		end),
+		on_activate = function()
+			if false then
+			else
+				app_list.launch_first()
+			end
+			return astal.exec_async("astal -i astal-lua -t launcher")
+		end,
 	})
 
 	return Widget.Window({
@@ -88,15 +47,19 @@ return function(gdkmonitor)
 		name = windowname,
 		class_name = "launcher",
 		keymode = "ON_DEMAND",
-		width_request = 400,
-		height_request = 500,
+		anchor = Astal.WindowAnchor.TOP
+			+ Astal.WindowAnchor.LEFT
+			+ Astal.WindowAnchor.RIGHT
+			+ Astal.WindowAnchor.BOTTOM,
 		visible = false,
+		application = App,
 		setup = function(self)
 			self:hook(self, "notify::visible", function()
+				entry.text = ""
 				if self.visible then
-					Entry:grab_focus()
-				else
-					Entry.text = ""
+					entry:set_position(-1)
+					entry:select_region(0, -1)
+					entry:grab_focus()
 				end
 			end)
 		end,
@@ -106,14 +69,25 @@ return function(gdkmonitor)
 			end
 		end,
 		Widget.Box({
-			valign = "START",
+			hexpand = true,
+			vexpand = true,
 			orientation = "VERTICAL",
-			Entry,
+			spacing = 10,
+			entry,
 			Widget.GtkScrolledWindow({
 				vexpand = true,
 				hexpand = true,
-				height_request = 500,
-				apps_cter,
+				Widget.Box({
+					hexpand = true,
+					vexpand = true,
+					orientation = "VERTICAL",
+					halign = "CENTER",
+					app_list.item_list,
+					icon_list.item_list,
+					file_list.item_list,
+					games_list.item_list,
+					calc_list.item_list,
+				}),
 			}),
 		}),
 	})
