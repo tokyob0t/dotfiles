@@ -3,6 +3,7 @@ GLib = astal.GLib
 Gtk = astal.Gtk
 Gdk = astal.Gdk
 Gio = astal.Gio
+GdkPixbuf = astal.require("GdkPixbuf", "2.0")
 
 Astal = astal.Astal
 Widget = astal.Widget
@@ -83,8 +84,8 @@ lookup_icon = function(args)
 	if type(args) == "string" then
 		return lookup_icon({ icon_name = args })
 	elseif type(args) == "table" then
+		local path = nil
 		if #args >= 1 and not args.icon_name then
-			local path = nil
 			for _, value in ipairs(args) do
 				path = lookup_icon(value)
 				if path then
@@ -93,7 +94,6 @@ lookup_icon = function(args)
 			end
 			return
 		elseif args.icon_name and type(args.icon_name) == "table" then
-			local path
 			for _, value in ipairs(args.icon_name) do
 				path = lookup_icon({
 					icon_name = value,
@@ -126,14 +126,15 @@ lookup_icon = function(args)
 		args.icon_name:lower(),
 		args.icon_name:upper(),
 	}) do
-		icon_info = theme:lookup_icon(name, args.size, Gtk.IconLookupFlags.USE_BUILTIN)
+		icon_info = theme:lookup_icon(name, args.size, "USE_BUILTIN")
 
 		if icon_info then
 			path = icon_info:get_filename()
 
 			if path then
 				if args.path then
-					return string.match(path, ".*/(.-)%.svg")
+					return string.match(path, ".*/(.+)%.[^%.]+$")
+					-- return name
 				else
 					return icon_info:load_icon()
 				end
@@ -181,4 +182,8 @@ end
 
 rem = function(px)
 	return px / 16
+end
+
+if not table.unpack then
+	table.unpack = unpack
 end

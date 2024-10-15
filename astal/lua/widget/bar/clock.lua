@@ -20,7 +20,7 @@ return function()
 		}),
 		Widget.Icon({
 			icon = "dot-symbolic",
-			class_name = "icon",
+			class_name = "symbolic",
 			valign = "CENTER",
 		}),
 		Widget.Label({

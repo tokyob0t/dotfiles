@@ -1,4 +1,4 @@
-local Hyprland <const> = astal.require("AstalHyprland")
+local Hyprland = astal.require("AstalHyprland")
 local map = require("lua.lib").map
 
 local wp_count = 9
@@ -53,7 +53,7 @@ return function()
 					self:hook(hypr, "notify::clients", update)
 					self:hook(hypr, "client-moved", update)
 				end,
-				on_click_release = function(self)
+				on_click_release = function()
 					return hypr:message_async(string.format("dispatch workspace %d", i))
 				end,
 				Widget.DrawingArea({

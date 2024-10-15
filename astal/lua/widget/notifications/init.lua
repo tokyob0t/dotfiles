@@ -1,6 +1,6 @@
-local timeout <const> = astal.timeout
-local Notifd <const> = astal.require("AstalNotifd")
-local notifd <const> = Notifd.get_default()
+local timeout = astal.timeout
+local Notifd = astal.require("AstalNotifd")
+local notifd = Notifd.get_default()
 local map = require("lua.lib").map
 local popup_timeout = 5000
 

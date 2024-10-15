@@ -1,7 +1,7 @@
 local Hyprland = astal.require("AstalHyprland")
 
-local cache_dir <const> = GLib.getenv("XDG_CACHE_HOME") .. "/astal"
-local wall_file <const> = cache_dir .. "/wallpaper"
+local cache_dir = GLib.getenv("XDG_CACHE_HOME") .. "/astal"
+local wall_file = cache_dir .. "/wallpaper"
 local desktop_wall = Variable("")
 
 local request_wall = function(callback)

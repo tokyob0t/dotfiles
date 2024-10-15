@@ -27,9 +27,14 @@ local VolumeIcon = function()
 			return string.format("%.0f%%", v * 100)
 		end),
 		Widget.Box({
-			Widget.Icon({
-				class_name = "icon",
-				icon = bind(speaker, "volume-icon"),
+			Widget.Button({
+				on_click_release = function()
+					speaker.mute = not speaker.mute
+				end,
+				Widget.Icon({
+					class_name = "icon",
+					icon = bind(speaker, "volume-icon"),
+				}),
 			}),
 			Widget.GtkRevealer({
 				reveal_child = scroll_revealed(),
