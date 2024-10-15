@@ -2,7 +2,7 @@
 
 ## Details
 
-###### (Updated Oct 08)
+###### (Updated Oct 15)
 
 - **Window Manager:** [Hyprland](https://github.com/hyprwm/Hyprland)
 - **Widgets:** [Astal](https://github.com/aylur/astal)
