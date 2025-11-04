@@ -1,0 +1,64 @@
+@use 'gap';
+@use 'size';
+@use 'roundness';
+@use 'padding';
+@use 'margin';
+@use 'font';
+@use 'color';
+@use 'transition';
+@use 'blur';
+@use '../variables';
+@use '../functions' as *;
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+entry.shake {
+  animation: shake 0.3s;
+}
+
+entry.flat {
+  background: unset;
+  outline: unset;
+}
+
+.highlight {
+  // background: darker(variables.$accent-color);
+  background-image: linear-gradient(
+    to top right,
+    variables.$accent-color,
+    mix(variables.$accent-color, white, 0.01)
+  );
+  outline: 0.1px solid rgba(0, 0, 0, 0.2);
+
+  image,
+  label {
+    color: variables.$bg;
+  }
+}
+
+.transparent {
+  background: transparent;
+}
+
+.background-alt {
+  background: variables.$bg-alt;
+}

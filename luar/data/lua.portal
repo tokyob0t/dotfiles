@@ -1,0 +1,4 @@
+[portal]
+DBusName=org.freedesktop.impl.portal.desktop.lua
+Interfaces=org.freedesktop.impl.portal.Wallpaper
+UseIn=wlroots;Hyprland;sway;Wayfire;river;

@@ -1,0 +1,28 @@
+$border-radius-values: (
+  'none': 0,
+  'sm': 0.125rem,  // 2px
+  'md': 0.375rem,  // 6px
+  'lg': 0.5rem,    // 8px
+  'xl': 0.75rem,   // 12px
+  '2xl': 1rem,     // 16px
+  '3xl': 1.5rem,     // 24px
+  'full': 9999px
+);
+
+@mixin border-radius($name, $value) {
+  .rounded#{$name} { border-radius: $value; }
+  .rounded-t#{$name} { border-top-left-radius: $value; border-top-right-radius: $value; }
+  .rounded-r#{$name} { border-top-right-radius: $value; border-bottom-right-radius: $value; }
+  .rounded-b#{$name} { border-bottom-right-radius: $value; border-bottom-left-radius: $value; }
+  .rounded-l#{$name} { border-top-left-radius: $value; border-bottom-left-radius: $value; }
+  .rounded-tl#{$name} { border-top-left-radius: $value; }
+  .rounded-tr#{$name} { border-top-right-radius: $value; }
+  .rounded-br#{$name} { border-bottom-right-radius: $value; }
+  .rounded-bl#{$name} { border-bottom-left-radius: $value; }
+}
+
+// Iterar sobre el mapa
+@each $name, $value in $border-radius-values {
+  $suffix: if($name == 'md', '', '-' + $name); // md sin guion
+  @include border-radius($suffix, $value);
+}

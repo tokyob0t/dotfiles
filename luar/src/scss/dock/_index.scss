@@ -1,0 +1,8 @@
+@use '../variables';
+@use '../functions' as *;
+
+window.dock {
+  menubutton {
+    padding: unset;
+  }
+}

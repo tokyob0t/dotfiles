@@ -1,0 +1,11 @@
+@use '../functions' as *;
+@use '../variables';
+
+window#launcher {
+  min-width: 500px;
+  margin-top: 300px;
+
+  > box {
+    border: 2px solid alpha(variables.$fg, 0.03);
+  }
+}

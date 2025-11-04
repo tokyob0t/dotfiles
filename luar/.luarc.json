@@ -1,0 +1,37 @@
+{
+	"$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+	"diagnostics": {
+		"disableScheme": ["@luagir/", "bundle/"],
+		"globals": [
+			"astal",
+			"bind",
+			"async",
+			"await",
+			"App",
+			"Variable",
+			"Widget",
+			"GObject",
+			"GLib",
+			"Gtk",
+			"Gio",
+			"Adw"
+		]
+	},
+	"completion": {
+		"callSnippet": "Both",
+		"keywordSnippet": "Both"
+	},
+	"workspace": {
+		"library": [
+			"/usr/share/lua/5.1/",
+			"~/.luarocks/share/lua/5.1/",
+			"@luagir/"
+		],
+		"maxPreload": 2000,
+		"preloadFileSize": 1000,
+		"ignoreDir": ["@luagir/", "bundle/", "scripts/"]
+	},
+	"runtime": {
+		"version": "LuaJIT"
+	}
+}

@@ -1,0 +1,84 @@
+
+// ========================
+// 🎨 Tailwind-like Transitions for GTK4
+// ========================
+
+// Duraciones (en ms)
+$durations: (
+  75: 75ms,
+  100: 100ms,
+  150: 150ms,
+  200: 200ms,
+  300: 300ms,
+  500: 500ms,
+  700: 700ms,
+  1000: 1000ms
+);
+
+// Retrasos (en ms)
+$delays: (
+  75: 75ms,
+  100: 100ms,
+  150: 150ms,
+  200: 200ms,
+  300: 300ms,
+  500: 500ms
+);
+
+// Curvas de easing
+$easings: (
+  linear: linear,
+  in: cubic-bezier(0.4, 0, 1, 1),
+  out: cubic-bezier(0, 0, 0.2, 1),
+  in-out: cubic-bezier(0.4, 0, 0.2, 1)
+);
+
+// Propiedades transicionables
+$transitions: (
+  none: none,
+  all: all,
+  colors: color, // GTK usa 'color', no 'background-color' directo
+  opacity: opacity,
+  shadow: box-shadow,
+  transform: transform
+);
+
+
+// ========================
+// 🧱 Generación de clases
+// ========================
+
+// Transiciones
+@each $key, $prop in $transitions {
+  .transition-#{$key} {
+    transition-property: #{$prop};
+  }
+}
+
+// Duraciones
+@each $key, $value in $durations {
+  .duration-#{$key} {
+    transition-duration: #{$value};
+  }
+}
+
+// Delays
+@each $key, $value in $delays {
+  .delay-#{$key} {
+    transition-delay: #{$value};
+  }
+}
+
+// Easing
+@each $key, $curve in $easings {
+  .ease-#{$key} {
+    transition-timing-function: #{$curve};
+  }
+}
+
+// Clase base de transición (por compatibilidad con .transition)
+.transition {
+  transition-property: all;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schemalist>
+    <schema id="@domain@" path="@resource@/">
+        <key name="bar-clock-format" type="s">
+            <default>"%-d %B — %H:%M"</default>
+        </key>
+        <key name="bar-clock-interval" type="u">
+            <default>60000</default>
+        </key>
+        <key name="notifications-timeout" type="u">
+            <default>5000</default>
+        </key>
+        <key name="notifications-allowed-apps" type="as">
+            <default>['Battery']</default>
+        </key>
+        <key name="notifications-denied-apps" type="as">
+            <default>[]</default>
+        </key>
+        <key name="launcher-excluded-entries" type="as">
+            <default>['nvim.desktop']</default>
+        </key>
+        <key name="launcher-max-entries" type="u">
+            <default>10</default>
+        </key>
+        <key name="launcher-search-delay" type='u'>
+            <default>80</default>
+        </key>
+        <key name="dock-hide-timeout" type="u">
+            <default>500</default>
+        </key>
+        <key name="dock-hide-duration" type="u">
+            <default>250</default>
+        </key>
+        <key name="dock-pinned" type="b">
+            <default>true</default>
+        </key>
+        <key name="dock-pinned-apps" type="as">
+            <default>['firefox.desktop']</default>
+        </key>
+        <key name="clipboard-max-history" type="u">
+            <default>30</default>
+        </key>
+        <key name="clipboard-max-item-size" type="u">
+            <default>5242880</default>
+        </key>
+        <key name="clipboard-history" type="a(ts)">
+            <default>[]</default>
+        </key>
+        <key name="battery-low" type="u">
+            <default>30</default>
+        </key>
+        <key name="battery-low-notify" type="b">
+            <default>true</default>
+        </key>
+        <key name="battery-charging-notify" type="b">
+            <default>true</default>
+        </key>
+    </schema>
+</schemalist>
