@@ -33,10 +33,10 @@ App:start {
         ---@param gdkmonitor Gdk.Monitor
         local added = function(gdkmonitor, index)
             bars[index] = Bar { gdkmonitor = gdkmonitor }
-            docks[index] = Dock { gdkmonitor = gdkmonitor }
+            -- docks[index] = Dock { gdkmonitor = gdkmonitor }
             notifpopups[index] = NotifPopups { gdkmonitor = gdkmonitor }
             qsettings[index] = QSettingsPanel { gdkmonitor = gdkmonitor }
-            walls[index] = Wallpaper { gdkmonitor = gdkmonitor }
+            -- walls[index] = Wallpaper { gdkmonitor = gdkmonitor }
         end
 
         for index, gdkmonitor in ipairs(App.monitors) do

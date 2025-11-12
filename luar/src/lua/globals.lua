@@ -7,6 +7,7 @@ async, await = astal.async, astal.await
 
 GLib = astal.require('GLib')
 Gdk = astal.require('Gdk')
+GdkPixbuf = astal.require('GdkPixbuf')
 Gtk = astal.require('Gtk')
 Gio = astal.require('Gio')
 GioUnix = astal.require('GioUnix')
@@ -20,7 +21,9 @@ Widget.Avatar = astalify(Adw.Avatar)
 Widget.ListBox = astalify(Gtk.ListBox)
 
 Widget.ListBoxRow = astalify(Gtk.ListBoxRow, {
-    set_children = function(self, children) self.child = children[1] or Gtk.Box {} end,
+    set_children = function(self, children)
+        self.child = children[1] or Gtk.Box {}
+    end,
 })
 
 Widget.ScrolledWindow = astalify(Gtk.ScrolledWindow, {})
@@ -42,8 +45,12 @@ Widget.AlertDialog = astalify(AlertDialog)
 Widget.SearchEntry = astalify(Gtk.SearchEntry)
 
 Widget.NavigationPage = astalify(Adw.NavigationPage, {
-    set_children = function(self, children) self.child = children[1] or Gtk.Box {} end,
-    get_children = function(self) return { self.child } end,
+    set_children = function(self, children)
+        self.child = children[1] or Gtk.Box {}
+    end,
+    get_children = function(self)
+        return { self.child }
+    end,
 })
 Widget.NavigationView = astalify(Adw.NavigationView, {
     set_children = function(self, children)
@@ -51,7 +58,9 @@ Widget.NavigationView = astalify(Adw.NavigationView, {
             self:add(ch)
         end
     end,
-    get_children = function() return {} end,
+    get_children = function()
+        return {}
+    end,
 })
 
 Widget.Clamp = astalify(Adw.Clamp)
@@ -73,8 +82,12 @@ Widget.Spinner = astalify(Adw.Spinner)
 Widget.PasswordEntry = astalify(Gtk.PasswordEntry)
 
 Widget.GtkWindow = astalify(Gtk.Window, {
-    set_children = function(self, children) self.child = children[1] or Gtk.Box {} end,
-    get_children = function(self) return { self.child } end,
+    set_children = function(self, children)
+        self.child = children[1] or Gtk.Box {}
+    end,
+    get_children = function(self)
+        return { self.child }
+    end,
 })
 
 Widget.Separator = astalify(Gtk.Separator)
@@ -97,8 +110,12 @@ Widget.PopoverMenu = astalify(Gtk.PopoverMenu)
 Widget.Popover = astalify(Gtk.Popover)
 
 Widget.ApplicationWindow = astalify(Adw.ApplicationWindow, {
-    set_children = function(self, children) self.content = children[1] or Gtk.Box {} end,
-    get_children = function(self) return { self.content } end,
+    set_children = function(self, children)
+        self.content = children[1] or Gtk.Box {}
+    end,
+    get_children = function(self)
+        return { self.content }
+    end,
 })
 
 Widget.ToolbarView = astalify(Adw.ToolbarView, {
@@ -121,18 +138,24 @@ Widget.ToolbarView = astalify(Adw.ToolbarView, {
             self:add_bottom_bar(table.remove(children, 1))
         end
     end,
-    get_children = function(self) return { self.content } end,
+    get_children = function(self)
+        return { self.content }
+    end,
 })
 
 ---@type Adw.HeaderBar | { start_widget: Gtk.Widget, end_widget: Gtk.Widget }
 local HeaderBar = Adw.HeaderBar
 
 HeaderBar._attribute.start_widget = {
-    set = function(self, widget) self:pack_start(widget) end,
+    set = function(self, widget)
+        self:pack_start(widget)
+    end,
 }
 
 HeaderBar._attribute.end_widget = {
-    set = function(self, widget) self:pack_end(widget) end,
+    set = function(self, widget)
+        self:pack_end(widget)
+    end,
 }
 
 Widget.HeaderBar = astalify(HeaderBar, {
@@ -141,7 +164,9 @@ Widget.HeaderBar = astalify(HeaderBar, {
         if children[1] then self:title_widget(table.remove(children, 1)) end
         if children[1] then self.end_widget = table.remove(children, 1) end
     end,
-    get_children = function() return {} end,
+    get_children = function()
+        return {}
+    end,
 })
 
 Widget.StatusPage = astalify(Adw.StatusPage)
@@ -151,15 +176,23 @@ Widget.Grid = astalify(Gtk.Grid)
 
 Widget.PreferencesGroup = astalify(Adw.PreferencesGroup, {
     set_children = function(self, children)
-        table.iterate(children, function(ch) self:add(ch) end)
+        table.iterate(children, function(ch)
+            self:add(ch)
+        end)
     end,
-    get_children = function() return {} end,
+    get_children = function()
+        return {}
+    end,
 })
 Widget.PreferencesPage = astalify(Adw.PreferencesPage, {
     set_children = function(self, children)
-        table.iterate(children, function(ch) self:add(ch) end)
+        table.iterate(children, function(ch)
+            self:add(ch)
+        end)
     end,
-    get_children = function() return {} end,
+    get_children = function()
+        return {}
+    end,
 })
 
 ---@type Adw.ActionRow | { prefix: Gtk.Widget, suffix: Gtk.Widget, prefixes: Gtk.Widget[], suffixes: Gtk.Widget[] }
@@ -167,7 +200,9 @@ local ActionRow = Adw.ActionRow
 
 ---@diagnostic disable-next-line
 ActionRow._attribute.prefix = {
-    set = function(self, prefix) self:add_prefix(prefix) end,
+    set = function(self, prefix)
+        self:add_prefix(prefix)
+    end,
 }
 
 ActionRow._attribute.prefixes = {
@@ -180,7 +215,9 @@ ActionRow._attribute.prefixes = {
 
 ---@diagnostic disable-next-line
 ActionRow._attribute.suffix = {
-    set = function(self, suffix) self:add_suffix(suffix) end,
+    set = function(self, suffix)
+        self:add_suffix(suffix)
+    end,
 }
 
 ActionRow._attribute.suffixes = {

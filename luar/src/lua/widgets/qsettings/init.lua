@@ -3,6 +3,7 @@ local Network = astal.require('AstalNetwork')
 local Bluetooth = astal.require('AstalBluetooth')
 local Icons = require('lua.widgets.icons')
 local Notifd = astal.require('AstalNotifd')
+local Caffeine = require('lua.services.caffeine')
 
 local variant = require('lua.utils.variant')
 
@@ -13,13 +14,17 @@ local gnome = Gio.Settings {
 }
 
 local dark_mode = bind {
-    get = function() return variant.decode(gnome:get_value('color-scheme')) end,
+    get = function()
+        return variant.decode(gnome:get_value('color-scheme'))
+    end,
     subscribe = function(self, callback)
         local id = gnome.on_changed:connect(function(_, _key)
             if _key == 'color-scheme' then callback(self:get()) end
         end)
 
-        return function() GObject.signal_handler_disconnect(gnome, id) end
+        return function()
+            GObject.signal_handler_disconnect(gnome, id)
+        end
     end,
 }
 local set_dark_mode = function(value)
@@ -56,7 +61,9 @@ function module.QSettingsPanelButton(args)
     return Widget.Button {
         css_classes = { 'flat' },
         on_clicked = function(self)
-            local visible = not table.find(panel_instances, function(win) return win.visible end)
+            local visible = not table.find(panel_instances, function(win)
+                return win.visible
+            end)
 
             self:toggle_css_class('highlight', visible)
 
@@ -79,10 +86,14 @@ function module.QSettingsPanel(args)
         namespace = 'astal-qsettings',
         css_classes = { 'qsettings', 'bg', 'mt-2', 'mr-2' },
         anchor = { 'TOP', 'RIGHT' },
-        setup = function(self) table.insert(panel_instances, self) end,
+        setup = function(self)
+            table.insert(panel_instances, self)
+        end,
         Widget.NavigationView {
             setup = function(self)
-                self:hook(visible_tag, function(_, tag) self:push_by_tag(tag) end)
+                self:hook(visible_tag, function(_, tag)
+                    self:push_by_tag(tag)
+                end)
             end,
             Page {
                 tag = 'default',
@@ -94,6 +105,7 @@ function module.QSettingsPanel(args)
                     setup = function(self)
                         -- self:attach(Header(), 0, 0, 3, 1)
 
+                        local caffeine = Caffeine.get_default()
                         local notifd = Notifd.get_default()
 
                         local flags = { 'BIDIRECTIONAL', 'SYNC_CREATE' }
@@ -112,7 +124,9 @@ function module.QSettingsPanel(args)
                                 if wifi then
                                     local binding =
                                         wifi:bind_property('enabled', this, 'active', flags)
-                                    this.on_destroy = function() binding:unbind() end
+                                    this.on_destroy = function()
+                                        binding:unbind()
+                                    end
                                 end
                             end,
                         }
@@ -131,7 +145,9 @@ function module.QSettingsPanel(args)
                                 if adapter then
                                     local binding =
                                         adapter:bind_property('powered', this, 'active', flags)
-                                    this.on_destroy = function() binding:unbind() end
+                                    this.on_destroy = function()
+                                        binding:unbind()
+                                    end
                                 end
                             end,
                         }
@@ -142,16 +158,36 @@ function module.QSettingsPanel(args)
                             row = 1,
                             width = 2,
                             icon = Icons.NotifIcon {},
-                            label = bind(notifd, 'dont-disturb'):as(
-                                function(dnd) return dnd and 'Silent' or 'Noisy' end
-                            ),
+                            label = bind(notifd, 'dont-disturb'):as(function(dnd)
+                                return dnd and 'Silent' or 'Noisy'
+                            end),
                             setup = function(this)
                                 local binding =
                                     notifd:bind_property('dont-disturb', this, 'active', flags)
 
-                                this.on_destroy = function() binding:unbind() end
+                                this.on_destroy = function()
+                                    binding:unbind()
+                                end
                             end,
                         }
+
+                        -- ToggleButton {
+                        --     grid = self,
+                        --     column = 1,
+                        --     row = 2,
+                        --     width = 2,
+                        --     icon_name = 'moon-outline-symbolic',
+                        --     label = 'Caffeine',
+                        --     setup = function(this)
+                        --         local binding =
+                        --             caffeine:bind_property('active', this, 'active', flags)
+
+                        --         this.on_destroy = function()
+                        --             binding:unbind()
+                        --         end
+                        --     end,
+                        -- }
+
                         ToggleButton {
                             grid = self,
                             column = 1,

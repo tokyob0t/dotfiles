@@ -24,12 +24,13 @@ return function(args)
 
     local body = Widget.Label {
         label = n.body,
-        css_classes = { 'dimmed' },
-        max_width_chars = 50,
         lines = 2,
         xalign = 0,
+        max_width_chars = 1,
+        wrap = true,
+        hexpand = true,
+        css_classes = { 'dimmed' },
         ellipsize = 'END',
-        wrap_mode = 'CHAR',
     }
 
     local header = Widget.Box {
@@ -54,24 +55,38 @@ return function(args)
             css_classes = { 'gap-2' },
             Widget.Button {
                 css_classes = { 'min-w-0', 'image-button', 'min-h-0', 'rounded-full' },
-                icon_name = bind(shrink)
-                    :as(function(value) return not value and 'down' or 'up' end)
-                    :as(function(value) return string.format('pan-%s-symbolic', value) end),
-                on_clicked = function() shrink.value = not shrink.value end,
+                icon_name = bind(shrink):as(function(value)
+                    return not value and 'down' or 'up'
+                end):as(function(value)
+                    return string.format('pan-%s-symbolic', value)
+                end),
+                on_clicked = function()
+                    shrink.value = not shrink.value
+                end,
             },
             Widget.Button {
                 icon_name = 'window-close-symbolic',
                 css_classes = { 'min-w-0', 'image-button', 'min-h-0', 'rounded-full' },
-                on_clicked = function() n:dismiss() end,
-                on_hover_enter = function(self) self:add_css_class('destructive-action') end,
-                on_hover_leave = function(self) self:remove_css_class('destructive-action') end,
+                on_clicked = function()
+                    n:dismiss()
+                end,
+                on_hover_enter = function(self)
+                    self:add_css_class('destructive-action')
+                end,
+                on_hover_leave = function(self)
+                    self:remove_css_class('destructive-action')
+                end,
             },
         },
     }
 
     local content = Widget.Revealer {
-        reveal_child = bind(shrink):as(function(value) return not value end),
-        on_destroy = function() shrink:drop() end,
+        reveal_child = bind(shrink):as(function(value)
+            return not value
+        end),
+        on_destroy = function()
+            shrink:drop()
+        end,
         transition_duration = 200,
         Widget.Box {
             vertical = true,
@@ -96,7 +111,9 @@ return function(args)
                     return Widget.Button {
                         label = action.label,
                         css_classes = { 'text-button', 'rounded-md' },
-                        on_clicked = function() n:invoke(action.id) end,
+                        on_clicked = function()
+                            n:invoke(action.id)
+                        end,
                     }
                 end),
             },

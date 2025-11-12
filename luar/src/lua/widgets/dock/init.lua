@@ -47,10 +47,9 @@ local function DockItem(args)
             }
         end)
 
-        local is_pinned = table.find(
-            pinned_apps:get(),
-            function(entry) return entry == args.desktop_entry end
-        )
+        local is_pinned = table.find(pinned_apps:get(), function(entry)
+            return entry == args.desktop_entry
+        end)
 
         return DockItem {
             setup = args.setup,
@@ -66,12 +65,9 @@ local function DockItem(args)
                         css_classes = { 'flat' },
                         on_clicked = function()
                             if is_pinned then
-                                set_pinned_apps(
-                                    table.filter(
-                                        pinned_apps:get(),
-                                        function(entry) return entry ~= args.desktop_entry end
-                                    )
-                                )
+                                set_pinned_apps(table.filter(pinned_apps:get(), function(entry)
+                                    return entry ~= args.desktop_entry
+                                end))
                             else
                                 set_pinned_apps {
                                     args.desktop_entry,
@@ -90,7 +86,9 @@ local function DockItem(args)
         transition_duration = 200,
         reveal_child = false,
         setup = function(self)
-            timeout(50, function() self.reveal_child = true end)
+            timeout(50, function()
+                self.reveal_child = true
+            end)
         end,
         Widget.MenuButton {
             tooltip_text = args.tooltip_text,
@@ -116,14 +114,11 @@ local function PinnedApps()
             css_classes = { 'gap-1' },
             ---@param array string[]
             pinned_apps:as(function(array)
-                return table.map(
-                    array,
-                    function(entry)
-                        return DockItem {
-                            desktop_entry = entry,
-                        }
-                    end
-                )
+                return table.map(array, function(entry)
+                    return DockItem {
+                        desktop_entry = entry,
+                    }
+                end)
             end),
         },
         Widget.Separator {},
@@ -140,10 +135,9 @@ local function HyprClients()
     local add_client = function(c)
         -- if not is_real_window(c) then return end
 
-        local is_pinned = table.find(
-            pinned_apps:get(),
-            function(app) return app == (c.initial_class .. '.desktop') end
-        )
+        local is_pinned = table.find(pinned_apps:get(), function(app)
+            return app == (c.initial_class .. '.desktop')
+        end)
 
         if is_pinned then return end
 
@@ -185,7 +179,9 @@ local function HyprClients()
 
             if revealer then
                 revealer.reveal_child = false
-                revealer.on_notify['child-revealed'] = function() clients:delete(class) end
+                revealer.on_notify['child-revealed'] = function()
+                    clients:delete(class)
+                end
             end
         end
     end
@@ -197,23 +193,25 @@ local function HyprClients()
                 add_client(c)
             end
 
-            self:hook(hypr, 'client-added', function(_, c) add_client(c) end)
-            self:hook(hypr, 'client-removed', function(_, address) remove_client(address) end)
+            self:hook(hypr, 'client-added', function(_, c)
+                add_client(c)
+            end)
+            self:hook(hypr, 'client-removed', function(_, address)
+                remove_client(address)
+            end)
 
             local _array = pinned_apps:get()
 
             self.on_destroy = pinned_apps:subscribe(function(array)
                 ---@type string[]
-                local added = table.filter(
-                    array,
-                    function(entry) return not table.contains(_array, entry) end
-                )
+                local added = table.filter(array, function(entry)
+                    return not table.contains(_array, entry)
+                end)
 
                 ---@type string[]
-                local removed = table.filter(
-                    _array,
-                    function(entry) return not table.contains(array, entry) end
-                )
+                local removed = table.filter(_array, function(entry)
+                    return not table.contains(array, entry)
+                end)
 
                 if #added > 0 then
                     for _, entry in ipairs(added) do
@@ -257,7 +255,7 @@ return function(args)
             css_classes = { 'rounded-3xl', 'bg', 'frame', 'p-1', 'gap-1' },
 
             PinnedApps(),
-            HyprClients(),
+            -- HyprClients(),
         },
     }
 end

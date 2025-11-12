@@ -4,7 +4,7 @@ indent_type = "Spaces"
 indent_width = 4
 quote_style = "AutoPreferSingle"
 call_parentheses = "NoSingleTable"
-collapse_simple_statement = "Always"
+collapse_simple_statement = "ConditionalOnly"
 syntax = "LuaJIT"
 
 [sort_requires]

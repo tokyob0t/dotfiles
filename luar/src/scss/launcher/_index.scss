@@ -2,10 +2,17 @@
 @use '../variables';
 
 window#launcher {
-  min-width: 500px;
+  min-width: 550px;
   margin-top: 300px;
+  color: variables.$fg;
 
   > box {
     border: 2px solid alpha(variables.$fg, 0.03);
+  }
+
+  button.launcher-item {
+    &:focus {
+      outline: unset;
+    }
   }
 }

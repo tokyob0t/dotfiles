@@ -28,6 +28,7 @@ function Recorder:start(area)
     if self.recording then return end
 
     self.priv.file = Recordings .. '/' .. now() .. '.mp4'
+
     mkdir(Recordings)
 
     local args = { '-f', self.priv.file }

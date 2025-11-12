@@ -126,7 +126,9 @@ table.from = function(props, fn)
     props.from = props.from or 1
     props.interval = props.interval or 1
 
-    fn = fn or function(i) return i end
+    fn = fn or function(i)
+        return i
+    end
 
     local tbl = {}
 
@@ -140,7 +142,9 @@ end
 ---@param tbl table
 ---@return boolean
 table.contains = function(tbl, item)
-    return not not table.find(tbl, function(value) return value == item end)
+    return not not table.find(tbl, function(value)
+        return value == item
+    end)
 end
 
 ---@generic T: table
@@ -177,30 +181,40 @@ end
 ---@param s string
 ---@param tbl string[]
 ---@return string
-string.join = function(s, tbl) return table.concat(tbl, s) end
+string.join = function(s, tbl)
+    return table.concat(tbl, s)
+end
 
-string.title = function(s) return string.gsub(' ' .. s, '%W%l', string.upper):sub(2) end
+string.title = function(s)
+    return string.gsub(' ' .. s, '%W%l', string.upper):sub(2)
+end
 
-string.capitalize = function(s) return string.gsub(s, '^%l', string.upper) end
+string.capitalize = function(s)
+    return string.gsub(s, '^%l', string.upper)
+end
 
 ---@param s string
 ---@param delimiter? string
 ---@param max_splits? number
 ---@return string[]
-string.split = function(s, delimiter, max_splits)
-    delimiter = delimiter or '%s'
+function string.split(s, delimiter, max_splits)
+    if delimiter == nil or delimiter == '' then
+        delimiter = '%s+' -- por defecto, separa por espacios en blanco
+    else
+        delimiter = delimiter:gsub('(%W)', '%%%1') -- escapamos el delimitador si tiene caracteres especiales
+    end
 
     local result = {}
     local count = 0
+    local pattern = '([^' .. delimiter .. ']+)'
 
-    if #s == 0 then return result end
-
-    for match in string.gmatch(s, '([^' .. delimiter .. ']+)') do
-        if max_splits and count == max_splits then
-            table.insert(result, match)
-            count = count + 1
-        else
-            table.insert(result, s:sub(#s - #match + 1))
+    for part in s:gmatch(pattern) do
+        table.insert(result, part)
+        count = count + 1
+        if max_splits and count >= max_splits then
+            -- agrega el resto de la cadena sin dividir más
+            local rest = s:match('.*' .. delimiter .. '.+$')
+            if rest then table.insert(result, rest) end
             break
         end
     end
@@ -209,7 +223,9 @@ string.split = function(s, delimiter, max_splits)
 end
 
 ---@diagnostic disable-next-line
-math.randomseed = function(x) GLib.random_set_seed(x) end
+math.randomseed = function(x)
+    GLib.random_set_seed(x)
+end
 
 ---@diagnostic disable-next-line
 math.random = function(m, n)
@@ -223,7 +239,9 @@ math.random = function(m, n)
 end
 
 ---@return number
-math.clamp = function(x, min, max) return math.max(min, math.min(x, max)) end
+math.clamp = function(x, min, max)
+    return math.max(min, math.min(x, max))
+end
 
 os.setenv = GLib.setenv
 os.getenv = GLib.getenv

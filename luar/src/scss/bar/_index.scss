@@ -2,7 +2,5 @@
 @use '../functions' as *;
 
 window.bar {
-  padding: 5px 10px;
-  background-color: variables.$bg;
   color: variables.$fg;
 }

@@ -13,67 +13,74 @@ local basic_types = {
 }
 
 --- Gracias chatgpt por tanto, perdon por tan poco
----@param v GLib.Variant
----@return string|number|boolean|table
-local function decode_variant(v)
-    -- Si no es un GLib.Variant, devolver tal cual
+--- @param v GLib.Variant
+--- @param depth? integer  -- Nivel máximo de decodificación (por defecto: infinito)
+--- @param level? integer  -- Nivel actual (interno)
+--- @return string|number|boolean|table|GLib.Variant
+local function decode_variant(v, depth, level)
     if type(v) ~= 'userdata' or not v.type then return v end
 
     local t = v.type
     if not t then return nil end
 
-    -- Maybe type
+    level = level or 0
+    depth = depth or math.huge
+
+    -- Si ya llegamos al límite de profundidad, no decodificar más
+    if level >= depth then return v end
+
+    -- Maybe type (mX)
     if t:sub(1, 1) == 'm' then
         if v.value == nil then
             return nil
         else
-            return decode_variant(GLib.Variant(t:sub(2), v.value))
+            return decode_variant(GLib.Variant(t:sub(2), v.value), depth, level + 1)
         end
     end
 
-    -- Variant type
-    if t == 'v' then return decode_variant(v.value) end
+    -- Variant type (v)
+    if t == 'v' then return decode_variant(v.value, depth, level + 1) end
 
     -- Scalar simple
     if t:match('^[bynqiuotsdg]$') then return v.value end
 
-    -- Array of dictionary entries (dictionary)
+    -- Diccionario (a{...})
     if t:match('^a{.+}$') then
         local result = {}
         for i = 0, #v - 1 do
             local entry = v:get_child_value(i)
             if entry then
-                local key = decode_variant(entry[1])
-                local value = decode_variant(entry[2])
+                local key = decode_variant(entry[1], depth, level + 1)
+                local value = decode_variant(entry[2], depth, level + 1)
                 result[key] = value
             end
         end
         return result
     end
 
-    -- Generic array
+    -- Array genérico (aX)
     if t:sub(1, 1) == 'a' then
         local arr = {}
         for i = 0, #v - 1 do
-            arr[i + 1] = decode_variant(v:get_child_value(i))
+            arr[i + 1] = decode_variant(v:get_child_value(i), depth, level + 1)
         end
         return arr
     end
 
-    -- Tuple
+    -- Tuple ((...))
     if t:match('^%(.+%)$') then
         local tuple = {}
         for i = 0, #v - 1 do
-            tuple[i + 1] = decode_variant(v:get_child_value(i))
+            tuple[i + 1] = decode_variant(v:get_child_value(i), depth, level + 1)
         end
         return tuple
     end
 
-    -- Dictionary entry (key-value pair)
+    -- Entry {key, value}
     if t:match('^{.+}$') then
         local entry = {}
-        entry[1] = decode_variant(v:get_child_value(0))
-        entry[2] = decode_variant(v:get_child_value(1))
+        entry[1] = decode_variant(v:get_child_value(0), depth, level + 1)
+        entry[2] = decode_variant(v:get_child_value(1), depth, level + 1)
         return entry
     end
 
@@ -124,7 +131,7 @@ local function encode_variant(signature, value)
         end
         local tbl = {}
         for k, v in pairs(value) do
-            local key = tostring(k) -- keys siempre string
+            local key = tostring(k)
             local val = encode_variant(val_type, v)
             tbl[key] = val
         end
@@ -144,8 +151,8 @@ local function encode_variant(signature, value)
 
     -- Tuples (...)
     if signature:match('^%(.+%)$') then
-        local inner_types = {}
         local s = signature:sub(2, -2)
+        local inner_types = {}
         local i = 1
         while i <= #s do
             local c = s:sub(i, i)
@@ -177,6 +184,14 @@ local function encode_variant(signature, value)
                 i = i + 1
             end
         end
+
+        -- Caso especial: (sv)
+        if #inner_types == 2 and inner_types[1] == 's' and inner_types[2] == 'v' then
+            local key, val = value[1], value[2]
+            local val_variant = encode_variant('v', val)
+            return GLib.Variant('(sv)', { key, val_variant })
+        end
+
         local inner = {}
         for idx, t in ipairs(inner_types) do
             inner[idx] = encode_variant(t, value[idx])
@@ -184,8 +199,17 @@ local function encode_variant(signature, value)
         return GLib.Variant(signature, inner)
     end
 
+    -- Diccionario simple {sv}
+    if signature == '{sv}' then
+        local key, val = value[1], value[2]
+        local val_variant = encode_variant('v', val)
+        return GLib.Variant('{sv}', { key, val_variant })
+    end
+
     error('Unsupported signature: ' .. tostring(signature))
 end
+
+-- ========
 
 return {
     decode = decode_variant,

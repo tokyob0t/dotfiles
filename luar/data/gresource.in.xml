@@ -2,6 +2,7 @@
 <gresources>
     <gresource prefix="@resource@">
         <file compressed="true">styles.css</file>
+        <file alias="icons/dot-symbolic.svg" preprocess="xml-stripblanks">../data/icons/dot-symbolic.svg</file>
         <file alias="icons/color-picker-symbolic.svg" preprocess="xml-stripblanks">../data/icons/color-picker-symbolic.svg</file>
         <file alias="icons/bell-outline-symbolic.svg" preprocess="xml-stripblanks">../data/icons/bell-outline-symbolic.svg</file>
         <file alias="icons/bell-outline-none-symbolic.svg" preprocess="xml-stripblanks">../data/icons/bell-outline-none-symbolic.svg</file>

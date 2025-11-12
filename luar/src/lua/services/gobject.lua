@@ -16,7 +16,9 @@ module.pspec_flag = {
 
 ---@enum (key) PSPEC_TYPE
 module.pspec_type = {
-    string = function(name, flags) return GObject.param_spec_string(name, name, name, '', flags) end,
+    string = function(name, flags)
+        return GObject.param_spec_string(name, name, name, '', flags)
+    end,
     float = function(name, flags)
         return GObject.param_spec_float(name, name, name, -1, 1, 0, flags)
     end,
@@ -46,7 +48,9 @@ module.pspec_type = {
 ---@param type PSPEC_TYPE
 ---@param flags PSPEC_FLAG[]
 ---@return GObject.ParamSpec
-module.pspec = function(name, type, flags) return module.pspec_type[type](name, flags) end
+module.pspec = function(name, type, flags)
+    return module.pspec_type[type](name, flags)
+end
 
 ---@generic T: GObject.Object
 ---@param gobject T | { _property: table }
@@ -55,17 +59,25 @@ module.pspec = function(name, type, flags) return module.pspec_type[type](name, 
 module.install_pspecs = function(gobject, pspecs)
     for key, value in pairs(pspecs) do
         ---@type PSPEC_FLAG[]
-        local flags = table.filter(value, function(v) return module.pspec_flag[v] ~= nil end)
+        local flags = table.filter(value, function(v)
+            return module.pspec_flag[v] ~= nil
+        end)
 
-        flags = table.map(value, function(v) return module.pspec_flag[v] end)
+        flags = table.map(value, function(v)
+            return module.pspec_flag[v]
+        end)
 
-        flags = table.filter(flags, function(v) return not not v end)
+        flags = table.filter(flags, function(v)
+            return not not v
+        end)
 
         if #flags == 0 then table.insert(flags, 'READWRITE') end
 
         ---@type PSPEC_TYPE
         ---@diagnostic disable-next-line:assign-type-mismatch
-        local data_type = table.find(value, function(v) return module.pspec_type[v] ~= nil end)
+        local data_type = table.find(value, function(v)
+            return module.pspec_type[v] ~= nil
+        end)
 
         gobject._property[key] = module.pspec(key, data_type, flags)
     end

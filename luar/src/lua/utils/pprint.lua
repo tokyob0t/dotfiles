@@ -11,7 +11,10 @@ return function(...)
             -- manejar índices numéricos consecutivos primero
             local i = 1
             while value[i] ~= nil do
-                table.insert(parts, string.rep(' ', indent + 2) .. rprint(value[i], indent + 2) .. ',\n')
+                table.insert(
+                    parts,
+                    string.rep(' ', indent + 2) .. rprint(value[i], indent + 2) .. ',\n'
+                )
                 i = i + 1
             end
 
@@ -19,7 +22,14 @@ return function(...)
             for k, v in pairs(value) do
                 if not (type(k) == 'number' and k >= 1 and k < i) then
                     local key = type(k) == 'string' and k or '[' .. tostring(k) .. ']'
-                    table.insert(parts, string.rep(' ', indent + 2) .. key .. ' = ' .. rprint(v, indent + 2) .. ',\n')
+                    table.insert(
+                        parts,
+                        string.rep(' ', indent + 2)
+                            .. key
+                            .. ' = '
+                            .. rprint(v, indent + 2)
+                            .. ',\n'
+                    )
                 end
             end
 
@@ -32,7 +42,7 @@ return function(...)
         end
     end
 
-    local args = {...}
+    local args = { ... }
     for i = 1, #args do
         io.stdout:write(rprint(args[i], 0) .. ' ')
     end

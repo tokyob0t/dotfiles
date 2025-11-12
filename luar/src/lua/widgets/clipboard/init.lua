@@ -3,7 +3,9 @@ local async_exec = require('astal.process').async_exec
 
 local history, set_history = settings('clipboard-history', 'a(ts)')
 
-local wl_copy = function(...) return async_exec { 'wl-copy', ... } end
+local wl_copy = function(...)
+    return async_exec { 'wl-copy', ... }
+end
 
 ---@type function
 local show_toast
@@ -85,7 +87,9 @@ local clipboard = Widget.ApplicationWindow {
     default_height = 500,
     hide_on_close = true,
     icon_name = 'application-x-executable',
-    setup = function(self) search_bar.key_capture_widget = self end,
+    setup = function(self)
+        search_bar.key_capture_widget = self
+    end,
     on_hide = function()
         search_bar.child.text, search_bar.search_mode_enabled = '', false
     end,
@@ -100,7 +104,9 @@ local clipboard = Widget.ApplicationWindow {
                         self:bind_property( 'active', search_bar, 'search-mode-enabled', { 'BIDIRECTIONAL' })
                     -- stylua: ignore end
 
-                    self.on_destroy = function() binding:unbind() end
+                    self.on_destroy = function()
+                        binding:unbind()
+                    end
                 end,
                 on_notify_active = function(self, active)
                     self:toggle_css_class('highlight', active)
@@ -113,7 +119,9 @@ local clipboard = Widget.ApplicationWindow {
                 icon_name = 'clipboard-symbolic',
                 title = 'Clipboard Empty',
                 description = 'Copy something to see it here.',
-                visible = history:as(function(items) return #items == 0 end),
+                visible = history:as(function(items)
+                    return #items == 0
+                end),
             },
             Widget.ToastOverlay {
                 setup = function(self)
@@ -125,7 +133,9 @@ local clipboard = Widget.ApplicationWindow {
 
                 Widget.ScrolledWindow {
                     hscrollbar_policy = 'NEVER',
-                    visible = history:as(function(items) return #items > 0 end),
+                    visible = history:as(function(items)
+                        return #items > 0
+                    end),
                     Widget.ListBox {
                         selection_mode = 'NONE',
                         css_classes = { 'boxed-list-separate', 'm-2' },
@@ -152,12 +162,9 @@ local clipboard = Widget.ApplicationWindow {
                                     on_deleted = function()
                                         show_toast('Removed from Clipboard')
                                         on_removed(timestamp)
-                                        set_history(
-                                            table.filter(
-                                                history:get(),
-                                                function(tuple) return tuple[1] ~= timestamp end
-                                            )
-                                        )
+                                        set_history(table.filter(history:get(), function(tuple)
+                                            return tuple[1] ~= timestamp
+                                        end))
                                     end,
                                 }
 
@@ -166,7 +173,9 @@ local clipboard = Widget.ApplicationWindow {
 
                             local history_cache = history:get()
 
-                            table.sort(history_cache, function(a, b) return a[1] < b[1] end)
+                            table.sort(history_cache, function(a, b)
+                                return a[1] < b[1]
+                            end)
 
                             for _, tuple in ipairs(history_cache) do
                                 on_added(table.unpack(tuple))
@@ -178,18 +187,16 @@ local clipboard = Widget.ApplicationWindow {
 
                                 if new_len > old_len then
                                     for _, tuple in ipairs(_history) do
-                                        local added = not table.any(
-                                            history_cache,
-                                            function(t) return t[2] == tuple[2] end
-                                        )
+                                        local added = not table.any(history_cache, function(t)
+                                            return t[2] == tuple[2]
+                                        end)
                                         if added then on_added(table.unpack(tuple)) end
                                     end
                                 elseif new_len < old_len then
                                     for _, tuple in ipairs(_history) do
-                                        local removed = not table.any(
-                                            history_cache,
-                                            function(t) return t[2] == tuple[2] end
-                                        )
+                                        local removed = not table.any(history_cache, function(t)
+                                            return t[2] == tuple[2]
+                                        end)
                                         if removed then return on_removed(tuple[2]) end
                                     end
                                 end
