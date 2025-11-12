@@ -1,0 +1,20 @@
+/* Centrar todos los headers en Obsidian */
+.cm-s-obsidian h1,
+.cm-s-obsidian h2,
+.cm-s-obsidian h3,
+.cm-s-obsidian h4,
+.cm-s-obsidian h5,
+.cm-s-obsidian h6 {
+    text-align: center;
+}
+
+
+/* Solo en la vista de lectura */
+.markdown-preview-view h1,
+.markdown-preview-view h2,
+.markdown-preview-view h3,
+.markdown-preview-view h4,
+.markdown-preview-view h5,
+.markdown-preview-view h6 {
+    text-align: center;
+}
