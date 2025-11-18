@@ -1,0 +1,174 @@
+autostart = [
+  'systemctl start --user xwayland-satellite',
+  '/usr/lib/soteria-polkit/soteria',
+  'swww-daemon',
+  'luar',
+]
+
+[env]
+DISPLAY = ":0"
+XDG_CURRENT_DESKTOP = 'fht-compositor'
+XDG_SESSION_DESKTOP = 'fht-compositor'
+XDG_SESSION_TYPE = 'wayland'
+SDL_VIDEODRIVER = 'wayland,x11'
+GDK_BACKEND = 'wayland,x11,*'
+GBM_BACKEND = 'nvidia-drm'
+# GSK_RENDERER = 'gl'
+ELECTRON_OZONE_PLATFORM_HINT = 'auto'
+
+[input]
+
+[input.keyboard]
+layout = "us"
+variant = 'altgr-intl'
+repeat-rate = 100
+repeat-delay = 250
+
+[input.touchpad]
+click-method = 'clickfinger'
+natural-scrolling = true
+disable-while-typing = false
+
+
+[general]
+cursor-warps = true
+focus-new-windows = true
+focus-follows-mouse = true
+layouts = ["tile"]
+nmaster = 1
+mwfact = 0.5
+inner-gaps = 10
+outer-gaps = 20
+
+[outputs.eDP-1]
+mode = '1920x1080@144'
+vrr = 'on-demand'
+
+# [outputs.HDMI-A-1]
+# position.x = 1920
+
+[decorations]
+decoration-mode = "force-server-side"
+
+[decorations.border]
+thickness = 3
+radius = 25
+normal-color = "transparent"
+
+[decorations.shadow]
+# floating-only = true 
+color = "#000"
+sigma = 30
+
+[decorations.blur]
+disable = true
+noise = 0.05
+passes = 3
+radius = 3
+
+
+[animations]
+disable = false
+
+[mousebinds]
+Super-left = "swap-tile"
+Super-right = "resize-tile"
+
+[keybinds]
+Super-Shift-q = "quit"
+Super-Shift-r = "reload-config"
+
+Super-t = { action = "run-command", arg = "ghostty" }
+Super-e = { action = "run-command", arg = "nautilus --new-window" }
+Super-f = { action = "run-command", arg = "firefox --new-window" }
+Super-r = { action = "run-command", arg = "astal-lua request -i luar -t launcher" }
+
+XF86AudioRaiseVolume = { action = "run-command", arg = "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+" }
+XF86AudioLowerVolume = { action = "run-command", arg = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" }
+XF86AudioMute = { action = "run-command", arg = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" }
+XF86AudioMicMute = { action = "run-command", arg = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" }
+XF86MonBrightnessUp = { action = "run-command", arg = "brightnessctl -e4 -n2 set 5%+" }
+XF86MonBrightnessDown = { action = "run-command", arg = "brightnessctl -e4 -n2 set 5%-" }
+
+Alt-tab = { action = "focus-next-window", repeat = true }
+Alt-Shift-tab = { action = "focus-previous-window", repeat = true }
+
+# Focus management, defaults are similar to what DWM provides.
+Super-left = "focus-next-window"
+Super-right = "focus-previous-window"
+Super-Ctrl-left = "focus-next-output"
+Super-Ctrl-right = "focus-previous-output"
+
+# Window management
+Super-w = "close-focused-window"
+Super-c = "fullscreen-focused-window"
+Super-Shift-c = "float-focused-window"
+Super-Shift-right = "swap-with-next-window"
+Super-Shift-left = "swap-with-previous-window"
+# Super-m = "maximize-focused-window"
+# Super-f = "fullscreen-focused-window"
+
+# Transient layout changes.
+# These changes persist through configuration reloads
+Super-return = "select-next-layout"
+Super-Shift-return = "select-previous-layout"
+Super-Alt-left = { action = "change-mwfact", arg = -0.05 }
+Super-Alt-right = { action = "change-mwfact", arg = +0.05 }
+Super-Alt-up = { action = "change-window-proportion", arg = +0.1 }
+Super-Alt-down = { action = "change-window-proportion", arg = -0.1 }
+# Super-Shift-h = { action = "change-nmaster", arg = +1 }
+# Super-Shift-l = { action = "change-nmaster", arg = -1 }
+
+# Workspaces
+Super-1 = { action = "focus-workspace", arg = 0 }
+Super-2 = { action = "focus-workspace", arg = 1 }
+Super-3 = { action = "focus-workspace", arg = 2 }
+Super-4 = { action = "focus-workspace", arg = 3 }
+Super-5 = { action = "focus-workspace", arg = 4 }
+Super-6 = { action = "focus-workspace", arg = 5 }
+Super-7 = { action = "focus-workspace", arg = 6 }
+Super-8 = { action = "focus-workspace", arg = 7 }
+Super-9 = { action = "focus-workspace", arg = 8 }
+
+# Sending windows to workspaces
+Super-Shift-1 = { action = "send-to-workspace", arg = 0 }
+Super-Shift-2 = { action = "send-to-workspace", arg = 1 }
+Super-Shift-3 = { action = "send-to-workspace", arg = 2 }
+Super-Shift-4 = { action = "send-to-workspace", arg = 3 }
+Super-Shift-5 = { action = "send-to-workspace", arg = 4 }
+Super-Shift-6 = { action = "send-to-workspace", arg = 5 }
+Super-Shift-7 = { action = "send-to-workspace", arg = 6 }
+Super-Shift-8 = { action = "send-to-workspace", arg = 7 }
+Super-Shift-9 = { action = "send-to-workspace", arg = 8 }
+
+# ---------------------------------------------------------
+
+[[rules]]
+is-floating = true
+ontop = true
+
+[[rules]]
+match-app-id = ["steam_app_*", 'steam', 'cs2', 'Sober']
+floating = true
+centered = true
+open-on-workspace = 4
+vrr = true
+blur.disable = true
+shadow.disable = true
+
+[[rules]]
+match-title = ['^$']
+match-app-id = ['^$']
+skip-focus = true
+floating = true
+blur.disable = true
+shadow.disable = true
+
+[[rules]]
+match-app-id = ['re.sonny.Commit']
+floating = true
+centered = true
+
+
+# [debug]
+# render-node = "/dev/dri/renderD128"

@@ -51,6 +51,11 @@ return function(args)
             xalign = 0,
             css_classes = { 'heading' },
         },
+        Widget.Label {
+            label = os.date('%H:%M', n.time),
+            css_classes = { 'heading' },
+            halign = 'END',
+        },
         Widget.Box {
             css_classes = { 'gap-2' },
             Widget.Button {

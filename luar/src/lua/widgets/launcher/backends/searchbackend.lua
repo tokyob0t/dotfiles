@@ -1,5 +1,4 @@
 local LauncherItem = require('lua.widgets.launcher.launcheritem')
-
 local async_exec = require('astal.process').async_exec
 local settings = require('lua.utils.settings')
 local max_entries = settings('launcher-max-entries', 'u')
@@ -103,6 +102,7 @@ return function(args)
                         if _item.clipboard_text then
                             wl_copy('--type', 'text/plain', _item.clipboard_text)
                         end
+
                         App:toggle_window('launcher')
                     end
                 end),

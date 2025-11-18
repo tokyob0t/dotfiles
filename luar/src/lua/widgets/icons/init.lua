@@ -45,9 +45,9 @@ function module.Volume(args)
 
     return Widget.Image {
         icon_name = bind(speaker, 'volume-icon'),
-        tooltip_text = bind(speaker, 'volume'):as(
-            function(volume) return string.format('%d%%', volume * 100) end
-        ),
+        tooltip_text = bind(speaker, 'volume'):as(function(volume)
+            return string.format('%d%%', volume * 100)
+        end),
     }
 end
 
@@ -77,9 +77,9 @@ function module.Battery(args)
         },
         args.display_percentage and Widget.Label {
             css_classes = { 'heading' },
-            label = bind(bat, 'percentage'):as(
-                function(p) return string.format('%d%%', p * 100) end
-            ),
+            label = bind(bat, 'percentage'):as(function(p)
+                return string.format('%d%%', p * 100)
+            end),
         },
     }
 end

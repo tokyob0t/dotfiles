@@ -1,12 +1,26 @@
 local Hyprland = astal.require('AstalHyprland')
 local subprocess = require('astal.process').subprocess
+local exec_async = require('astal.process').exec_async
 
-local hypr = Hyprland.get_default()
+local XDG_CURRENT_DESKTOP = os.getenv('XDG_CURRENT_DESKTOP')
 
-if hypr then
+if XDG_CURRENT_DESKTOP == 'Hyprland' then
+    local hypr = Hyprland.get_default()
     ---@return boolean
     return function(command)
         hypr:dispatch('exec', command)
+        return true
+    end
+elseif XDG_CURRENT_DESKTOP == 'fht-compositor' then
+    return function(command)
+        exec_async {
+            'fht-compositor',
+            'ipc',
+            'action',
+            'run-command-line',
+            '--command-line',
+            command,
+        }
         return true
     end
 end

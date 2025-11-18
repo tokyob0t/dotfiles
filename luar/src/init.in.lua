@@ -14,10 +14,10 @@ Gtk.IconTheme
     :add_resource_path(package.resource .. '/icons')
 
 local Bar = require('lua.widgets.bar')
-local Dock = require('lua.widgets.dock')
+-- local Dock = require('lua.widgets.dock')
 local NotifPopups = require('lua.widgets.notifpopups')
 local QSettingsPanel = require('lua.widgets.qsettings').QSettingsPanel
-local Wallpaper = require('lua.widgets.wallpaper')
+-- local Wallpaper = require('lua.widgets.wallpaper')
 
 App:start {
     instance_name = package.name,

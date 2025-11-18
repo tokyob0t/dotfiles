@@ -1,36 +1,6 @@
-local LauncherItem = require('lua.widgets.launcher.launcheritem')
-local lookup_icon = require('lua.utils.lookup_icon')
-
 local ApplicationsBackend = require('lua.widgets.launcher.backends.applications')
 local SearchBackend = require('lua.widgets.launcher.backends.searchbackend')
 local SearchProvider = require('lua.widgets.launcher.backends.searchprovider')
-
-local find = function(path)
-    local stdout = astal.exec { 'find', path, '-mindepth', '1' }
-
-    if not stdout then return {} end
-
-    return string.split(stdout, '\n')
-end
-
----@return { bus_name: string, object_path: string, desktop_id: string }[]
-local list_providers = function()
-    local providers = {}
-
-    for _, file in ipairs(find('/usr/share/gnome-shell/search-providers')) do
-        local keyfile = GLib.KeyFile.new()
-
-        keyfile:load_from_file(file, 'NONE')
-
-        table.insert(providers, {
-            desktop_id = keyfile:get_string('Shell Search Provider', 'DesktopId'),
-            bus_name = keyfile:get_string('Shell Search Provider', 'BusName'),
-            object_path = keyfile:get_string('Shell Search Provider', 'ObjectPath'),
-        })
-    end
-
-    return providers
-end
 
 local backends = {
     ApplicationsBackend {

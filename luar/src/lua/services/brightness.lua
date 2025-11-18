@@ -3,6 +3,8 @@ local gobject = require('lua.services.gobject')
 local file, process = require('astal.file'), require('astal.process')
 
 ---@class LuaBrightnessService: GObject.Object
+---@field screen number
+---@field kbd number
 local Brightness = gobject.new('LuaBrightnessService', {}, {
     screen = { 'float' },
     kbd = { 'float' },
@@ -45,7 +47,9 @@ Brightness.register_keyboard = async(function(self)
         g_connection = Gio.async_bus_get('SYSTEM'),
     }
 
-    proxy.on_g_signal = function() print('wea') end
+    proxy.on_g_signal = function()
+        print('wea')
+    end
 end)
 
 local _instance

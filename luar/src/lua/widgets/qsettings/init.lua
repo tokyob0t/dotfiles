@@ -27,6 +27,7 @@ local dark_mode = bind {
         end
     end,
 }
+
 local set_dark_mode = function(value)
     if value ~= dark_mode:get() then gnome:set_value('color-scheme', GLib.Variant('s', value)) end
 end
