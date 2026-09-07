@@ -1,0 +1,10 @@
+[core]
+editor=flatpak run re.sonny.Commit
+[user]
+name=tokyob0t
+email=tokyob0t.business@proton.me
+
+[re.sonny.Commit]
+title-length-hint=50
+body-length-wrap=72
+auto-capitalize-title=true

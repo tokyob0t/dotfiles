@@ -1,3 +1,0 @@
-#!/bin/bash
-
-wf-recorder -f ~/Videos/"ScreenRecord_$(date +'%m%d%H%M%S').mp4" -g "$(slurp -d)" -x yuv420p

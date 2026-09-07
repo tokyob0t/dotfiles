@@ -1,0 +1,26 @@
+# Binds
+set completion-ignore-case on
+# set show-all-if-ambiguous on
+set mark-directories on
+set colored-completion-prefix on
+set colored-stats on
+set echo-control-characters off
+set expand-tilde off
+set skip-completed-text on
+
+
+# Tab autocompletion
+TAB: menu-complete
+"\e[Z": menu-complete-backward
+
+# ctrl + backspace = delete word
+"\x08": backward-kill-word
+
+# ctrl + supr = delete word
+"\e[3;5~": kill-word
+
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+"\e[1;6D": backward-word
+"\e[1;6C": forward-word

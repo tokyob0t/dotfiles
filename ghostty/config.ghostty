@@ -1,0 +1,17 @@
+#command = /usr/bin/hilbish
+
+font-family = JetBrainsMono Nerd Font
+font-style = semibold
+theme = oxocarbon.conf
+
+window-padding-x = 10 
+window-padding-y = 10
+window-decoration = client 
+
+keybind = ctrl+t=new_tab
+keybind = ctrl+w=close_tab
+keybind = ctrl+enter=ignore
+keybind = ctrl+shift+left=ignore
+keybind = ctrl+shift+right=ignore
+keybind = performable:ctrl+c=copy_to_clipboard
+keybind = performable:ctrl+v=paste_from_clipboard
